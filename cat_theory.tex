@@ -1,0 +1,352 @@
+\documentclass[12pt,letterpaper]{book}
+\usepackage[margin=0.9in]{geometry}
+\usepackage[utf8]{inputenc} 
+\usepackage[english]{babel}
+\usepackage{graphicx}
+\usepackage{amsmath, amsfonts, amssymb, amsthm, thmtools}
+\usepackage{braket} 
+\usepackage{relsize} 
+\usepackage{float}
+\usepackage{mathtools}
+\usepackage{lmodern} 
+\usepackage[T1]{fontenc}
+\usepackage{fancyhdr}
+\usepackage[dvipsnames]{xcolor} % Colors, use dvipsnames for more color options
+\usepackage{framed} % Fancy leftbar
+\usepackage[normalem]{ulem}
+\usepackage{tikz-cd} % Diagrams
+\usepackage{tikz} % General purpose graphics
+\usepackage{tikz-3dplot}
+\usepackage[most]{tcolorbox} % For theorem boxing
+\usepackage{bm} % For better bold math font
+\usepackage{old-arrows} 
+\usepackage[usestackEOL]{stackengine}
+\usepackage{sectsty}
+\usepackage[hyperfootnotes=false]{hyperref} % For clickable table of contents
+\usepackage[linesnumbered, ruled, boxruled]{algorithm2e} % Fancy algorithm presentation
+\usepackage{calc} % For simpler calculation - used for spacing the index letter headings correctly
+\usepackage{makeidx} % Required to make an index
+\makeindex % Tells LaTeX to create the files required for indexing
+\usepackage{verbatim}
+\usepackage{titlesec} % Allows customization of titles
+\usepackage{enumitem} % Customize lists
+\setlist{nolistsep} %  Reduce spacing between bullet points and numbered lists
+\usepackage{booktabs} %  Required for nicer horizontal rules in tables
+\usepackage{eso-pic} %  Required for specifying an image background in the title page
+\usepackage{titletoc, tocloft, pgffor}
+\usepackage[titletoc]{appendix} % For appendix
+\usepackage{braids}
+\usepackage{adjustbox} % Very useful boxing environment
+\usepackage{setspace} % Variable line spacing
+\usepackage{soul}
+\linespread{1.1}    
+
+\graphicspath{{pictures/}}% All images lie in pictures folder
+\hypersetup{ % For clickable table of contents
+    colorlinks,
+    citecolor=black,
+    filecolor=black,
+    linkcolor=black,
+    urlcolor=black
+}
+\usetikzlibrary{arrows, 
+arrows.meta, 
+braids, 
+calc, 
+shapes.geometric,
+arrows,
+decorations.markings,
+decorations.pathreplacing, 
+intersections
+}
+
+\tikzcdset{arrow style = tikz, diagrams={>={Stealth[scale=1]}}} % Use stealth arrows in CDs
+\tikzset{>={Stealth[scale=1]}} % Use stealth arrows in TiKZ graphics
+
+% Better \to command
+\renewcommand{\to}{\mathbin{\tikz[baseline] \draw[-{Stealth[length=5pt,width=4pt]}] (0pt,.6ex) -- (3.5ex,.6ex);}}
+
+% Barrage of shorcuts
+\newcommand{\normal}{\unlhd}
+\newcommand{\im}{\mbox{Im}}
+\newcommand{\nat}{\mbox{Nat}}
+\newcommand{\ZZ}{\mathbb{Z}}
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\NN}{\mathbb{N}}
+\newcommand{\zz}{\mathbb{Z}}
+\newcommand{\rr}{\mathbb{R}}
+\newcommand{\nn}{\mathbb{N}}
+\newcommand{\qq}{\mathbb{Q}}
+\newcommand{\dom}{\mbox{Dom}}
+\newcommand{\cod}{\mbox{Cod}}
+\newcommand{\id}{\mbox{id}}
+\newcommand{\ob}{\mbox{Ob}}
+\newcommand{\CC}{\mathcal{C}}
+\newcommand{\DD}{\mathcal{D}}
+\newcommand{\BB}{\mathcal{B}}
+\newcommand{\cc}{\mathcal{C}}
+\newcommand{\dd}{\mathcal{D}}
+\newcommand{\bb}{\mathcal{B}}
+\newcommand{\pp}{\mathcal{P}} 
+\newcommand{\ee}{\mathcal{E}}
+\newcommand{\qqq}{\mathcal{Q}}
+\newcommand{\ppp}{\mathbb{Q}}
+\newcommand{\vv}{\mathcal{V}}
+\newcommand{\ff}{\mathcal{F}}
+\newcommand{\gal}{\text{Gal}}
+\newcommand{\aut}{\text{Aut}}
+\newcommand{\cone}{\text{Cone}}
+\newcommand{\fun}{\text{Fun}}
+\newcommand{\op}{^{\text{op}}}
+\newcommand{\ann}{\mbox{Ann}}
+\newcommand{\<}{\left<}
+\newcommand{\Lim}{\text{Lim }}
+\newcommand{\Colim}{\text{Colim }}
+\newcommand{\proj}{\text{proj}}
+\newcommand{\join}{\vee}
+\newcommand{\meet}{\wedge}
+\newcommand{\coker}{\text{Coker}}
+\newcommand{\isomarrow}{\mathrel{\setstackgap{S}{-0.5pt}\ensurestackMath{\Shortstack{\scriptstyle\sim\\ \longrightarrow}}}} 
+\newcommand{\aend}{\text{End}} %a is added because LaTeX does not allow commands to begin with "end."
+\newcommand{\spec}{\text{Spec}}
+\renewcommand{\path}{\text{Path}}
+
+\newcommand{\Limto}{\Llim\limits_{\Arrowto{0.8cm}}}
+\newcommand{\Limfrom}{\Llim\limits_{\Arrowfrom{0.8cm}}}
+\newcommand{\Colimto}{\Ccolim\limits_{\Arrowto{1cm}}}
+\newcommand{\Arrowto}[1]{\parbox{#1}{\tikz{\draw[->](0,0)--(#1,0);}}}
+\newcommand{\Arrowfrom}[1]{\parbox{#1}{\tikz{\draw[<-](0,0)--(#1,0);}}}
+
+\newcommand{\smallish}{1.45em}
+
+\renewcommand{\ss}{\mathcal{S}}
+\renewcommand{\labelenumi}{{\bf (\alph{enumi})}} 
+\renewcommand{\ker}{\mbox{Ker}}
+\renewcommand{\hom}{\mbox{Hom}}
+\renewcommand{\epsilon}{\varepsilon}
+\renewcommand{\AA}{\mathcal{A}}
+\renewcommand{\aa}{\mathcal{A}}
+\renewcommand{\phi}{\varphi}
+\renewcommand{\>}{\right>}
+\renewcommand{\char}{\text{char}}
+\renewcommand{\subset}{\subseteq}
+
+\DeclareMathOperator*{\Llim}{\text{Lim}}
+\DeclareMathOperator*{\Ccolim}{\text{Colim}}
+
+\def\checkmark{\tikz\fill[scale=0.4](0,.35) -- (.25,0) -- (1,.7) -- (.25,.15) -- cycle;}
+
+% Theorem customization and colorings
+\theoremstyle{definition}
+\newtheorem{theorem}{Theorem}[section]
+
+\declaretheoremstyle[
+  headfont=\color{RoyalPurple}\normalfont\bfseries,
+]{colors}
+
+\declaretheorem[
+  style=colors,
+  name=Definition,
+  sibling=theorem
+]{definition}
+
+\declaretheoremstyle[
+  headfont=\color{RoyalBlue}\normalfont\bfseries,
+]{colorss}
+
+\declaretheorem[
+  sibling=theorem,
+  style=colorss,
+  name=Proposition,
+]{proposition}
+
+\declaretheoremstyle[
+  headfont=\color{RoyalBlue}\normalfont\bfseries,
+]{colorsss}
+
+\declaretheorem[ 
+  style=colorsss,
+  name=Corollary,
+  sibling=theorem
+]{corollary}
+
+\declaretheoremstyle[
+  headfont=\color{RoyalBlue}\normalfont\bfseries,
+]{colorssss}
+
+\declaretheorem[
+  style=colorssss,
+  name=Lemma,
+  sibling=theorem
+]{lemma}
+
+% Avoid counting from zero     
+\setcounter{section}{1}
+
+% Section text styling
+\titlecontents{lsection}[0em] % Indendating
+{\footnotesize\sffamily} % Font settings
+{}
+{}
+{}
+% section text styling
+\titlecontents{lsection}[.5em] % Indentation
+{\small\normalfont\sffamily\thesection \hspace{0.1cm}} % Font settings
+{}
+{}
+{}
+
+%----------------------------------------------------------------------------------------
+%	Page Headers
+%----------------------------------------------------------------------------------------
+
+\pagestyle{fancy}
+\renewcommand{\chaptermark}[1]{\markboth{\sffamily\normalsize\bfseries\chaptername\ \thechapter.\ #1}{}} % Chapter text font settings
+\renewcommand{\sectionmark}[1]{\markright{\sffamily\normalsize\thesection\hspace{5pt}#1}{}} % Section text font settings
+\fancyhf{} \fancyhead[LE,RO]{\sffamily\normalsize\thepage} % Font setting for the page number in the header
+\fancyhead[LO]{\rightmark} % Print the nearest section name on the left side of odd pages
+\fancyhead[RE]{\leftmark} % Print the current chapter name on the right side of even pages
+\renewcommand{\headrulewidth}{0.5pt} % Width of the rule under the header
+\addtolength{\headheight}{2.5pt} % Increase the spacing around the header slightly
+\renewcommand{\footrulewidth}{0pt} % Removes the rule in the footer
+\fancypagestyle{plain}{\fancyhead{}\renewcommand{\headrulewidth}{0pt}} % Style for when a plain pagestyle is specified
+
+% Removes the header from odd empty pages at the end of chapters
+\makeatletter
+\renewcommand{\cleardoublepage}{
+\clearpage\ifodd\c@page\else
+\hbox{}
+\vspace*{\fill}
+\thispagestyle{empty}
+\newpage
+\fi}
+
+
+%----------------------------------------------------------------------------------------
+%	Chapter Headings
+%----------------------------------------------------------------------------------------
+
+% The canonical, moronic way to store values because TeX is moronic 
+\newcommand{\thechapterimage}{}
+\newcommand{\chapterimage}[1]{\renewcommand{\thechapterimage}{#1}}
+
+% Numbered chapters with mini tableofcontents
+\def\thechapter{\arabic{chapter}}
+\def\@makechapterhead#1{ 
+{\centering \normalfont\sffamily
+\ifnum \c@secnumdepth >\m@ne
+\if@mainmatter
+\startcontents
+\begin{tikzpicture}[remember picture,overlay]
+    \node at (current page.north west) {
+        \begin{tikzpicture}[remember picture,overlay]
+            \node[anchor=north west,inner sep=0pt] at (0,0) {
+                \includegraphics[width=\paperwidth]{\thechapterimage}
+            };
+            %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+            % Commenting the 3 lines below removes the small contents box in the chapter heading
+            % \fill[color=ocre!10!white,opacity=.6] (1cm,0) rectangle (8cm,-7cm);
+            % \node[anchor=north west] at (1.1cm,.35cm) {\parbox[t][8cm][t]{6.5cm}{\huge\bfseries\flushleft \printcontents{l}{1}{\setcounter{tocdepth}{2}}}}; %controls inside border
+            \draw[anchor=west] (1cm,-9cm) 
+                node [rounded corners=20pt,
+                    fill=ProcessBlue!10!white,
+                    text opacity=1,
+                    draw=NavyBlue,
+                    draw opacity=1,
+                    line width=1.5pt,
+                    fill opacity=.6,inner sep=12pt]
+                    {
+                        \huge\rmfamily\bfseries\textcolor{black}{\thechapter. \LARGE#1\strut\makebox[22cm]{}}
+                    }; %controls outside border
+            %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+        \end{tikzpicture}
+        };
+\end{tikzpicture}}
+\par\vspace*{230\p@}
+\fi
+\fi}
+
+\chaptertitlefont{\tiny}
+
+\newcommand\BackgroundPic{% For background image
+\put(0,0){%
+\parbox[b][\paperheight]{\paperwidth}{%
+\vfill
+\centering 
+\includegraphics[width=\paperwidth,height=\paperheight]{mountain.jpeg}%
+\vfill
+}}}
+
+\renewcommand{\cftpartfont}{\normalsize}% To adjust contents fontsize
+
+\input{latex_commands} % Various environment commands
+  
+\renewcommand{\thealgocf}{} %removes annoying numbering in algorithm header
+
+%% Section number design 
+\titleformat{\section}[hang]{\bfseries}{
+    \hspace{-1.6cm} % align square and number outside the margin
+    \begin{minipage}{0.1\textwidth}
+        \vspace{-0.15cm}
+        \begin{tikzpicture}
+            \filldraw[thick, NavyBlue, opacity=0.6] (-0.1,-0.1)--(1.1,-0.1)--(1.1,1.1)--(-0.1,1.1)--cycle;
+            \node at (0.65, 0.5) {\Large\bfseries{\color{white}\thesection}\enspace};
+        \end{tikzpicture}
+    \end{minipage}
+        }{1pt}{
+        \Large\bfseries\filright
+        }
+
+%% This creates a bigger \cdot symbol which is  smaller than \bullet. 
+%% It's used for group product symbols because I think \cdot is too small.
+\makeatletter
+\newcommand*\bcdot{\mathpalette\bcdot@{.6}}
+\newcommand*\bcdot@[2]{\mathbin{\vcenter{\hbox{\scalebox{#2}{$\m@th#1\bullet$}}}}}
+\DeclareMathOperator*{\bigcdot}{\bcdot}
+\makeatother
+
+\begin{document} 
+    \AddToShipoutPicture*{\BackgroundPic} 
+    \section*{\textcolor{White}{Category Theory}}  
+    \vspace{20cm}
+
+    {\large \textcolor{White}{Luke Trujillo}}
+    \newpage
+    \tableofcontents 
+
+    \setcounter{section}{1}
+    \include{chapters/chp0_prelude/prelude} 
+
+    \chapterimage{chapter1_pic/functors.pdf} % Chapter heading image
+    \include{chapters/chp1_introduction/introduction}
+    
+    \chapterimage{chapter2_pic/chapt2head.pdf} 
+    \include{chapters/chp2_constructions/constructions}
+   
+    \chapterimage{chapter3_pic/chapt3head.pdf}
+    \include{chapters/chp3_universals/universals}
+     
+    \chapterimage{chapter4_pic/chapt4head.pdf}
+    \include{chapters/chp4_adjoints/adjoints}
+
+    \chapterimage{chapter5_pic/chapt5head.pdf} 
+    \include{chapters/chp5_limits_colimits/limits_colimits}
+
+    \include{chapters/chp6_special_limits_kan_extensions/special_limits_kan_extensions}
+
+    \chapterimage{chapter7_pic/chapt7head.pdf} 
+    \include{chapters/chp7_monoidals/monoidals}    
+    
+    \include{chapters/chp8_abelian_categories/abelian_categories}
+
+    \include{chapters/chp9_operads/operads}
+
+    \include{chapters/chp10_sheaves/sheaves} 
+ 
+    \include{chapters/chp11_persistence_modules/persistence_modules} 
+      
+    % \include{chapters/appendix/monoidals_appendix}
+
+    % \include{chapters/appendix/solutions}
+
+\end{document}      
