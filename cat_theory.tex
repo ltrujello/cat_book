@@ -289,7 +289,7 @@ intersections
     \begin{minipage}{0.1\textwidth}
         \vspace{-0.15cm}
         \begin{tikzpicture}
-            \filldraw[thick, NavyBlue, opacity=0.6] (-0.1,-0.1)--(1.1,-0.1)--(1.1,1.1)--(-0.1,1.1)--cycle;
+            \filldraw[thick, navy, opacity=0.6] (-0.1,-0.1)--(1.1,-0.1)--(1.1,1.1)--(-0.1,1.1)--cycle;
             \node at (0.65, 0.5) {\Large\bfseries{\color{white}\thesection}\enspace};
         \end{tikzpicture}
     \end{minipage}
@@ -304,6 +304,13 @@ intersections
 \newcommand*\bcdot@[2]{\mathbin{\vcenter{\hbox{\scalebox{#2}{$\m@th#1\bullet$}}}}}
 \DeclareMathOperator*{\bigcdot}{\bcdot}
 \makeatother
+
+%----------- My colors -----------------
+\definecolor{processBlue}{HTML}{E0F8FF}
+\definecolor{mypurple}{HTML}{4D34A4}
+\definecolor{navy}{RGB}{20,150,220} % original
+
+
 
 \begin{document} 
     \AddToShipoutPicture*{\BackgroundPic} 
