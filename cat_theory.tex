@@ -58,7 +58,8 @@ shapes.geometric,
 arrows,
 decorations.markings,
 decorations.pathreplacing, 
-intersections
+intersections,
+hobby
 }
 
 \tikzcdset{arrow style = tikz, diagrams={>={Stealth[scale=1]}}} % Use stealth arrows in CDs
@@ -112,7 +113,7 @@ intersections
 \newcommand{\spec}{\text{Spec}}
 \renewcommand{\path}{\text{Path}}
 
-\newcommand{\Limto}{\Llim\limits_{\Arrowto{0.8cm}}}
+\DeclareMathOperator*{\Limto}{\Llim\limits_{\Arrowto{0.8cm}}}
 \newcommand{\Limfrom}{\Llim\limits_{\Arrowfrom{0.8cm}}}
 \newcommand{\Colimto}{\Ccolim\limits_{\Arrowto{1cm}}}
 \newcommand{\Arrowto}[1]{\parbox{#1}{\tikz{\draw[->](0,0)--(#1,0);}}}
@@ -310,7 +311,7 @@ intersections
 \definecolor{processBlue}{HTML}{E0F8FF}
 \definecolor{mypurple}{HTML}{4D34A4}
 \definecolor{navy}{RGB}{20,150,220} % original
-
+\definecolor{purp}{HTML}{CDCBFF}
 
 
 \begin{document} 
