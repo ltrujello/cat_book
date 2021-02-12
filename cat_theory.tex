@@ -112,6 +112,14 @@ hobby
 \newcommand{\aend}{\text{End}} %a is added because LaTeX does not allow commands to begin with "end."
 \newcommand{\spec}{\text{Spec}}
 \renewcommand{\path}{\text{Path}}
+\newcommand{\ww}{\mathcal{W}}
+\newcommand{\mm}{\mathcal{M}}
+\renewcommand{\ll}{\mathcal{L}}
+\renewcommand{\ee}{\mathcal{E}}
+\renewcommand{\ss}{\mathcal{S}}
+\renewcommand{\wp}{\mathcal{W}_{\mathrm{P}}}
+\renewcommand{\*}{ \mathbin{*} }
+
 
 \DeclareMathOperator*{\Limto}{\Llim\limits_{\Arrowto{0.8cm}}}
 \newcommand{\Limfrom}{\Llim\limits_{\Arrowfrom{0.8cm}}}
@@ -138,12 +146,36 @@ hobby
 
 \def\checkmark{\tikz\fill[scale=0.4](0,.35) -- (.25,0) -- (1,.7) -- (.25,.15) -- cycle;}
 
+
+%%%%%%%%%%%%% This is for the section on Mac Lane's Coherence Theorem
+% to center tabular elements 
+% \newcolumntype{P}[1]{>{\centering\arraybackslash}p{#1}}
+
+% for custom theorem numbering 
+\newtheorem{innercustomthm}{Theorem}
+\newenvironment{customthm}[1]
+{\renewcommand\theinnercustomthm{#1}\innercustomthm}
+{\endinnercustomthm}
+
+\newtheorem{innercustomprop}{Proposition}
+\newenvironment{customprop}[1]
+{\renewcommand\theinnercustomprop{#1}\innercustomprop}
+{\endinnercustomprop}
+
+\newtheorem{innercustomlemma}{Lemma}
+\newenvironment{customlemma}[1]
+{\renewcommand\theinnercustomlemma{#1}\innercustomlemma}
+{\endinnercustomlemma}
+
+%%%%%%%%%%%%%
+
 % Theorem customization and colorings
 \theoremstyle{definition}
 \newtheorem{theorem}{Theorem}[section]
 
 \declaretheoremstyle[
-  headfont=\color{RoyalPurple}\normalfont\bfseries,
+    spacebelow=6pt,%
+    headfont=\color{RoyalPurple}\normalfont\bfseries,
 ]{colors}
 
 \declaretheorem[
@@ -153,7 +185,8 @@ hobby
 ]{definition}
 
 \declaretheoremstyle[
-  headfont=\color{RoyalBlue}\normalfont\bfseries,
+    spacebelow=6pt,%
+    headfont=\color{RoyalBlue}\normalfont\bfseries,
 ]{colorss}
 
 \declaretheorem[
@@ -163,7 +196,8 @@ hobby
 ]{proposition}
 
 \declaretheoremstyle[
-  headfont=\color{RoyalBlue}\normalfont\bfseries,
+    spacebelow=6pt,%
+    headfont=\color{RoyalBlue}\normalfont\bfseries,
 ]{colorsss}
 
 \declaretheorem[ 
@@ -173,7 +207,8 @@ hobby
 ]{corollary}
 
 \declaretheoremstyle[
-  headfont=\color{RoyalBlue}\normalfont\bfseries,
+    spacebelow=6pt,%
+    headfont=\color{RoyalBlue}\normalfont\bfseries,
 ]{colorssss}
 
 \declaretheorem[
@@ -186,7 +221,7 @@ hobby
 \setcounter{section}{1}
 
 % Section text styling
-\titlecontents{lsection}[0em] % Indendating
+\titlecontents{lsection}[0em] % Indenting
 {\footnotesize\sffamily} % Font settings
 {}
 {}
@@ -304,7 +339,7 @@ hobby
 \makeatletter
 \newcommand*\bcdot{\mathpalette\bcdot@{.6}}
 \newcommand*\bcdot@[2]{\mathbin{\vcenter{\hbox{\scalebox{#2}{$\m@th#1\bullet$}}}}}
-\DeclareMathOperator*{\bigcdot}{\bcdot}
+\DeclareMathOperator{\bigcdot}{\mathbin{\bcdot}}
 \makeatother
 
 %----------- My colors ----------------------------------------
@@ -335,24 +370,24 @@ hobby
     \chapterimage{chapter3_pic/chapt3head.pdf}
     \include{chapters/chp3_universals/universals}
      
-    \chapterimage{chapter4_pic/chapt4head.pdf}
-    \include{chapters/chp4_adjoints/adjoints}
+    % \chapterimage{chapter4_pic/chapt4head.pdf}
+    % \include{chapters/chp4_adjoints/adjoints}
 
-    \chapterimage{chapter5_pic/chapt5head.pdf} 
-    \include{chapters/chp5_limits_colimits/limits_colimits}
+    % \chapterimage{chapter5_pic/chapt5head.pdf} 
+    % \include{chapters/chp5_limits_colimits/limits_colimits}
 
-    \include{chapters/chp6_special_limits_kan_extensions/special_limits_kan_extensions}
+    % \include{chapters/chp6_special_limits_kan_extensions/special_limits_kan_extensions}
 
-    \chapterimage{chapter7_pic/chapt7head.pdf} 
-    \include{chapters/chp7_monoidals/monoidals}    
+    % \chapterimage{chapter7_pic/chapt7head.pdf} 
+    % \include{chapters/chp7_monoidals/monoidals}    
     
-    \include{chapters/chp8_abelian_categories/abelian_categories}
+    % \include{chapters/chp8_abelian_categories/abelian_categories}
 
-    \include{chapters/chp9_operads/operads}
+    % \include{chapters/chp9_operads/operads}
 
-    \include{chapters/chp10_sheaves/sheaves} 
+    % \include{chapters/chp10_sheaves/sheaves} 
  
-    \include{chapters/chp11_persistence_modules/persistence_modules} 
+    % \include{chapters/chp11_persistence_modules/persistence_modules} 
       
     % \include{chapters/appendix/monoidals_appendix}
 
