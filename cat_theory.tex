@@ -40,7 +40,7 @@
 \usepackage{adjustbox} % Very useful boxing environment
 \usepackage{setspace} % Variable line spacing
 \usepackage{soul}
-\linespread{1.1}    
+\linespread{1.1}
 
 \graphicspath{{pictures/}}% All images lie in pictures folder
 \hypersetup{ % For clickable table of contents
@@ -62,6 +62,7 @@ intersections,
 hobby
 }
 
+% Tikzcd specifications
 \tikzcdset{arrow style = tikz, diagrams={>={Stealth[scale=1]}}} % Use stealth arrows in CDs
 \tikzset{>={Stealth[scale=1]}} % Use stealth arrows in TiKZ graphics
 
@@ -147,6 +148,22 @@ hobby
 \DeclareMathOperator*{\Ccolim}{\text{Colim}}
 
 \def\checkmark{\tikz\fill[scale=0.4](0,.35) -- (.25,0) -- (1,.7) -- (.25,.15) -- cycle;}
+
+%%% This is to easily reference to definitions. 
+\newcommand{\universalDToF}[1]{\hyperref[definition:universal_morphism_from_D_to_F]{\textcolor{blue}{#1}}}
+\newcommand{\universalFToD}[1]{\hyperref[definition:universal_morphism_from_F_to_D]{\textcolor{blue}{#1}}}
+
+
+%% This is to type out expressions of the form F --> <-- G
+\newcommand{\adjunction}[4]{
+    \begin{tikzcd}[ampersand replacement = \&]
+        #1
+        \arrow[r, shift right = -0.5ex, "#2"]
+        \&
+        #3
+        \arrow[l, shift right = -0.5ex, "#4"]
+    \end{tikzcd}
+}
 
 
 %%%%%%%%%%%%% This is for the section on Mac Lane's Coherence Theorem
@@ -358,7 +375,8 @@ hobby
 
     {\large \textcolor{White}{Luke Trujillo}}
     \newpage
-    \tableofcontents 
+    \tableofcontents
+     
 
     \setcounter{section}{1}
     \include{chapters/chp0_prelude/prelude} 
