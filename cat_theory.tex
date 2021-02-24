@@ -26,12 +26,9 @@
 \usepackage[linesnumbered, ruled, boxruled]{algorithm2e} % Fancy algorithm presentation
 \usepackage{calc} % For simpler calculation - used for spacing the index letter headings correctly
 \usepackage{makeidx} % Required to make an index
-\makeindex % Tells LaTeX to create the files required for indexing
 \usepackage{verbatim}
 \usepackage{titlesec} % Allows customization of titles
 \usepackage{enumitem} % Customize lists
-\setitemize{noitemsep,topsep=0.5em, parsep=0.5em ,partopsep=0pt}
-\setlist{nolistsep} %  Reduce spacing between bullet points and numbered lists
 \usepackage{booktabs} %  Required for nicer horizontal rules in tables
 \usepackage{eso-pic} %  Required for specifying an image background in the title page
 \usepackage{titletoc, tocloft, pgffor}
@@ -40,123 +37,155 @@
 \usepackage{adjustbox} % Very useful boxing environment
 \usepackage{setspace} % Variable line spacing
 \usepackage{soul}
-\linespread{1.1}
 
-\graphicspath{{pictures/}}% All images lie in pictures folder
-\hypersetup{ % For clickable table of contents
+%----------------------------------------------------------------------------------------
+%	Global Document Settings
+%----------------------------------------------------------------------------------------
+\setcounter{section}{1} % Avoid counting from zero
+\linespread{1.1} % Set line spacing
+\graphicspath{{pictures/}}% Set graphics directory
+\hypersetup{ % Set hyperref settings
     colorlinks,
     citecolor=black,
     filecolor=black,
     linkcolor=black,
     urlcolor=black
 }
-\usetikzlibrary{arrows, 
-arrows.meta, 
-braids, 
-calc, 
-shapes.geometric,
-arrows,
-decorations.markings,
-decorations.pathreplacing, 
-intersections,
-hobby
+\setitemize{noitemsep,topsep=0.5em, parsep=0.5em ,partopsep=0pt}
+\setlist{nolistsep} %  Reduce spacing between bullet points and numbered lists
+
+%----------------------------------------------------------------------------------------
+%	TikZ Settings
+%----------------------------------------------------------------------------------------
+\usetikzlibrary{
+    arrows, 
+    arrows.meta, 
+    braids, 
+    calc, 
+    shapes.geometric,
+    decorations.markings,
+    decorations.pathreplacing, 
+    intersections,
+    hobby
 }
+% Set stealth arrows in TikzCD
+\tikzcdset{
+    arrow style = tikz, diagrams={>={Stealth[scale=1]}}
+} 
+% Set stealth arrows in TikZ
+\tikzset{
+    >={Stealth[scale=1]}
+} 
 
-% Tikzcd specifications
-\tikzcdset{arrow style = tikz, diagrams={>={Stealth[scale=1]}}} % Use stealth arrows in CDs
-\tikzset{>={Stealth[scale=1]}} % Use stealth arrows in TiKZ graphics
+%----------------------------------------------------------------------------------------
+%	Math Commands
+%----------------------------------------------------------------------------------------
+% First we need to overwrite some existing commands. 
+\let\*\relax 
+\let\path\relax 
+\let\ker\relax 
+\let\im\relax
+\let\hom\relax
+\let\Set\relax
+\let\top\relax
+\let\ll\relax
+%% Various Math Operators
+\DeclareMathOperator{\im}{\rm{Im}}
+\DeclareMathOperator{\id}{\mathrm{id}}
+\DeclareMathOperator{\ob}{\mathrm{Ob}}
+\DeclareMathOperator{\*}{ \mathbin{*} }
+\DeclareMathOperator{\path}{\mathrm{Path}} 
+\DeclareMathOperator{\nat}{\mathrm{Nat}}
+\DeclareMathOperator{\dom}{\mathrm{Dom}}
+\DeclareMathOperator{\cod}{\mathrm{Cod}}
+\DeclareMathOperator{\gal}{\mathrm{Gal}}
+\DeclareMathOperator{\aut}{\mathrm{Aut}}
+\DeclareMathOperator{\cone}{\mathrm{Cone}}
+\DeclareMathOperator{\fun}{\mathrm{Fun}}
+\DeclareMathOperator{\proj}{\mathrm{proj}}
+\DeclareMathOperator{\coker}{\mathrm{Coker}}
+\DeclareMathOperator{\aend}{\mathrm{End}} %a is added because LaTeX does not allow commands to begin with "end."
+\DeclareMathOperator{\spec}{\mathrm{Spec}}
+\DeclareMathOperator{\ker}{\mathrm{Ker}}
+\DeclareMathOperator*{\Lim}{\mathrm{Lim }}
+\DeclareMathOperator*{\Colim}{\mathrm{Colim }}
+\DeclareMathOperator{\hom}{\mathrm{Hom}}
+\DeclareMathOperator{\Char}{\mathrm{char}} % We'd prefer \char, but... NEVER overwrite \char! TeX will die.
+\DeclareMathOperator{\ll}{\mathcal{L}}
 
-% Better \to command
-\renewcommand{\to}{\mathbin{\tikz[baseline] \draw[-{Stealth[length=5pt,width=4pt]}] (0pt,.6ex) -- (3.5ex,.6ex);}}
-
-% Barrage of shorcuts
-\newcommand{\normal}{\unlhd}
-\newcommand{\im}{\mbox{Im}}
-\newcommand{\nat}{\mbox{Nat}}
-\newcommand{\ZZ}{\mathbb{Z}}
-\newcommand{\RR}{\mathbb{R}}
-\newcommand{\NN}{\mathbb{N}}
+%% General Math Shortcuts
 \newcommand{\zz}{\mathbb{Z}}
 \newcommand{\rr}{\mathbb{R}}
 \newcommand{\nn}{\mathbb{N}}
 \newcommand{\qq}{\mathbb{Q}}
-\newcommand{\dom}{\mbox{Dom}}
-\newcommand{\cod}{\mbox{Cod}}
-\newcommand{\id}{\mbox{id}}
-\newcommand{\ob}{\mbox{Ob}}
-\newcommand{\CC}{\mathcal{C}}
-\newcommand{\DD}{\mathcal{D}}
-\newcommand{\BB}{\mathcal{B}}
-\newcommand{\cc}{\mathcal{C}}
-\newcommand{\dd}{\mathcal{D}}
-\newcommand{\bb}{\mathcal{B}}
-\newcommand{\pp}{\mathcal{P}} 
-\newcommand{\ee}{\mathcal{E}}
-\newcommand{\qqq}{\mathcal{Q}}
-\newcommand{\ppp}{\mathbb{Q}}
-\newcommand{\vv}{\mathcal{V}}
-\newcommand{\ff}{\mathcal{F}}
-\newcommand{\gal}{\text{Gal}}
-\newcommand{\aut}{\text{Aut}}
-\newcommand{\cone}{\text{Cone}}
-\newcommand{\fun}{\text{Fun}}
-\newcommand{\op}{^{\text{op}}}
-\newcommand{\ann}{\mbox{Ann}}
-\newcommand{\<}{\left<}
-\newcommand{\Lim}{\text{Lim }}
-\newcommand{\Colim}{\text{Colim }}
-\newcommand{\proj}{\text{proj}}
+\newcommand{\normal}{\unlhd}
 \newcommand{\join}{\vee}
 \newcommand{\meet}{\wedge}
-\newcommand{\coker}{\text{Coker}}
-\newcommand{\isomarrow}{\mathrel{\setstackgap{S}{-0.5pt}\ensurestackMath{\Shortstack{\scriptstyle\sim\\ \longrightarrow}}}} 
-\newcommand{\aend}{\text{End}} %a is added because LaTeX does not allow commands to begin with "end."
-\newcommand{\spec}{\text{Spec}}
-\renewcommand{\path}{\text{Path}}
-\newcommand{\ww}{\mathcal{W}}
+\renewcommand{\epsilon}{\varepsilon}
+\renewcommand{\phi}{\varphi}
+\renewcommand{\subset}{\subseteq}
+\newcommand{\op}{^{\mathrm{op}}}
+
+%% Category Shortcuts
+\newcommand{\bb}{\mathcal{B}}
+\newcommand{\cc}{\mathcal{C}}
+\newcommand{\dd}{\mathcal{D}}
+\newcommand{\ee}{\mathcal{E}}
+\newcommand{\ff}{\mathcal{F}}
 \newcommand{\mm}{\mathcal{M}}
-\renewcommand{\ll}{\mathcal{L}}
+\newcommand{\pp}{\mathcal{P}} 
+\newcommand{\qqq}{\mathcal{Q}}
+\newcommand{\vv}{\mathcal{V}}
+\newcommand{\ww}{\mathcal{W}}
+\renewcommand{\aa}{\mathcal{A}}
 \renewcommand{\ee}{\mathcal{E}}
 \renewcommand{\ss}{\mathcal{S}}
 \renewcommand{\wp}{\mathcal{W}_{\mathrm{P}}}
-\renewcommand{\*}{ \mathbin{*} }
 
+% Category of Sets
+\DeclareMathOperator{\Set}{\mathbf{Set}}
+\DeclareMathOperator{\finset}{\mathbf{FinSet}}
+\DeclareMathOperator{\finord}{\mathbf{FinOrd}}
+% "Algebraic" categories
+\DeclareMathOperator{\grp}{\mathbf{Grp}}
+\DeclareMathOperator{\ab}{\mathbf{Ab}}
+\DeclareMathOperator{\ring}{\mathbf{Ring}}
+\DeclareMathOperator{\cring}{\mathbf{CRing}}
+\DeclareMathOperator{\mon}{\mathbf{Mon}}
+\DeclareMathOperator{\rmod}{\mathbf{-Mod}}
+\DeclareMathOperator{\alg}{\mathbf{Alg}}
+\DeclareMathOperator{\fld}{\mathbf{Fld}}
+% Other Categories
+\DeclareMathOperator{\open}{\mathbf{Open}}
+\DeclareMathOperator{\top}{\mathbf{Top}}
+\DeclareMathOperator{\Toph}{\mathbf{Toph}}
+\DeclareMathOperator{\vect}{\mathbf{Vect}}
+\DeclareMathOperator{\cat}{\mathbf{Cat}}
 
-\DeclareMathOperator*{\Limto}{\Llim\limits_{\Arrowto{0.8cm}}}
+% A nice \to command
+\renewcommand{\to}{\mathbin{\tikz[baseline] \draw[-{Stealth[length=5pt,width=4pt]}] (0pt,.6ex) -- (3.5ex,.6ex);}} 
 
-\newcommand{\Limfrom}{\Llim\limits_{\Arrowfrom{0.8cm}}}
-\newcommand{\Colimto}{\Ccolim\limits_{\Arrowto{1cm}}}
-\newcommand{\Colimfrom}{\Ccolim\limits_{\Arrowfrom{1cm}}}
+% A nice isomorphism arrow
+\newcommand{\isomarrow}{\mathrel{\setstackgap{S}{-0.5pt}\ensurestackMath{\Shortstack{\scriptstyle\sim\\ \longrightarrow}}}} 
+
+% A nice \cdot symbol, which is bigger than \cdot but smaller than \bullet. 
+\makeatletter % So that we access commands with "@" in them
+\newcommand*\bcdot{\mathpalette\bcdot@{.6}}
+\newcommand*\bcdot@[2]{\mathbin{\vcenter{\hbox{\scalebox{#2}{$\m@th#1\bullet$}}}}}
+\DeclareMathOperator{\bigcdot}{\mathbin{\bcdot}}
+\makeatother
+
+% These are \Lim and \Colim with arrows underneath
 \newcommand{\Arrowto}[1]{\parbox{#1}{\tikz{\draw[->](0,0)--(#1,0);}}}
 \newcommand{\Arrowfrom}[1]{\parbox{#1}{\tikz{\draw[<-](0,0)--(#1,0);}}}
+\DeclareMathOperator*{\Limto}{\Lim_{\Arrowto{0.8cm}}}
+\DeclareMathOperator*{\Limfrom}{\Lim_{\Arrowfrom{0.8cm}}}
+\DeclareMathOperator*{\Colimto}{\Colim_{\Arrowto{1cm}}}
+\DeclareMathOperator*{\Colimfrom}{\Colim_{\Arrowfrom{1cm}}}
 
-\newcommand{\smallish}{1.45em}
-
-\renewcommand{\ss}{\mathcal{S}}
-\renewcommand{\labelenumi}{{\bf (\alph{enumi})}} 
-\renewcommand{\ker}{\mbox{Ker}}
-\renewcommand{\hom}{\mbox{Hom}}
-\renewcommand{\epsilon}{\varepsilon}
-\renewcommand{\AA}{\mathcal{A}}
-\renewcommand{\aa}{\mathcal{A}}
-\renewcommand{\phi}{\varphi}
-\renewcommand{\>}{\right>}
-\renewcommand{\char}{\text{char}}
-\renewcommand{\subset}{\subseteq}
-
-\DeclareMathOperator*{\Llim}{\text{Lim}}
-\DeclareMathOperator*{\Ccolim}{\text{Colim}}
-
-\def\checkmark{\tikz\fill[scale=0.4](0,.35) -- (.25,0) -- (1,.7) -- (.25,.15) -- cycle;}
-
-%%% This is to easily reference to definitions. 
-\newcommand{\universalDToF}[1]{\hyperref[definition:universal_morphism_from_D_to_F]{\textcolor{blue}{#1}}}
-\newcommand{\universalFToD}[1]{\hyperref[definition:universal_morphism_from_F_to_D]{\textcolor{blue}{#1}}}
-
-
-%% This is to type out expressions of the form F --> <-- G
+% To type out adjunctions
 \newcommand{\adjunction}[4]{
-    \begin{tikzcd}[ampersand replacement = \&]
+    \begin{tikzcd}[ampersand replacement = \&] %\newcommand freaks out with & symbols
         #1
         \arrow[r, shift right = -0.5ex, "#2"]
         \&
@@ -165,101 +194,95 @@ hobby
     \end{tikzcd}
 }
 
+%----------------------------------------------------------------------------------------
+%	Non-Math Commands
+%----------------------------------------------------------------------------------------
 
-%%%%%%%%%%%%% This is for the section on Mac Lane's Coherence Theorem
-% to center tabular elements 
-% \newcolumntype{P}[1]{>{\centering\arraybackslash}p{#1}}
+% Some colors
+\definecolor{processBlue}{HTML}{E0F8FF}
+\definecolor{mypurple}{HTML}{4D34A4}
+\definecolor{navy}{RGB}{20,150,220}
+\definecolor{purp}{HTML}{CDCBFF}
 
-% for custom theorem numbering 
+% For enumerate environment
+\renewcommand{\labelenumi}{{\bf (\alph{enumi})}} 
+
+% To easily reference universal morphism definition
+\newcommand{\universalDToF}[1]{\hyperref[definition:universal_morphism_from_D_to_F]{\textcolor{blue}{#1}}}
+\newcommand{\universalFToD}[1]{\hyperref[definition:universal_morphism_from_F_to_D]{\textcolor{blue}{#1}}}
+
+\renewcommand{\cftpartfont}{\normalsize}% To adjust contents fontsize
+\renewcommand{\thealgocf}{} %removes annoying numbering in algorithm header
+
+%----------------------------------------------------------------------------------------
+%	Theorem Environments
+%----------------------------------------------------------------------------------------
+
+\input{latex_commands} % Proof, Example, Remark, Important Statement Environments
+
+% Custom Theorem to override numbering
 \newtheorem{innercustomthm}{Theorem}
 \newenvironment{customthm}[1]
 {\renewcommand\theinnercustomthm{#1}\innercustomthm}
 {\endinnercustomthm}
 
+% Custom Proposition to override numbering
 \newtheorem{innercustomprop}{Proposition}
 \newenvironment{customprop}[1]
 {\renewcommand\theinnercustomprop{#1}\innercustomprop}
 {\endinnercustomprop}
 
+% Custom Lemma to override numbering
 \newtheorem{innercustomlemma}{Lemma}
 \newenvironment{customlemma}[1]
 {\renewcommand\theinnercustomlemma{#1}\innercustomlemma}
 {\endinnercustomlemma}
 
-%%%%%%%%%%%%%
-
 % Theorem customization and colorings
 \theoremstyle{definition}
+\declaretheoremstyle[spacebelow=6pt, headfont=\color{RoyalPurple}\normalfont\bfseries]{Defn}
+\declaretheoremstyle[spacebelow=6pt, headfont=\color{RoyalBlue}\normalfont\bfseries]{Prop}
+
+% Theorem 
 \newtheorem{theorem}{Theorem}[section]
 
-\declaretheoremstyle[
-    spacebelow=6pt,%
-    headfont=\color{RoyalPurple}\normalfont\bfseries,
-]{colors}
-
-\declaretheorem[
-  style=colors,
-  name=Definition,
-  sibling=theorem
-]{definition}
-
-\declaretheoremstyle[
-    spacebelow=6pt,%
-    headfont=\color{RoyalBlue}\normalfont\bfseries,
-]{colorss}
-
-\declaretheorem[
-  sibling=theorem,
-  style=colorss,
-  name=Proposition,
-]{proposition}
-
-\declaretheoremstyle[
-    spacebelow=6pt,%
-    headfont=\color{RoyalBlue}\normalfont\bfseries,
-]{colorsss}
-
-\declaretheorem[ 
-  style=colorsss,
-  name=Corollary,
-  sibling=theorem
-]{corollary}
-
-\declaretheoremstyle[
-    spacebelow=6pt,%
-    headfont=\color{RoyalBlue}\normalfont\bfseries,
-]{colorssss}
-
-\declaretheorem[
-  style=colorssss,
-  name=Lemma,
-  sibling=theorem
-]{lemma}
-
-% Avoid counting from zero     
-\setcounter{section}{1}
-
-% Section text styling
-\titlecontents{lsection}[0em] % Indenting
-{\footnotesize\sffamily} % Font settings
-{}
-{}
-{}
-% section text styling
-\titlecontents{lsection}[.5em] % Indentation
-{\small\normalfont\sffamily\thesection \hspace{0.1cm}} % Font settings
-{}
-{}
-{}
+% Definition, Proposition, Corollary, Lemma
+\declaretheorem[name=Definition, style=Defn, sibling=theorem]{definition}
+\declaretheorem[name=Proposition, style=Prop, sibling=theorem]{proposition}
+\declaretheorem[name=Corollary, style=Prop, sibling=theorem]{corollary}
+\declaretheorem[name=Lemma, style=Prop,sibling=theorem]{lemma}
 
 %----------------------------------------------------------------------------------------
-%	Page Headers
+%	Front Cover, Chapter, and Page Designs
 %----------------------------------------------------------------------------------------
 
+% Background Image
+\newcommand{\BackgroundPic}{
+    \put(0,0){%
+    \parbox[b][\paperheight]{\paperwidth}{%
+    \vfill
+    \centering 
+    \includegraphics[width=\paperwidth,height=\paperheight]{mountain.jpeg}%
+    \vfill
+}}}
+
+% Front Cover
+\newcommand{\frontCover}{
+    \AddToShipoutPicture*{\BackgroundPic} 
+    \section*{\textcolor{White}{Category Theory}}  
+    \vspace{20cm}
+
+    {\large \textcolor{White}{Luke Trujillo}}
+    \newpage
+    \tableofcontents
+}
+
+% Header design
 \pagestyle{fancy}
 \renewcommand{\chaptermark}[1]{\markboth{\sffamily\normalsize\bfseries\chaptername\ \thechapter.\ #1}{}} % Chapter text font settings
 \renewcommand{\sectionmark}[1]{\markright{\sffamily\normalsize\thesection\hspace{5pt}#1}{}} % Section text font settings
-\fancyhf{} \fancyhead[LE,RO]{\sffamily\normalsize\thepage} % Font setting for the page number in the header
+\fancyhf{} 
+\fancyhead[LE,RO]{\sffamily\normalsize\thepage} % Font setting for the page number in the header
 \fancyhead[LO]{\rightmark} % Print the nearest section name on the left side of odd pages
 \fancyhead[RE]{\leftmark} % Print the current chapter name on the right side of even pages
 \renewcommand{\headrulewidth}{0.5pt} % Width of the rule under the header
@@ -267,26 +290,12 @@ hobby
 \renewcommand{\footrulewidth}{0pt} % Removes the rule in the footer
 \fancypagestyle{plain}{\fancyhead{}\renewcommand{\headrulewidth}{0pt}} % Style for when a plain pagestyle is specified
 
-% Removes the header from odd empty pages at the end of chapters
-\makeatletter
-\renewcommand{\cleardoublepage}{
-\clearpage\ifodd\c@page\else
-\hbox{}
-\vspace*{\fill}
-\thispagestyle{empty}
-\newpage
-\fi}
-
-
-%----------------------------------------------------------------------------------------
-%	Chapter Headings
-%----------------------------------------------------------------------------------------
-
+% Chapter design
 % The canonical, moronic way to store values because TeX is moronic 
 \newcommand{\thechapterimage}{}
 \newcommand{\chapterimage}[1]{\renewcommand{\thechapterimage}{#1}}
-
 % Numbered chapters with mini tableofcontents
+\makeatletter % Need to access commands with @
 \def\thechapter{\arabic{chapter}}
 \def\@makechapterhead#1{ 
 {\centering \normalfont\sffamily
@@ -299,10 +308,6 @@ hobby
             \node[anchor=north west,inner sep=0pt] at (0,0) {
                 \includegraphics[width=\paperwidth]{\thechapterimage}
             };
-            %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-            % Commenting the 3 lines below removes the small contents box in the chapter heading
-            % \fill[color=ocre!10!white,opacity=.6] (1cm,0) rectangle (8cm,-7cm);
-            % \node[anchor=north west] at (1.1cm,.35cm) {\parbox[t][8cm][t]{6.5cm}{\huge\bfseries\flushleft \printcontents{l}{1}{\setcounter{tocdepth}{2}}}}; %controls inside border
             \draw[anchor=west] (1cm,-9cm) 
                 node [rounded corners=20pt,
                     fill=ProcessBlue!10!white,
@@ -313,72 +318,35 @@ hobby
                     fill opacity=.6,inner sep=12pt]
                     {
                         \huge\rmfamily\bfseries\textcolor{black}{\thechapter. \LARGE#1\strut\makebox[22cm]{}}
-                    }; %controls outside border
-            %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+                    }; % Controls outside border
         \end{tikzpicture}
         };
 \end{tikzpicture}}
 \par\vspace*{230\p@}
 \fi
 \fi}
-
-\chaptertitlefont{\tiny}
-
-\newcommand\BackgroundPic{% For background image
-\put(0,0){%
-\parbox[b][\paperheight]{\paperwidth}{%
-\vfill
-\centering 
-\includegraphics[width=\paperwidth,height=\paperheight]{mountain.jpeg}%
-\vfill
-}}}
-
-\renewcommand{\cftpartfont}{\normalsize}% To adjust contents fontsize
-
-\input{latex_commands} % Various environment commands
-  
-\renewcommand{\thealgocf}{} %removes annoying numbering in algorithm header
-
-%% Section number design 
-\titleformat{\section}[hang]{\bfseries}{
-    \hspace{-1.6cm} % align square and number outside the margin
-    \begin{minipage}{0.1\textwidth}
-        \vspace{-0.15cm}
-        \begin{tikzpicture}
-            \filldraw[thick, navy, opacity=0.6] (-0.1,-0.1)--(1.1,-0.1)--(1.1,1.1)--(-0.1,1.1)--cycle;
-            \node at (0.65, 0.5) {\Large\bfseries{\color{white}\thesection}\enspace};
-        \end{tikzpicture}
-    \end{minipage}
-        }{1pt}{
-        \Large\bfseries\filright
-        }
-
-%% This creates a bigger \cdot symbol which is  smaller than \bullet. 
-%% It's used for group product symbols because I think \cdot is too small.
-\makeatletter
-\newcommand*\bcdot{\mathpalette\bcdot@{.6}}
-\newcommand*\bcdot@[2]{\mathbin{\vcenter{\hbox{\scalebox{#2}{$\m@th#1\bullet$}}}}}
-\DeclareMathOperator{\bigcdot}{\mathbin{\bcdot}}
 \makeatother
 
-%----------- My colors ----------------------------------------
-\definecolor{processBlue}{HTML}{E0F8FF}
-\definecolor{mypurple}{HTML}{4D34A4}
-\definecolor{navy}{RGB}{20,150,220} % original
-\definecolor{purp}{HTML}{CDCBFF}
+% Section number design 
+\titleformat{\section}[hang]{\bfseries}{
+\hspace{-1.6cm} % align square and number outside the margin
+\begin{minipage}{0.1\textwidth}
+    \vspace{-0.15cm}
+    \begin{tikzpicture}
+        \filldraw[thick, navy, opacity=0.6] (-0.1,-0.1)--(1.1,-0.1)--(1.1,1.1)--(-0.1,1.1)--cycle;
+        \node at (0.65, 0.5) {\Large\bfseries{\color{white}\thesection}\enspace};
+    \end{tikzpicture}
+\end{minipage}
+}{1pt}{\Large\bfseries\filright}
 
+%----------------------------------------------------------------------------------------
+%	\begin{document}
+%----------------------------------------------------------------------------------------
 
 \begin{document} 
-    \AddToShipoutPicture*{\BackgroundPic} 
-    \section*{\textcolor{White}{Category Theory}}  
-    \vspace{20cm}
 
-    {\large \textcolor{White}{Luke Trujillo}}
-    \newpage
-    \tableofcontents
-     
+    \frontCover
 
-    \setcounter{section}{1}
     \include{chapters/chp0_prelude/prelude} 
 
     \chapterimage{chapter1_pic/functors.pdf} % Chapter heading image
