@@ -16,6 +16,7 @@
 *.ptc
 .*.lb
 .*.fdb_latexmk
+.*bak
 
 # Mac
 *.DS_Store

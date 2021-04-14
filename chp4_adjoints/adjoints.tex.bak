@@ -1,0 +1,2398 @@
+\chapter{Adjoints.}
+
+\section{Adjuncitons.}
+
+Let $J$ be an indexing category (simply, any category which we will use to 
+index things), $\cc$ a category, and suppose that 
+each functor $F: J \to \cc$ has a limit $\Lim F$ in $\cc$. Then what 
+we can do with this is 
+define the functor $\Lim: \cc^J \to \cc$ where the functor sends 
+functor $F: J \to \cc$ to their limits:
+\[
+    F: J \to C \mapsto  \Lim F.
+\]
+Why is this functorial? Well, suppose $\theta: F \to G$ is a morphism (natural 
+transformation) between two functors $F, G: J \to \cc$ in $\cc^J$. 
+Recall that $\Delta: \cc \to \cc^J$ is the diagonal functor.
+Then, as limits, 
+they have natural transformations 
+\[
+    \epsilon_F: \Delta(\Lim F) \to F \qquad \epsilon_G: \Delta(\Lim G) \to G
+\] 
+which are equipped with the universal property expressed in the 
+diagrams below.
+\begin{center}
+    \begin{tikzcd}[column sep = 1.4cm, row sep = 1.4cm]
+        \Delta(\Lim F) \arrow[r, "\epsilon_F"] 
+        &
+        F\\
+        \arrow[u, dashed, "u"]
+        \Delta(C)\arrow[ur, swap, "f"]
+    \end{tikzcd}
+    \hspace{1cm}
+    \begin{tikzcd}[column sep = 1.4cm, row sep = 1.4cm]
+        \Delta(\Lim G) \arrow[r, "\epsilon_G"] 
+        &
+        G\\
+        \arrow[u, dashed, "v"]
+        \Delta(D)\arrow[ur, swap, "g"]
+    \end{tikzcd}
+\end{center}
+where $C, D$ are objects of $\cc$ and $f, g$ are morphisms in $\cc^J$. 
+Then observe that we can connect these diagrams: 
+\begin{center}
+    \begin{tikzcd}[column sep = 1.4cm, row sep = 1.4cm]
+        \Delta(\Lim G) 
+        \arrow[r, "v"]
+        &
+        G\\
+        \Delta(\Lim F)
+        \arrow[u, dashed, "h"]
+        \arrow[ur, swap, "\theta \circ \epsilon_F"]
+    \end{tikzcd}
+\end{center}
+which forces the unique existence of a morphism (natural transformation) 
+$h: \Delta(\Lim F) \to \Delta(\Lim G)$ in $\cc^J$. If we set $F(\theta) = h$, 
+then we see that this behavior is functorial. The other trivial properties are simple to check. 
+
+\textcolor{NavyBlue}{So, what's the big deal about the limit $\Lim $of a functor actually being a secret 
+functor whenever all limits are admitted?}
+
+First, the fact that it is a functor means we have a truly remarkable relationship between 
+the functors 
+\begin{center}
+    \begin{tikzcd}[column sep = 1.4cm, row sep = 1.4cm]
+        \cc^J \arrow[r, shift right = 0.5ex, swap, "\Lim "] 
+        &
+        \cc 
+        \arrow[l, shift left = -0.5ex, swap, "\Delta"]
+    \end{tikzcd}
+\end{center}
+
+Now to really see the significance, let's reinterpret what it means for a functor $F: J \to \cc$ to 
+have a limit in $\cc$. It means that the diagram below 
+\begin{center}
+    \begin{tikzcd}[column sep = 1.4cm, row sep = 1.4cm]
+        \Delta(\Lim F) \arrow[r, "\epsilon_F"] 
+        &
+        F\\
+        \arrow[u, dashed, "u"]
+        \Delta(C)\arrow[ur, swap, "f"]
+        &
+    \end{tikzcd}
+\end{center}
+commutes. Specifically, whenever we have a morphism $f: \Delta(C) \to F$ in $\cc^J$, there 
+exists a unique morphism $u: C \to \Lim F$. 
+This is old news. However, an equivalent way to interpret this result is to observe 
+that it also is communicating to us a bijection
+\begin{statement}{ProcessBlue!10}
+    \begin{equation}\label{lim_delta_adjoints}
+       \hom_{\cc^J}(\Delta(C), F) \cong \hom_{\cc}(C, \Lim F).
+    \end{equation}
+\end{statement}
+which is given by some bijection $\phi_{C, F}$. Moreover, this bijection is actually natural in
+each object, but we won't worry about that for now. The point here is that we call 
+the above relation between functors, equipped with the above natural bijection, an
+\textbf{adjunction}.
+\\
+
+The above result can be applied for 
+all kinds of limits; and the beauty of it is that it captures the individual philosophy 
+of each individual limit. 
+For example, when $J$ is discrete, the limit 
+becomes a product. Specifically, our functors reduce to the relation 
+\begin{center}
+    \begin{tikzcd}[column sep = 1.4cm, row sep = 1.4cm]
+        \prod_{j \in J}\cc \arrow[r, shift right = 0.5ex, swap, "P"] 
+        &
+        \cc 
+        \arrow[l, shift left = -0.5ex, swap, "\Delta"]
+    \end{tikzcd}
+\end{center}
+where $\prod_{j \in J}\cc$ is product category, and
+we define $P$ to act on the product category as
+\[
+    (A_j)_{j \in J} \mapsto \prod_{i \in J}A_i
+    \quad 
+\]  
+(hence, $P$ for "product")
+where $(A_j)_{j \in J}$ denotes a "tuple" of elements,
+and the diagonal functor behaves as
+\[
+    A \mapsto (A_j)_{j \in J} \text{ where } A_j = A \text{ for  all j}.
+\]
+Then from our previous work we automatically get the natural bijection 
+between hom-sets
+\[
+    \hom_{\prod_{j \in J}\cc}\Big((A)_{j \in J}, (C_j)_{j \in J}\Big) 
+    \cong 
+    \hom_{\cc}\left(A, \prod_{j \in J} C_j\right).
+\]
+The above bijection actually makes a lot of sense; it says that if you have a family of morphisms 
+into the factors $(C_j)_{j \in J}$ of a product $\prod_{j \in J} C_j$, 
+then you get a unique morphism into the product of those factors, 
+which is \emph{exactly} the universal property of products! 
+
+As another example, suppose $J$ is the category
+\begin{center}
+    \begin{tikzcd}
+        1
+        \arrow[r, shift right = 0.5ex, swap, "g"]
+        \arrow[r, shift left = 0.5ex, "f"]
+        &
+        2
+    \end{tikzcd}.
+\end{center}
+Then the limit of a functor $F: J \to \cc$ (when it exists) is an equalizer
+of the morphisms $f' = F(f)$ and $g' = G(f)$. 
+The diagram below expresses the universal property.
+\begin{center}
+    \begin{tikzcd}[column sep = 1.4cm, row sep = 1.4cm]
+        \text{Eq}(f', g') 
+        \arrow[r, "e"]
+        &
+        F(1)
+        \arrow[r, shift right = 0.5ex, swap, "g'"]
+        \arrow[r, shift left = 0.5ex, "f'"]
+        &
+        F(2)\\
+        C \arrow[u, dashed, "u"]
+        \arrow[ur, swap, "h"]
+    \end{tikzcd}
+\end{center}
+where $f' \circ e = g' \circ e$ and  $f' \circ h = g' \circ h$. 
+Now because 
+\[
+    \hom_{\cc^{J}}(\Delta(C), F)
+    = 
+    \{ h: C \to F(1) \mid f' \circ h = g' \circ h  \}
+\]
+we see that
+relation \ref{lim_delta_adjoints} gives us 
+\[
+    \hom_{\cc^{J}}(\Delta(C), F) = \{ h: C \to F(1) \mid f' \circ h = g' \circ h  \} 
+    \cong \hom_{\cc}(C, \text{Eq}(f',g')).
+\]
+This is just a different way of stating the exact concept of an equalizer!
+
+The general formula we produced cleverly
+offers clarity of limits from a different perspective, one which we wouldn't normally 
+envision ourselves (a fact that Saunder Mac Lane believes as to why it took so long for adjoints to be 
+defined). 
+
+Adjunctions, which are beautiful correspondences between pairs of functors such at $\Lim$ and $\Delta$
+are abundant in math, and we now define them generally.
+
+% Consider again the example we introduced in the previous section, in
+% which we considered two functors between the categories \textbf{Set}
+% and $\textbf{Vct}_K$. Let $U: \textbf{Vct}_K \to \textbf{Set}$ be the
+% natural forgetful functor, and let $V: \textbf{Set} \to
+% \textbf{Vct}_K$ which assigns as set $X$ to a vector space $V(X)$ with
+% basis elements in $X$. 
+
+% Now consider a morphism $g: X \to U(W)$ for some set $X$ and vector
+% space $W$. Then this extends to a morphism $f: V(X) \to W$ in
+% $\textbf{Vct}_K$, where 
+% \[
+%     f\left( \sum_{i=1}^{n}k_ix_i \right) = \sum_{i=1}^{n}k_ig(x_i) \in W.
+% \]
+% As $f$ is defined in terms of $g$, we know that this correspondence $g
+% \mapsto f$ is unique. 
+
+% On the other hand, consider a linear transformation $f: V(X) \to W$.
+% Then if we restruct $f$ to $X$, we see that 
+% \[
+%     f\big|_X : X \to W
+% \]
+% which we can interpret as a morphism $g: X \to U(W)$. Hence this
+% correspondence goes both ways, and we have a bijection of sets 
+% \[
+%     \textbf{Vct}_K(V(X), W) \cong \textbf{Set}(X, U(W)).
+% \]
+% and we denote this bijection as $\phi_{X, W}: \textbf{Vct}_K(V(X), W) \cong
+% \textbf{Set}(X, U(W))$. This then extends itself into a natural
+% transformation; that is, if $h: X' \to X$, then
+% \begin{center}
+%     \begin{tikzcd}[column sep = 1.4cm, row sep = 1.4cm]
+%         \textbf{Vct}_K(V(X), W) \arrow[r, "\phi"]
+%         \arrow[d, swap, "(Vh)^*"]
+%         &
+%         \textbf{Set}(X, U(W))\arrow[d, "h^*"]\\
+%         \textbf{Vct}_K(V(X'), W) \arrow[r, "\phi"]
+%         &
+%         \textbf{Set}(X', U(W))
+%     \end{tikzcd}
+% \end{center}
+% is commutative, where $(Vh)^{*}(f: V(X) \to W) = f \circ V(h)$ and
+% $h^{*}(g: X \to U(W)) = g \circ h$. 
+
+\begin{definition}
+    Let $\cc$ and $\dd$ be categories. We say an \textbf{adjunction}
+    $(F, G,\phi)$ is a pair of functors 
+    \begin{center}
+        \begin{tikzcd}[column sep = 1.4cm, row sep = 1.4cm]
+            \cc \arrow[r, shift left=0.6ex,"F"] & \dd 
+            \arrow[l,shift right =-0.6ex, "G"]
+        \end{tikzcd}
+    \end{center}
+    and a bijection $\phi_{C,D}$ which assigns each pair of objects
+    $C, D$ a bijection of sets
+    \[
+        \phi(C, D) \mapsto \phi_{C, D}: \hom_\dd(F(C), D) \cong \hom_\cc(C, 
+        G(D))
+    \]  
+    which is natural in both $C$ and $D$. In this case, we say that
+    $F$ is the \textbf{left-adjoint} and $G$ is the
+    \textbf{right-adjoint}. 
+\end{definition}
+    
+    Now, what do we mean by the above equation being natural in both
+    $C$ and $D$? Well, for all $h: C' \to
+    C$ and $k: D \to D'$, we must have that 
+    \begin{center}
+        \begin{tikzcd}[column sep = 1.4cm, row sep = 1.4cm]
+            \hom_\dd(F(C), D)\arrow[r, "\phi_{C,D}"]
+            \arrow[d, swap, "k_*"]
+            &
+            \hom_\cc(C, G(D))\arrow[d, "G(k)_*"]\\
+            \hom_\dd(F(C),D') \arrow[r, "\phi_{C,D'}"]
+            &
+            \hom_\cc(C, G(D'))
+        \end{tikzcd}
+        \begin{tikzcd}[column sep = 1.4cm, row sep = 1.4cm]
+            \hom_\dd(F(C), D)\arrow[r, "\phi_{C,D}"]
+            \arrow[d, swap, "(F(h))^*"]
+            &
+            \hom_\cc(C, G(D))\arrow[d, "h^*"]\\
+            \hom_\dd(F(C'),D) \arrow[r, "\phi_{C,D'}"]
+            &
+            \hom_\cc(C', G(D))
+        \end{tikzcd}
+    \end{center}
+    all commute. Here, recall that $k_*(f: F(C) \to D) = k \circ f$,
+    and $h^*(g: C \to G(D)) = g \circ h$. The
+    commutativity of the diagrams can be written our in terms of
+    equations; if $f: F(C) \to D$, then
+    \begin{align}
+        \phi(k \circ f) = G(k) \circ \phi(f)\\
+        \phi(f \circ F(h)) = \phi(f) \circ h.
+    \end{align}
+    Since $\phi$ is a bijection, we know that 
+    \[
+        \phi^{-1}: \hom_{\cc}(C, G(D)) \to \hom_\dd(F(C), D)   
+    \]
+    exists and is also a bijection. And because $\phi$ is natural in
+    $C$ and $D$, we know that $\phi^{-1}$ also preserves naturality as
+    well. Thus we also have that 
+    \begin{center}
+        \begin{tikzcd}[column sep = 1.4cm, row sep = 1.4cm]
+            \hom_\cc(C, G(D))\arrow[r, "\phi^{-1}_{C,D}"]
+            \arrow[d, swap, "G(k)_*"]
+            &
+            \hom_\dd(F(C), D)\arrow[d,  "k_*"]\\
+            \hom_\cc(C, G(D')) \arrow[r, "\phi^{-1}_{C,D'}"]
+            &
+            \hom_\dd(F(C),D')
+        \end{tikzcd}
+        \begin{tikzcd}[column sep = 1.4cm, row sep = 1.4cm]
+            \hom_\cc(C, G(D))\arrow[d, swap, "h^*"]
+            \arrow[r, "\phi^{-1}_{C,D}"]
+            &
+            \hom_\dd(F(C), D) \arrow[d, "(F(h))^*"]\\
+            \hom_\cc(C', G(D)) \arrow[r, "\phi^{-1}_{C,D'}"]
+            &
+            \hom_\dd(F(C'),D)
+        \end{tikzcd}
+    \end{center}
+    commutes. We can also express this commutativity in terms of
+    equations betwee morphisms. If $g: C \to G(D)$, then
+    \begin{align}
+        k \circ \phi^{-1}(g) = \phi^{-1}(G(k) \circ g)\\
+        \phi^{-1}(g) \circ F(h) = \phi^{-1}(g \circ h). 
+    \end{align}
+    What we're seeing here is the adjunctions give us \textit{a lot of
+    shit}, but not bad shit; it gives a lot of good shit. As we'll
+    see, there's even more to explore. 
+
+
+    \section*{Universality from $C$ to $G$.}
+    It turns out that the concept of an adjunction goes much deeper
+    than what we've just outlined here. Not only do adjunctions appear
+    in many places, but they also give rise to universal morphisms. To
+    see this, let $D = F(C)$. Then $\phi_{F(C), F(C)}$ forms a
+    bijection between the sets 
+    \[
+        \hom_\cc(F(C), F(C)) \cong \hom_\dd(C, G(F(C))).
+    \]
+    Now let's chase the identity $1_{F(C)}: F(C) \to F(C)$. 
+    The function $\phi$ sends
+    $1_{F(C)}$ to a unnique morphism $\phi(1_{F(C)}): C \to G(F(C))$. Call
+    this $\eta_C$. 
+
+    For any other $f': F(C) \to F(C)$, we can use equation (3) to
+    observe that 
+    \begin{align*}
+        \phi(f') = \phi(f' \circ 1_{F(C)}) &= G(f') \circ \phi(1_{F(C)})\\
+        &= G(f') \circ \eta_C.
+    \end{align*}
+    Look familiar? Recall Proposition 3.2! The isomorphism 
+    \[
+        \phi: \hom_\cc(F(C), F(C)) \cong \hom_\dd(C, G(F(C)))
+    \]
+    which sends each $f': F(C) \to F(C)$ to $G(f') \circ \eta_x$ holds
+    if and only if $\eta_C: C \to G(F(C))$ is a universal morphism
+    from $C$ to $G$. \textcolor{NavyBlue}{Hence, we see that for
+    \textit{every object} $C$ of $\cc$, an adjunction gives rise to a
+    universal morphism from $C$ to $G: \dd \to \cc$!}
+
+    Thus there exists some function $\psi$ where 
+    \[  
+        C \longmapsto \eta_C : C \to G(F(C))
+    \]
+    which makes $\psi$ a natural transformation, so that 
+    \[
+        \psi: I_C \to G\circ F
+    \] 
+    where $I_C$ is
+    the trivial functor on $\cc$. Now consider again $h: C' \to C$,
+    and observe by equation (4), 
+    \begin{align*}
+        G(F(h)) \circ \eta_{C'} = G(F(h)) \circ \phi(1_{C'})
+        &= \phi(F(h) \circ 1_{C'})\\
+        &= \phi(1_{C'} \circ F(h))\\
+        &= \phi(1_{C'}) \circ h\\
+        &= \eta_{C'} \circ h.
+    \end{align*}
+    where in the second step used equation (3), and in the fourth step
+    we used equation (4). This gives rise to the diagram
+    \begin{center}
+        \begin{tikzcd}[column sep = 1.4cm, row sep = 1.4cm]
+            C' \arrow[r, "\eta_{C'}"]
+            \arrow[d, swap, "h"]
+            &
+            G(F(C')) \arrow[d, "G(F(h))"]\\
+            C \arrow[r, swap, "\eta_{C}"]
+            &
+            G(F(C))
+        \end{tikzcd}
+    \end{center}
+    which commutes. This then shows that the function which sends $C
+    \to \eta_C$ is natural in $C$. That is, not only do we have a
+    correspondence between objects of $\cc$ and universal arrows from
+    $C$ to $G$, this correspondence respects naturality! 
+
+    \section*{Universality from $F$ to $D$.} 
+    We can also perform the same procedure we just did using equations
+    (3) and (4) on the equations (5) and (6). Thus consider the
+    inverse $\phi^{-1}: \hom_{\cc}(C, G(D)) \to \hom_\dd(F(C), D)$. 
+    Suppose we set $C = G(D)$. Then $\phi^{-1}$ gives the bijection 
+    \[
+        \hom_\dd(F(G(D)), D) \cong \hom_{\cc}(G(D), G(D)).
+    \]
+    As before, let's consider $1_{G(D)}: G(D) \to G(D)$. Suppose we
+    write 
+    \[
+        \epsilon_D = \phi^{-1}(G(D)): F(G(D)) \to D.   
+    \]
+    Now consider any $g: G(D) \to G(D)$. Then 
+    \begin{align*}
+        \phi^{-1}(g) = \phi^{-1}(1_{G(D)} \circ g)
+        &= \phi^{-1}(1_{G(D)}) \circ F(g)\\
+        &= \epsilon_D \circ F(g).
+    \end{align*}
+    where we used equation (6). 
+    As this is the action of $\phi^{-1}$, and because $\phi^{-1}$
+    establishes the above isomorphim between the hom-sets, we can use
+    the dual version of Proposition 3.2 (check yourself, it works) to
+    conclude that $\epsilon_D:F(G(D)) \to D$ is a universal arrow from $F$
+    to $D$, for every object $D$ of $\dd$. Moreover, we can conclude that 
+    $\epsilon: F\circ G \to I_\dd$
+    is a natural transformation, where $I_\dd$ is the identity functor
+    on $\dd$. 
+
+    Finally, observe that 
+    \[
+        1_{G(D)} = \phi(\phi^{-1}(1_{G(D)})) = \phi(\epsilon_D) = G
+        (\epsilon_D) \circ 
+        \eta_{G(D)}
+    \]
+    and that 
+    \[
+        1_{F(C)} = \phi(\phi^{-1}(1_{F(C)})) = \phi^{-1}(\eta_C) = \epsilon_
+        {F(C)} \circ F(\eta_C).
+    \]
+    Hence we see that the composite natural transformations
+    \begin{center}
+        \begin{tikzcd}
+        G \arrow[r, "\eta_{G}"] & G \circ F \circ G
+        \arrow[r,"G(\epsilon)"] & G
+        \end{tikzcd}
+        \hspace{0.5cm}
+        \begin{tikzcd}
+        F \arrow[r, "F(\eta)"] & F \circ G \circ G
+        \arrow[r, "\epsilon_{F}"]
+        & 
+        F
+        \end{tikzcd}
+    \end{center}
+    are both the identity. As we now have a notion of $\eta$ and
+    $\epsilon$, we denote $\eta$ as the \textbf{unit} and $\epsilon$
+    as the \textbf{counit}. Now all of our analysis proves the following
+    theorem. 
+    \begin{thm}
+        $(F, G, \phi)$ forms an adjunction between $\cc$
+        and $\dd$ if and only if
+        \begin{description}
+            \item[$\bm{(i)}$]There exists a natural transformation
+            $\eta: I_\cc \to G \circ F$ such that 
+            for each object $C$ of $\cc$, the
+            morphism 
+            \[
+                \eta_C: C \to G(F(C))
+            \]
+            is universal from $C$ to $G$, and if $f: F(C) \to D$
+            \[
+                \phi(f) = G(f) \circ \eta_C.  
+            \]
+            \item[$\bm{(ii)}$] There exists a natural transformation
+            $\epsilon: F \circ G \to I_\dd$ such that for each object
+            $D$ of $\dd$, the morphism
+            \[
+                \epsilon_D: F(G(D)) \to D  
+            \]
+            is universal from $F$ to $D$, and if $g: C \to G(D)$,
+            \[
+                \phi^{-1}(g) = \epsilon_{D} \circ F(g).
+            \]
+        \end{description}
+    \end{thm}
+
+    \begin{prf}
+        \begin{description}
+            \item[$\bm{(i)}$] 
+            \begin{description}
+                \item[$\implies$]Suppose that $(F, G, \phi)$ is an 
+                adjunction between $\cc$
+                and $\dd$. As $\phi$ establishes the bijection 
+                \[
+                    \hom_{\dd}(F(C), D) \cong \hom_\cc(C, G(D))
+                \]
+                for any objects $C, D$ of $\cc, \dd$, repsectively, we can
+                set $D = F(C)$ and we have that  
+                \[
+                    \hom_{\dd}(F(C), F(C)) \cong \hom_\cc(C, G(F(C))).
+                \]
+                Let $\eta_C = \phi(1_{F(C)})$.
+                Then by equation (3), if $f': F(C) \to
+                F(c)$ we have that $\phi(f') = G(f') \circ \eta_C$. Then by
+                proposition 3.2, we see that $\eta_C: C \to G(F(C))$
+                is universal from $C$ to $G$. Hence we get the
+                following diagram 
+                \begin{center}
+                    \begin{tikzcd}[column sep = 1.4cm, row sep = 1.4cm]
+                        C \arrow[r, "\eta_C"] 
+                        \arrow[dr, swap, "g"]
+                        & G(F(C)) \arrow[d, dashed, "G(f)"] \\
+                        & G(D) 
+                    \end{tikzcd}
+                \end{center}
+                Now suppose $h: C \to C'$ is a morphism. Then we see
+                that $\eta_{C'} \circ h: C \to G(F(C'))$, and by
+                universality (i.e., by the above diagram), this
+                implies that there exists a unique morphism $k : F(C) \to
+                F(C')$ such that $G(k) \circ \eta_C = \eta_{C'} \circ h$.
+                Visually, this is given by the commutative diagram
+                below. 
+                \begin{center}
+                    \begin{tikzcd}[column sep = 1.4cm, row sep = 1.4cm]
+                        C \arrow[r, "\eta_C"] \arrow[d, swap, "h"] 
+                        &
+                        G(F(C)) \arrow[d, dashed, "G(k)"]\\
+                        C' \arrow[r, swap, "\eta_{C'}"]
+                        &
+                        G(F(C')) 
+                    \end{tikzcd}
+                    \hspace{1cm}
+                    \begin{tikzcd}[column sep = 1.4cm, row sep = 1.4cm]
+                        F(C) \arrow[d, dashed, "k"]\\
+                        F(C')
+                    \end{tikzcd}
+                \end{center}
+                
+                
+     
+                \item[$\impliedby$] Now suppose we have a natural 
+                transformation $\eta: I_C
+                \to G \circ F$ which assigns each $C$ a universal arrow
+                $\eta_C: C \to G(F(C))$ from $C$ to $G$. Then from
+                universality, 
+                \begin{center}
+                    \begin{tikzcd}[column sep = 1.4cm, row sep = 1.4cm]
+                        C \arrow[r, "\eta_C"] 
+                        \arrow[dr, swap, "g"]
+                        & G(F(C)) \arrow[d, dashed, "G(f)"] \\
+                        & G(D) 
+                    \end{tikzcd}
+                    \hspace{1cm}
+                    \begin{tikzcd}[column sep = 1.4cm, row sep = 1.4cm]
+                        F(C) \arrow[d, dashed, swap, "f"]\\
+                        D
+                    \end{tikzcd}
+                \end{center}
+                Every $g: C \to G(D)$ uniquely corresponds witha
+                morphism $f: F(C) \to D$. Hence we have a bijection of
+                hom-sets
+                \[
+                    \hom_\dd(F(C), D) \cong \hom_\cc(C, G(D))
+                \]
+                which is given by some bijection $\phi$. We then have
+                that $(F, G, \phi)$ compose an adjunction, as desired. 
+            \end{description}
+
+            \item[$\bm{(ii)}$] 
+            \begin{description}
+                \item[$\implies$] Suppose that $(F, G, \phi)$ is an adjunction between $\cc$
+                and $\dd$. As $\phi$ establishes the bijection 
+                \[
+                    \hom_{\dd}(F(C), D) \cong \hom_\cc(C, G(D))
+                \]
+                for any objects $C, D$ of $\cc, \dd$, repsectively, we can
+                set $C = G(D)$ and we have that  
+                \[
+                    \hom_{\dd}(F(G(D)), D) \cong \hom_\cc(G(D), G(D)).
+                \]
+                Now let $\epsilon_D = \phi^{-1}(1_{G(D)})$. Then by
+                equation (5), for any $g: C \to G(D)$, we have that
+                $\phi^{-1}(g) = \epsilon_D \circ F(g)$.  
+
+                \item[$\impliedby$] 
+                Now suppose we have a natural transformation $\eta: F
+                \circ G \to I_\dd$ where $\eta_D: F(G(D)) \to D$ is
+                universal from $F$ to $D$. Then we have the diagram 
+                \begin{center}
+                    \begin{tikzcd}[column sep = 1.4cm, row sep = 1.4cm]
+                        D & \arrow[l, swap, "\epsilon_D"] F(G(D))
+                        \\
+                        & \arrow[ul, "f"] F(C) \arrow[u, dashed, swap,
+                        "F(g)"]
+                    \end{tikzcd}
+                    \hspace{1cm}
+                    \begin{tikzcd}[column sep = 1.4cm, row sep = 1.4cm]
+                        G(D)\\
+                        C \arrow[u, dashed, "g"]
+                    \end{tikzcd}
+                \end{center} 
+                so that for every morphism $F(C) \to D$, there exists
+                a unique morphism $g: C \to G(D)$. Hence we have the
+                \[
+                    \hom_{\dd}(F(G(D)), D) \cong \hom_\cc(G(D), G(D)).
+                \]
+                We then have that $(F, G, \phi)$ form an adjunction,
+                as desired. 
+            \end{description}
+        \end{description}
+    \end{prf}
+
+    Now we offer some sufficient conditions for establishing an
+    adjunction. 
+    \begin{proposition}
+        Let $G: \dd \to C$ be a functor, and that for each $C \in \cc$
+        there exists 
+        \begin{itemize}
+            \item[1.] An object $F_0(C) \in \dd$ 
+            \item[2.] a universal morphism $\eta_C: C \to G(F_0(C))$
+            from $C$ to $G$. 
+        \end{itemize}
+        Then there exists a functor $F: \cc \to \dd$, left-adjoint to
+        $G$. In other words, there exists an adjunction $(F, G, \phi)$
+        between $\cc$ and $\dd$.
+    \end{proposition}
+
+    \begin{prf}
+        To have universality from $C$ to $G$, the diagram 
+        \begin{center}
+            \begin{tikzcd}[column sep = 1.4cm, row sep = 1.4cm]
+                \textcolor{red}{C} \arrow[r, "\eta_C"] 
+                \arrow[dr, red, swap, "g"]
+                & G(F(C)) \arrow[d, dashed, "G(f)"] \\
+                & \textcolor{red}{G(D)}
+            \end{tikzcd}
+            \hspace{1cm}
+            \begin{tikzcd}[column sep = 1.4cm, row sep = 1.4cm]
+                \textcolor{blue}{F(C)} \arrow[d, blue, dashed, swap, "f"]\\
+                \textcolor{blue}{D}
+            \end{tikzcd}
+        \end{center}
+        must commute. Hence we have a bijection 
+        \[
+            \hom_{\dd}(\textcolor{blue}{F(C), D}) \cong \hom_\cc(\textcolor{red}{C, G(D)}).  
+        \]
+        Now suppose $h: C \to C'$. Then the dashed arrow 
+        \begin{center}
+            \begin{tikzcd}[column sep = 1.4cm, row sep = 1.4cm]
+                C \arrow[r, "\eta_C"] \arrow[d, swap, "f"] 
+                &
+                G(F_0(C)) \arrow[d, dashed, "G(h)"]\\
+                C' \arrow[r, swap, "\eta_{C'}"]
+                &
+                G(F_0(C')) 
+            \end{tikzcd}
+        \end{center}
+        must exist by universality; we simply utilize the previous
+        diagram. In other words, if $h: C \to C'$, then there exists a
+        morphism $f: F_0(C) \to F_0(C')$. With that said, we can then
+        define a functor where
+        $F: \cc \to \dd$ with $F(C) = F_0(C)$ and $F(h) = F_0(C) \to
+        F_0(C')$. 
+
+        We then have our triple $(F, G, \phi)$, with $\phi$
+        establishing the bijection, so that we have an adjunction
+        between $\cc$ and $\dd$ as desired. 
+    \end{prf}
+    
+    Now we consider the parallel of the previous proposition.
+    \begin{proposition}
+        Let $F: \cc \to \dd$ be a functor. Suppose for each object $d
+        \in D$ there exists 
+        \begin{itemize}
+            \item[1.] an object $G_0(D) \in \cc$ 
+            \item[2.] a universal morphism $\epsilon_d: F(G_0(D)) \to
+            D$ from $F$ to $D$. 
+        \end{itemize}
+        Then there exists a functor $G: \dd \to \cc$, right-adjoint to
+        $F$. In other words, there exists an adjuncton $(F, G, \phi)$
+        between $\cc$ and $\dd$. 
+    \end{proposition}
+
+    \begin{prf}
+        If we have universality from $F$ to $D$, then the diagram 
+        \begin{center}
+            \begin{tikzcd}[column sep = 1.4cm, row sep = 1.4cm]
+                \textcolor{blue}{D} & \arrow[l, swap, "\epsilon_D"] F(G(D))
+                \\
+                & \arrow[ul, blue,"f"] \textcolor{blue}{F(C)} \arrow[u, dashed, swap,
+                "F(g)"]
+            \end{tikzcd}
+            \hspace{1cm}
+            \begin{tikzcd}[column sep = 1.4cm, row sep = 1.4cm]
+                \textcolor{red}{G(D)}\\
+                \textcolor{red}{C} \arrow[u, red, dashed, "g"]
+            \end{tikzcd}
+        \end{center} 
+        must commute for every object $C, D$. This then establishes the bijection 
+        \[
+            \hom_\dd(\textcolor{blue}{F(C), D}) \cong \hom_\cc(\textcolor{red}{C, G(D)}).   
+        \]
+        Consider any $h: D' \to D$. Then by universality, the dashed
+        morphism 
+        \begin{center}
+            \begin{tikzcd}[column sep = 1.4cm, row sep = 1.4cm]
+                D 
+                & \arrow[l, swap, "\epsilon_d"] F(G_0(D))\\
+                D' \arrow[u, "h"] 
+                &
+                F(G_0(D')) \arrow[l, "\epsilon_{D'}"]
+                \arrow[u, dashed, swap, "F(f')"]
+            \end{tikzcd}
+        \end{center}
+        must exist. In other words, if we have $h: D' \to D$, then
+        there must exist a morphism $f' : G_0(D') \to G_0(D)$. We can
+        then define a functor $G: \dd \to \cc$ by defining its object
+        function to be $G_0$ and defining $G(h) = f'$. Thus we have
+        that there exist a right-adjoint to $F$, so that $(F, G,
+        \phi)$ forms an adjunction, as desired. 
+    \end{prf}
+
+    We now introduce a proposition which offers sufficient conditions
+    for an adjunction, although it is not parallel to either of our
+    previous propositions. 
+
+    \begin{proposition}
+        Let $F: \cc \to \dd$ and $G: \dd \to \cc$ be functors, and
+        suppose we have the pair of natural transformations:
+        \begin{align*}
+            \eta_{C} : I_C \to G \circ F \quad
+            \epsilon_{D}: I_D \to F \circ G
+        \end{align*}
+        such that the following composites are the identity: 
+        \begin{center}
+            \begin{tikzcd}
+            G \arrow[r, "\eta_{G}"] & G \circ F \circ G
+            \arrow[r,"G(\epsilon)"] & G
+            \end{tikzcd}
+            \hspace{0.5cm}
+            \begin{tikzcd}
+            F \arrow[r, "F(\eta)"] & F \circ G \circ G
+            \arrow[r, "\epsilon_{F}"]
+            & 
+            F
+            \end{tikzcd}
+        \end{center}
+        Then there exists a bijective $\phi$ such that $(F, G, \phi)$
+        form an adjunction between $\cc$ and $\dd$. 
+    \end{proposition}
+
+    \begin{example}
+    Let $U: \textbf{Ab} \to \textbf{Grp}$ be the
+    forgetful functor, and suppose $F: \textbf{Grp} \to \textbf{Ab}$ is 
+    the abelianization functor. That is, if $G$ is a group and $\phi:
+    G \to G'$ is a group homomorphism then 
+    \[
+        F(G) = G/[G,G] \qquad F(\phi) : G/[G, G] \to G'/[G',G'].
+    \]
+    where $[G,G]$ is the commutator subgroup. But how do we know that $\phi$ induces a group homomorphisms on
+    the commutator subgroups? Well, define 
+    \[
+        F(\phi)(g + [G,G]) = \phi(g) + [G',G']. 
+    \]
+    it's straightforward to show this is well defined (and I'm too
+    lazy to do so). Now define the projection $\pi_G: G \to G/[G,G]$ where 
+    \[
+        \pi(g) = g + [G, G].
+    \]
+    Then clearly we have that 
+    \[
+        U(F(\phi)) \circ \pi_G(g) = U(F(\phi)) (g + [G, G]) = \phi(g) + [G, G']
+    \]
+    while 
+    \[
+        \pi_{G'} \circ \phi(g) = \phi(g) + [G',G'].
+    \]
+    Hence we have that $U(F(\phi)) \circ \pi_G = \pi_{G'} \circ \phi$,
+    which gives rise to the commutative diagram. 
+    \begin{center}
+        \begin{tikzcd}[column sep = 1.4cm, row sep = 1.4cm]
+            G \arrow[r, "\pi_G"] \arrow[d, swap, "\phi"]
+            & U(F(G))\arrow[d, "U(F(\phi))"]\\
+            G' \arrow[r, swap, "\pi_{G'}"]
+            &
+            U(F(G'))
+        \end{tikzcd}
+    \end{center}
+    Since $\pi_G$ is defined for all $G \in \textbf{Grp}$, we can
+    conclude that we actually have a natural transformation    
+    \[
+        \pi : I_{\textbf{Grp}} \to U \circ F.
+    \]
+    Next we would like to show that $\pi_G$ is universal from $G$ to
+    $U$ for every group $G$. Hence consider a morphism $\psi: G \to
+    U(H)$, where $H$ is an abelian group. Suppose $g \in [G, G]$, so
+    that $g = hkh^{-1}k^{-1}$ for some elements $h, k \in G$. Then we
+    have that 
+    \[
+        \phi(g) = \phi(h)\phi(k)\phi(h)^{-1}\phi(h)^{-1} = e_H
+    \]
+    since $H$ is abelian. where $e_H$ is the identity of $H$. Hence $[G, G] \subset
+    \ker(\psi)$. Hence we can define a morphism $\pi': F(G) \to H$
+    where $\pi'(g + [G,G]) = \psi(g)$, so that the diagram 
+    \begin{center}
+        \begin{tikzcd}[column sep = 1.4cm, row sep = 1.4cm]
+            G \arrow[r, "\pi_G"] \arrow[dr, swap, "\psi"]
+            &
+            U(F(G)) \arrow[d, dashed, "U(\pi')"]\\
+            & U(H)
+        \end{tikzcd}
+        \hspace{1cm}
+        \begin{tikzcd}[column sep = 1.4cm, row sep = 1.4cm]
+            F(G) \arrow[d, dashed, "\pi'"]\\
+            H
+        \end{tikzcd}
+    \end{center} 
+    commutes. Since $\pi'$ exists and is unique, and because $\psi$
+    was arbitrary, this shows that $\pi_G$ is universal from $G$ to
+    $U$. 
+    
+    \textcolor{MidnightBlue}{At this point, we have everything we
+    need. We have two functors}
+    \begin{tikzcd}
+        \textcolor{MidnightBlue}{\textbf{Grp}} \arrow[r, MidnightBlue, shift left=0.6ex,"F"] & \textcolor{MidnightBlue}{\textbf{Ab}}
+        \arrow[l, MidnightBlue, shift right =-0.6ex, "U"]
+    \end{tikzcd}
+    \textcolor{MidnightBlue}{and we know there exists a natural
+    transformation $\pi: 
+    I_{\textbf{Grp}} \to U \circ F$ such that $\pi_G: G \to U(F(G))$
+    is universal from $G$ to $U$ for all $G \in \textbf{Grp}$.
+    Therefore, we have an adjunction, and we can establish the
+    following bijection:}
+    \[
+        \hom_{\textbf{Ab}}(H/[H,H], G) \cong \hom_{\textbf{Grp}}(H, U(G)).
+    \]
+    where $H$ is a group and $G$ is an abelian group. How do we
+    interpret this result? This states that every group homomorphism $\psi: H
+    \to U(G)$ corresponds uniquely to a group homomorphism $\phi:
+    H/[H,H] \to  G$ between abelian groups, and vice versa. This is a
+    standard result in group theory, but our adjunction allows us to
+    prove the unique corresponds goes \textit{both} ways, and hence we
+    can prove there's a bijection between these homsets. Moreover, our
+    adjunction assures us that this bijection is natural in both
+    objects $G, H$! 
+    \end{example}
+
+
+    \begin{example}
+        Let $U: \textbf{R-Mod} \to \textbf{Ab}$ be the forgetful functor,
+    which forgets the $R$-module structure on the underlying abelian
+    group $M$. Consider the functor $F: \textbf{Ab} \to
+    \textbf{R-Mod}$, where $F(A) = R \otimes A$. We'll show that this
+    is left-adjoint to $U$ as follows. 
+
+    To show this, we'll propose a morphism which we will show to be
+    universal. If $A$ is an abelian group, then we let 
+    $\eta_A : A \to U(F(A))$ where $\eta_A(a) = 1 \otimes a$. 
+
+    Thus let $M$ be an $R$-module, and suppose there exists a morphism
+    $f: A \to U(M)$. Then we can define a morphism $\phi: F(A) \to M$
+    where 
+    \[
+        \phi(r \otimes a) = r\cdot f(a).
+    \]
+    Our construction ensures that this is a well-defined $R$-module
+    homomorphism. Hence we clearly have the equality $U(\phi) \circ \eta_A =
+    f$. Visually, this becomes 
+    \begin{center}
+        \begin{tikzcd}[column sep = 1.4cm, row sep = 1.4cm]
+            A \arrow[r, "\eta_A"] \arrow[dr, swap, "f"]
+            &
+            U(F(A)) \arrow[d, dashed, "U(\phi)"]\\
+            & U(M)
+        \end{tikzcd}
+        \hspace{1cm}
+        \begin{tikzcd}[column sep = 1.4cm, row sep = 1.4cm]
+            F(A) \arrow[d, dashed, "\phi"]\\
+            M
+        \end{tikzcd}
+    \end{center} 
+    Since the construction of $\phi$ depends directly on the existence
+    of $f$, we see that it is unique. Hence we see that $\eta_A: A \to
+    U(F(A))$ is universal from $A$ to $U$. Then by Theorem 4.1, we see
+    that we have an adjunction, so that $F$ is truly left adjoint to
+    the forgetful functor $U$. 
+    
+    \end{example}
+
+    \begin{proposition}
+        Let $F, F' : \cc \to \dd$ be two left adjoints of the functor
+        $G : \dd \to \cc$. Then $F, F'$ are naturally isomorphic. 
+    \end{proposition}
+
+    \begin{prf}
+        Let $(F, G, \phi)$ and $(F', G, \phi')$ be two adjunctions
+        between  $\cc$ and $\dd$. Then these adjoints give rise to the
+        universal morphisms
+        \[
+            \eta_C : C \to G(F(C)) \quad \eta'_{C}: C \to G(F'(C))
+        \]
+        for every $C \in \cc$. Since these are both universal
+        morphisms from $C$ to $G$, we know that they are isomorphic.
+        Hence there exists a unique isomorphism $\theta_C :  F(C) \to
+        F'(C)$ by universality such that $G(\theta_C) \circ \eta_C =
+        \eta_C'$ (think of a universal diagram). 
+
+        Now let $h: C \to C'$ be a morphism in $\cc$. Then 
+        $F'(h) \circ \theta_C = \theta_{C'} \circ F(h)$ so that the diagram 
+        \begin{center}
+            \begin{tikzcd}[column sep = 1.4cm, row sep = 1.4cm]
+                F(C) \arrow[r, "\theta_C"] \arrow[d, swap, "F(h)"]
+                & F'(C) \arrow[d, "F'(h)"]\\
+                F(C') \arrow[r, swap, "\theta_{C'}"]
+                &
+                F'(C')
+            \end{tikzcd}
+        \end{center}
+        commutes. Hence we see that $\theta: F \to F'$ is a natural
+        isomorphic transformation between $F$ and $F'$, so that these
+        two functors are naturally isomorphic.
+    \end{prf}
+    The other direction holds as well. That is, two right adjoints to
+    one left adjoint are natrually isomorphic as well, and the proof
+    is the same. We now have our last proposition for this section. 
+
+    \begin{proposition}
+        Let $G: \dd \to \cc$ be a functor. Then $G$ has a left-adjoint
+        $F: \cc \to \dd$ if and only if for each $C \in \cc$, the
+        functor $\hom_{\cc}(C, G(-))$ is representable as a functor of
+        $D \in \dd$. Furthermore, if $\phi: \hom_{\dd}(F_0(C), D)
+        \cong \hom_{\cc}(C, G(D))$ is a representation of this
+        functor, then $F_0$ is the object function of $F$. 
+    \end{proposition}
+
+    Finally, we end this section by realizing that we can actually
+    form composition of adjoints. 
+    \begin{thm}
+        Let $\cc, \dd$ and $\ee$ be categories. Suppose we have
+        adjunctions 
+        \[
+            (F, G, \eta, \epsilon): \cc \to \dd 
+            \qquad 
+            (F', G', \eta', \epsilon;): \dd \to \ee.
+        \]
+        Then there exists a composite adjunction given by 
+        \[
+            (F'\circ F, G \circ G', \overline{\eta}, \overline{\epsilon}): 
+            \cc \to \ee.
+        \]
+        where 
+        \begin{align*}
+            \overline{\eta}_C = G(\eta'_{F(C)}) \circ \eta_C: C \to
+            (G\circ G) \circ (F'\circ F(C))\\
+            \overline{\epsilon}_E = \epsilon'_E \circ F'(\epsilon_{G'(E)}) 
+            : (F' \circ F) \circ (G \circ G'(E)) \to E
+        \end{align*}
+        \vspace{-0.7cm}
+    \end{thm}
+
+    \begin{prf}
+        First, observe that the two given adjunctions give rise to 
+        \[
+            \hom_{\dd}(F(C), D) \cong \hom_{\cc}(C, G(D)) 
+            \qquad 
+            \hom_{\ee}(F'(D), E) \cong \hom_{\dd}(D, G'(E)).
+        \]
+        which are relations that are natural in objects $C, D$ and
+        $E$. Observe that in the second relation, we can set $D =
+        F(C)$. This then translates to 
+        \[
+            \hom_{\ee}(F'(F(C)), E) \cong \hom_{\dd}(F(C), G'(E)).
+        \]
+        Using the first relation, we know that 
+        $\hom_{\dd}(F(C), G(E)) \cong \hom_{\cc}(C, G(G'(E)))$.
+        Putting this together, we then have the bijection of homsets 
+        \[
+            \hom_{\ee}(F'\circ F(C)), E) \cong \hom_{\cc}(C, G \circ G'(E))
+        \]
+        which is natural in $C$ and $E$. Now, describing the
+        unit and counit is a bit ugly, and not exactly necessary, since in
+        the end we know what these adjunctions look like. The
+        punchline here is that we can write our new unit and counit in
+        terms of the original ones. 
+
+        Observe that for any object $C$ of $\cc$, we have the universal
+        morphism 
+        \[
+             \eta_C: C \to G(F(C)).
+        \]
+        Since $F(C) \in \dd$, we can use $\eta'$ that
+        \[
+            \eta'_{F(C)}: F(C) \to G'(F'(F(C))).            
+        \]
+        Finally, note that $G(\eta'_{F(C)}): G(F(C)) \to G(G'(F'(F(C))))$.
+        However, we can precompose this with $\eta_C$ to have that 
+        \[
+            G(\eta'_{F(C)}) \circ \eta_C: C \to G(G'(F'(F(C)))).
+        \]
+        On the other hand, for any object $E$ of $\ee$ that 
+        \[
+            \epsilon'_E : F'(G'(E)) \to E.
+        \]
+        We also have $\epsilon_D : F(G(D)) \to D$ for any object $D
+        \in \dd$. Hence, 
+        we can set $D = G'(E)$ for some object $E$ of $\ee$
+        to get
+        \[
+            \epsilon_{G'(E)} : F(G(G'(E))) \to G'(E).
+        \]
+        We can then get that $F'(\epsilon_{G'(E)}) : F'(F(G(G'(E))))
+        \to F'(G'(E))$. Composing this with the original
+        $\epsilon'_D$, we get that 
+        \[
+            \epsilon'_E \circ F'(\epsilon_{G'(E)}): F'(F(G(G'(E)))) \to E
+        \] 
+        as desired. Now showing that these remain universal is not
+        hard; just annoying. 
+    \end{prf}
+
+
+    \begin{exercise}[Exercise 4.2.2] 
+        \textcolor{purple}{Show that the functor $U: \textbf{R-Mod}
+        \to \textbf{Ab}$ has not only a left adjoint $A \mapsto R
+        \otimes A$ but also a right adjoint 
+        $A \mapsto \hom_{\zz}(R, A)$.}
+    \end{exercise}
+
+    \begin{solution}
+        In a previous example, we already showed that the functor
+        which assigns $A \mapsto R \otimes A$ is left adjoint to $U$.
+        Now consider the functor $F: \textbf{Ab} \to \textbf{R-Mod}$, 
+        which is defined as follows.
+        \begin{description}
+            \item[Objects.] If $A$ is an abelain group, then $F(A) =
+            \hom_{\zz}(R, A)$. Why is this an $R$-module? From module
+            theory, we know that 
+
+            \item[Morphisms.] Suppose $f: A \to G$ is a group homomorphism 
+            between abelian groups. Then this necessarily induces a
+            morphism $f* : \hom_{\zz}(R, A) \to \hom_{\zz}(R, G)$. Thus we define 
+            \[
+                F(f) = f^*: \hom_{\zz}(R, A) \to \hom_{\zz}(R, G)
+            \]
+            where $f^*(\phi: R \to A) = f \circ \phi : R \to G$. 
+            
+            
+        \end{description}
+    \end{solution}
+
+    
+    \newpage
+    \section{Reflective Subcategories.} 
+
+    \begin{definition}
+        Let $\aa$ be a subcategory of $\cc$. We say $\aa$ is
+        \textbf{reflective} in $\cc$ whenever the inclusion functor
+        $I: \aa \to \cc$ has a left adjoint $F: \cc \to \aa$. We then
+        say the functor $F$ is the \textbf{reflector}, and the
+        adjunction $(F, I, \phi)$ is a \textbf{reflection} of $B$. 
+    \end{definition}
+    In the case of a reflection, we obtain the bijection of hom-sets 
+    \[
+        \hom_{\aa}(F(C),A) \cong \hom_{\cc}(C, I(A)) \implies \hom_{\aa}(F(C),A) \cong \hom_{\cc}(C, A) 
+    \]
+    which is natural in both $C$ and $A$. 
+
+    \textcolor{MidnightBlue}{At this point, we've seen about 7
+    different formulations which lead to the notion of an adjunction. Therefore, 
+    the above definition is not a definitive one of what it means to
+    have a reflector. A reflector simply requires the existence of an
+    adjunction, but an adjunction can be determined by various different conditions.
+    }
+
+    For example, we can also describe a reflection as follows: $\aa
+    \subset \cc$ is \textbf{reflective} if and only if for each $C \in \cc$,
+    there exists a universal morphism $\eta_C \to I(F(C))$ from $C$ to
+    $I$, where we assume we already have the functors 
+    \begin{tikzcd}[column sep = 1.4cm, row sep = 1.4cm]
+        \aa \arrow[r, shift left=0.6ex,"I"] & \cc.
+        \arrow[l,shift right =-0.6ex, "F"]
+    \end{tikzcd}
+    As an example, recall that we showed that $F: \textbf{Grp} \to
+    \textbf{Ab}$ is the left adjoint to the forgetful functor $U:
+    \textbf{Ab} \to \textbf{Grp}$. The argument is unchanged if we
+    instead consider the inclusion functor $I: \textbf{Ab} \to
+    \textbf{Grp}$. That is, $F$ is a left adjoint to this functor. We
+    then see that $\textbf{Ab}$ is reflective in $\textbf{Grp}.$
+
+    \begin{example}
+        Let $\textbf{Top}$ be the category of topological spaces with
+        morphisms continuous functions. Let $\textbf{CHaus}$, the
+        category of compact Hausdorff spaces, which is a subcategory
+        of $\textbf{Top}$. 
+
+        If we let $X$ be a topological space, then we denote
+        $\beta(X)$ to be the Stone-Cech compactification. Let $I :
+        \textbf{CHaus} \to \textbf{Top}$ be the inclusion functor. 
+        Then the definition of the Stone-Cech compactification of a space $X$ is the
+        universal property: 
+        \begin{center}
+            \begin{tikzcd}[column sep = 1.4cm, row sep = 1.4cm]
+                X \arrow[dr, swap, "f'"] \arrow[r, "u"] & I(\beta(X)) \arrow[d, dashed, "\beta(f)"]\\
+                & I(C)
+            \end{tikzcd}
+            \hspace{1cm}
+            \begin{tikzcd}[column sep = 1.4cm, row sep = 1.4cm]
+                \beta(X) \arrow[d, dashed, "f"]\\
+                C
+            \end{tikzcd}
+        \end{center}
+        That is, the Stone-Cech compactification is a topological
+        space $\beta(X)$ with a morphism $u: X \to \beta(X)$ which is
+        universal across all morphisms $f: X \to C$ where $C$ is
+        compact, Hausdorff. 
+
+        Thus we see that a Stone-Cech compactification gives
+        rise to an object $\beta(X) \in \textbf{CHaus}$ and a
+        universal morphism $X \to I(\beta(X))$ from $X$ to $I$. Now by
+        Proposition 4.1, this makes $\beta : \textbf{Top} \to
+        \textbf{CHaus}$ a functor, which is left adjoint to the
+        inclusion functor $I: \textbf{CHaus} \to \textbf{Top}$. 
+
+        This then makes $\beta: \textbf{Top} \to \textbf{CHaus}$ a
+        reflector, so that the adjunction is a relflection between
+        $\textbf{Top}$ and $\textbf{CHaus}$. Consequently we have the
+        bijection 
+        \[
+            \hom_{\textbf{Top}}(X, I(C)) \cong \hom_{\textbf{CHaus}}(\beta(X), C)
+            \implies 
+            \hom_{\textbf{Top}}(X, C) \cong \hom_{\textbf{CHaus}}(\beta(X), C).
+        \]
+        since $I(C)$ is technically no different than from $C$. This
+        bijection is natural in both $X$ and $C$. 
+    \end{example}
+
+    \begin{exercise}[Exercise 2.]
+        \textcolor{purple}{Show that the torsion-free abelian groups form a full
+        reflective subcategory of $\textbf{Ab}$.}
+    \end{exercise}
+
+    \begin{solution}
+        Let $\textbf{Ab}_{\textbf{TF}}$ represent the category of
+        abelian groups with torsion free elements (for a lack of
+        better notation). Then we have a natural inclusion functor 
+        $I: \textbf{Ab}_{\textbf{TF}} \to \textbf{Ab}$.
+        Now consider the functor $F : \textbf{Ab} \to
+        \textbf{Ab}_{\textbf{TF}}$, which we define as follows:
+        \begin{description}
+            \item[Objects.] Let $G$ be an abelian group. Then 
+            $F(G) = G_{TF}$ where 
+            \[
+                G_{TF} = \{g \in G \mid g^n \ne e \text{ for } n = 1, 2, 3, \dots\}.
+            \] 
+            That is, it sends $G$ to its underlying abelian group of
+            torsion-free elements. It's not hard to show this is an
+            abelian group.
+            
+            \item[Morphisms.] Suppose $\phi: G \to H$ is a morphism
+            between abelian groups. Then we set $F(\phi) = \phi_{TF}$
+            where 
+            \[
+                \phi_{TF}: G_{TF} \to H_{TF} \qquad \phi_{TF}(g) = \phi(g).
+            \]
+            Note that this definition will cause no issues, since
+            $\text{ord}(g) = \text{ord}(\phi(g))$. Thus we simply
+            obtain $\phi_{TF}$ by restricting $\phi$ to $G_{TF}$.
+        \end{description} 
+        To show that $F$ is left adjoint to $I$, we need to
+        demonstrate that there exists a universal morphism $\eta_{G} :
+        G \to I(F(G))$ for every $G \in \textbf{Ab}$. Hence we propose
+        $\eta_{G}$ takes on the form 
+        \[
+            \eta_{G}(g) = 
+            \begin{cases}
+                g & \text{ if } \text{ord}(g) = \infty\\
+                e & \text{ otherwise. }
+            \end{cases}
+        \]
+        To show this is universal from $G$ to $I$, suppose we have a
+        morphism $\phi: G \to I(H)$, where $H \in
+        \textbf{Ab}_{\textbf{TF}}$. Then there exists a morphism
+        $\psi: F(G) \to H$ such that $I(\phi) \circ \eta_{G} = \phi$.
+        Visually, that is, 
+        \begin{center}
+            \begin{tikzcd}[column sep = 1.4cm, row sep = 1.4cm]
+                G \arrow[dr, swap, "\phi"]\arrow[r, "\eta_{G}"] & I(F(G)) \arrow[d, dashed,
+                "I(\psi)"]\\
+                & I(H)
+            \end{tikzcd}
+            \hspace{1cm}
+            \begin{tikzcd}[column sep = 1.4cm, row sep = 1.4cm]
+                F(G) \arrow[d, dashed, "\psi"]\\
+                H
+            \end{tikzcd}
+        \end{center}
+        Sure such a morphism exists, but why the equality? 
+        \begin{description}
+            \item[$\bm{g \in \ker(\eta_G)}$.] If $g \in \ker(\eta_G)$,
+            then $g$ has finite order. Hence we see that $\phi(g) =
+            e$; this is because $\text{ord}(\phi(g)) =
+            \text{ord}(g) < \infty$, but the only element in $I(H)$
+            with finite order is $e$. We then have that $g \in
+            \ker(\phi)$. Therefore, 
+            \[
+                I(\psi)\circ \eta_G(g) = I(\psi)(e) = e = \phi(g).
+            \]
+            Hence $I(\psi) \circ \eta_G = \phi$ if $g \in
+            \ker(\eta_{G})$. 
+
+            \item[$\bm{g \not\in \ker(\eta_G)}$.]
+            if $g \not\in \ker(\eta_G)$, then we know that
+            $\text{ord}(g) = \infty$. Therefore, we see that 
+            \[
+                I(\psi) \circ \eta_G(g) = I(\phi)(g) = \phi(g).
+            \] 
+            Hence $I(\psi) \circ \eta_G = \phi$ for $g \not\in
+            \ker(\eta_G)$. 
+        \end{description}
+        By our previous work, we then have that $I(\psi) \circ \eta_G
+        = \phi$, as desired. Now $\psi$ is of course unique based on
+        its construction, since its definition depends directly on
+        $\phi$. We then have that $\eta_G: G \to I(F(G))$ is universal
+        from $G$ to $I$ for each $G \in \textbf{Ab}$! 
+
+        We then have by Theorem 4.1 that $F, I$ form an adjunction, so
+        that $F$ is the left adjoint of $I$. Hence by definition, we
+        see that $\textbf{AB}_{\textbf{TF}}$ forms a full reflective
+        subcategory of $\textbf{Ab}$.
+    \end{solution}
+    
+    \newpage
+    \section{Equivalence of Categories}
+    In an ideal world, if we have a category of which we are
+    interested in, our goal would be to find an isomorphism between it
+    and a category of which we understand very well. We then know that
+    certain mathematical structures are invariant between
+    transitioning between the two, so that we could better understand
+    our desired category. 
+
+    However, this is generally too much to ask for. Many categories
+    which are constructed are constructed in such a way that they're
+    not isomorphic to anything we're familiar with; if they were, then
+    they probably wouldn't be interesting.
+    Hence we have a more useful notion of equivalence between
+    categories. 
+
+    \begin{definition}
+        Let $F : \cc \to \dd$ be a functor. We say that $\cc$ is
+        \textbf{equivalent} to $\dd$ if there exists a functor $G:\dd \to \cc$
+        and natural isomorphisms $\eta: I_\cc \to G \circ F $ and
+        $\epsilon: F \circ G \to I_\dd$.
+
+        In this case, we say both $F$ and $G$ are an \textbf{equivalence of categories}.
+    \end{definition}
+
+    \begin{example}
+        Let $X$ and $Y$ be sets, and regard them as discrete categories. Then a
+        functor $F: X \to Y$ is just a function between sets. In this case, to say 
+        that $X$ and $Y$ are equivalent is if there exists a functor (function!) 
+        $G: Y \to X$ such that we have natural isomorphisms 
+        $\eta_x: x \to G(F(x))$ and $\epsilon_x: F(G(x)) \to x$. However, 
+        each category has nontrivial morphisms; hence we see that each of 
+        these must be identity morphisms so that 
+        \[
+            G(F(x)) = x \qquad F(G(x)) = x.
+        \]
+        What this then means is that an equivalence of categories 
+        for sets is just a pair of invertible functions. That is, 
+        it gives rise to an isomorphism. 
+    \end{example}
+
+    Since $\eta, \epsilon$ are already natural transformations, this
+    simply makes them natural isomorphisms. It turns out that the
+    notion of equivalence is more useful than of an isomorphism. An
+    isomorphism is just too much to ask, but equivalence does give us
+    nice invariants too. 
+
+    \begin{definition}
+        A \textbf{adjoint equivalence} between categories $C$ and $D$
+        is an adjunction $(F, G, \eta, \epsilon)$ where the unit and
+        counit $\eta$ and $\epsilon$ are natural isomorphisms.
+    \end{definition}
+
+    It turns our an adjoint equivalence is the same thing as an
+    equivalence between categories. But before we move on, we prove a
+    lemma and a proposition.
+    \begin{lemma}
+        Let $\cc$ be a category, and $f: A \to B$ a morphism. Then 
+        $f$ induces a natural transformation 
+        \[
+            f^*: \hom_{\cc}(C, -) \to \hom_{\cc}(C', -)
+        \]
+        Then $f^{*}$ is a monomorphism if and only if $f$ is an epimorphism, 
+        and $f^{*}$ is an epimorphism if and only if $f$ is a split monomorphism 
+        (that is, if and only if $f$ has a left-inverse.)
+    \end{lemma}
+
+    \begin{prf}
+        \begin{description}
+            \item[$\bm{\implies}$] Observe that $\hom_{\cc}(C, -) \to
+            \cc \to \textbf{Set}$ is a functor. Then $f^*:
+            \hom_{\cc}(C, -) \to \hom_{\cc}(C', -)$ is a natural transformation where
+            $f: C' \to C$. Now suppose $\eta, \eta': F
+            \to \hom_{\cc}(C, -)$, where $F: \cc \to \textbf{Set}$ is a functor, are
+            natural transformations. Then if $f^*$ is monic, 
+            \[  
+                f^* \circ \eta = f^* \circ \eta' \implies \eta = \eta'.
+            \]
+            Now let $h: A \to A'$ be a morphism in $\cc$. Then we have the
+            commutative diagram 
+            \begin{center}
+                \begin{tikzcd}[column sep = 1.4cm, row sep = 1.4cm]
+                    A \arrow[d, "h"]\\
+                    A'
+                \end{tikzcd}
+                \hspace{1cm}
+                \begin{tikzcd}[column sep = 1.4cm, row sep = 1.4cm]
+                    F(A) \arrow[r, "{\eta_A, \eta'_A}"] \arrow[d, swap, "F(h)"] 
+                    &
+                    \hom_{\cc}(C, A) \arrow[d, "h_*"] \arrow[r, "f^*"]
+                    &
+                    \hom_{\cc}(C', A) \arrow[d, "h_*"]
+                    \\
+                    F(A') \arrow[r,swap, "{\eta_{A'}, \eta'_{A'}}"] 
+                    &
+                    \hom_{\cc}(C, A') \arrow[r,swap, "f^*"]
+                    &
+                    \hom_{\cc}(C', A')
+                \end{tikzcd}
+            \end{center}
+            where we denote $\eta_A, \eta'_{A}$ on the arrow to
+            signify the fact that both $\eta_A, \eta_A'$ are morphisms
+            from $F(A)$ to $\hom_{\cc}(C, A)$. Now 
+            let $x \in F(A)$. Then
+            \[
+                f^* \circ \eta_A(x) = f^* \circ \eta'_A(x) \iff \eta_A(x) \circ f = \eta'_A(x) \circ f.
+            \]
+            But if $f$ is monic, then $f^* \circ \eta_A(x) = f^*
+            \circ'_A(x)$ implies that $\eta_A = \eta'_A$. Hence
+            we see that $\eta_A(x) \circ f = \eta'_A(x) \circ f
+            \implies \eta_A(x) = \eta'_A(x).$
+
+            \item[$\bm{\impliedby}$] Now suppose $f$ is epic. Then
+            using the same notation as earlier, note that 
+            \[
+                f^* \circ \eta_A(x) = f^* \circ \eta'_A(x) \iff \eta_A(x) \circ f = \eta'_A(x) \circ f \implies \eta_{A} = \eta_{A}.
+            \]
+            Hence we see that $f^*$ is a monomorphism. 
+        \end{description}
+    \end{prf}
+    Taking the dual of what we proved, we prove the second part of the
+    lemma. Now we'll use this lemma in the theorem below, one which will be very useful.
+
+    \begin{proposition}
+        Let $(F, G, \eta, \epsilon)$ be an adjunction between
+        categories $\cc$ and $\dd$. Then 
+        \begin{description}
+            \item[$\bm{(i)}$] $G$ is faithful if and only if for each
+            $D \in \dd$, $\epsilon_{D}$ is epic 
+            \item[$\bm{(ii)}$] $G$ is full if and only if every
+            $\epsilon_{D}$ is split monic. 
+        \end{description}
+        Therefore, $G$ is full and faithful if and only if
+        $\epsilon_D$ is an isomorphism between $F(G(D))$ and $D$. 
+    \end{proposition}
+
+    \begin{prf}
+        If $G: \dd \to \cc$ is a functor, then we see that $G$ itself
+                becomes a natural transformation between the two
+                functors: 
+                \[
+                    G_{D,-}: \hom_{\dd}(D, -) \to \hom_{\dd}(G(D), G(-)).    
+                \]
+                Recall that we have an adjunction given by $F, G$.
+                Then there exists a bijection $\phi$ where 
+                \[
+                    \phi_{C, D'}: \hom_{\cc}(F(C), D') \to \hom_{\dd}(C, G(D)).
+                \]
+                Thus $\phi^{-1}: \hom_{\dd}(C, G(D)) \to
+                \hom_{\dd}(F(C), D')$. Moreover, if $D$ is an
+                arbitrary object, this becomes a natural
+                transformation between the two functors: 
+                \[
+                    \phi^{-1}_{C, -}: \hom_{\dd}(C, G(-)) \to \hom_{\cc}(F(C), -).
+                \]
+                Let $C = G(D)$. Then we have the following sequence of
+                natural transformations:
+                \begin{center}
+                    \begin{tikzcd}[column sep = 1.4cm, row sep = 1.4cm]
+                        \hom_{\dd}(D,-) \arrow[r, "G_{D, -}"]
+                        &
+                        \hom_{\cc}(G(D), G(-)) \arrow[r, "\phi^{-1}_{G(D), G(-)}"]
+                        &
+                        \hom_{\dd}(F(G(D)), -)
+                    \end{tikzcd}
+                \end{center}
+                Composing the natural transformations, we finally
+                obtain a natural transformation 
+                $\phi^{-1}_{G(D), G(-)} \circ G_{D, -} : \hom_{\dd}(D,
+                -) \to \hom_{\dd}(F(G(D)), -)$. How is this natural
+                transformation given? We can assign $-$ as $D$ itself,
+                and see what happens when we consider the identity
+                morphism $1_D: D \to D$. In this case
+                \[
+                    \phi^{-1}_{G(D), G(D)} \circ G_{D, D}(1_D) 
+                    = 
+                    \phi^{-1}_{G(D), G(D)}(1_{G(D)})
+                    = 
+                    \epsilon_{D}
+                \]
+                by definition of the counit $\epsilon_D$. Now we
+                understand how this poorly-notated natural
+                transformation works! In general, for and $f: D \to
+                D'$, we see that 
+                \begin{align}
+                    \phi^{-1}_{G(D), G(D')} \circ G_{D, D'}(f) = f \circ \epsilon_{D}.
+                \end{align}
+                Thus, we see that this natural transformation is in
+                disguise; it's actually just $\epsilon_D^*:
+                \hom_{\dd}(D, -) \to \hom_{\dd}(F(G(D), -)$!
+        \begin{description}
+            \item[$\bm{(i)}$]
+            \begin{description}
+                \item[$\bm{\iff}$]
+                If $G$ is faithful, then the natural
+                transformation in equation (7) is one to one. This makes
+                $\epsilon_D^*$ a monomorphism. By the previous lemma,
+                this holds if and only if $\epsilon_D$ is epic for every $D$
+                in $\dd$.
+             
+            \end{description} 
+            \item[$\bm{(ii)}$]
+            \begin{description}
+                \item[$\bm{\iff}$]
+                On the other hand, if $G$ is full, then this natural
+                transformation in equation (7) surjective. This makes
+                $\epsilon_{D}^*$ an epimorphism, and by the previous
+                lemma, that holds if and only if $\epsilon_D$ is a split monomorphism. 
+            \end{description}   
+        \end{description}
+    \end{prf}
+
+
+
+    \begin{thm}\label{equivalence_theorem}
+        Let $F: \cc \to \dd$ be a functor. Then the following are
+        equivalent. 
+        \begin{description}
+            \item[$\bm{(i)}$] $G$ is an equivalence of categories 
+            \item[$\bm{(ii)}$] $G$ is part of an adjunction $(F, G,
+            \eta, \epsilon)$ where $\eta, \epsilon$ are natural
+            isomorphisms 
+            \item[$\bm{(iii)}$] $F$ is full and faithful, and each
+            object $C$ is isomorphic to $G(D)$ for 
+            some object $D$. 
+        \end{description} 
+    \end{thm}
+    Note that this theorem is symmetric; one could interchange $G$
+    with $F$, and then obtain the same exact results. \textcolor{MidnightBlue}{Thus, one 
+    way of stating this theorem is that $\cc$ and $\dd$ are equivalent
+    as categories if and only if there exits full and faithful
+    functors $F: \cc \to \dd$ and $G: \dd \to \cc$; or if and only if
+    $F, G$ form an adjoint equivalence.}
+
+    \begin{prf}
+        \begin{description}
+            \item[$\bm{(i) \implies (iii)}$] 
+            Suppose we have an equivalence of categories given by $F:
+            \cc \to \dd$ and $G: \dd \to \cc$, with natural
+            isomorphisms 
+            \[
+                \phi: F \circ G \cong I_\dd \qquad \psi: G \circ F \cong I_\cc.
+            \]
+            Let $f: C \to C'$ be a morphism in $\cc$. Then observe
+            that the following diagram
+            \begin{center}
+                \begin{tikzcd}[column sep = 1.4cm, row sep = 1.4cm]
+                    C \arrow[d, "f"]\\
+                    C'
+                \end{tikzcd}
+                \hspace{1cm}
+                \begin{tikzcd}[column sep = 1.4cm, row sep = 1.4cm]
+                    G(F(C)) \arrow[r, "\psi_C"] \arrow[d, swap, "G(F(C))"]
+                    &
+                    C \arrow[d, "f"]\\
+                    G(F(C')) \arrow[r, swap, "\psi_C'"] 
+                    &
+                    C'
+                \end{tikzcd}
+            \end{center}
+            is commutative. In an equations, we have that $f = \psi_C'
+            \circ G(F(f)) \circ \psi_{C'}^{-1}$. Thus suppose that
+            $f_1, f_2: C \to C'$ are two morphisms such that $F(f_1)
+            =F(f_2)$. Then we get a pair of commutative diagrams,
+            similar to the ones above, which translate into the
+            equations 
+            \[
+                f_1 = \psi_{C}'\circ G(F(f_1)) \circ \psi_{C'}^{-1}  
+                \qquad 
+                f_2 = \psi_{C'}\circ G(F(f_2)) \circ \psi_{C'}^{-1}.
+            \]
+            Then if $F(f_1) = F(f_2)$, the above equations guarantee
+            that $f_1 = f_2$. Hence we see that $F$ is a faithful
+            functor. Since the statement is symmetric in both $F$ and
+            $G$, we have also that $G$ is faithful.
+            
+            To show that $F$ is full, suppose there exists a morphism
+            $h: F(C) \to F(C')$ for a pair of objects $C, C'$. Let $f
+            = \psi_{C'} \circ G(h) \circ \psi_C$. Then we have the
+            commutative squares
+            \begin{center}
+                \begin{tikzcd}[column sep = 1.4cm, row sep = 1.4cm]
+                    G(F(C)) \arrow[r, "\psi_C"] \arrow[d, swap, "G(h)"]
+                    &
+                    C \arrow[d, "f"]\\
+                    G(F(C')) \arrow[r, swap, "\psi_C'"] 
+                    &
+                    C'.
+                \end{tikzcd}
+                \hspace{1cm}
+                \begin{tikzcd}[column sep = 1.4cm, row sep = 1.4cm]
+                    G(F(C)) \arrow[r, "\psi_C"] \arrow[d, swap, "G(F(f))"]
+                    &
+                    C \arrow[d, "f"]\\
+                    G(F(C')) \arrow[r, swap, "\psi_C'"] 
+                    &
+                    C'.
+                \end{tikzcd}
+            \end{center}
+            and hence we have that $G(h) = G(F(f))$. But since $G$ is faithful, 
+            this implies that $h = F(f)$. Hence we have that there
+            exists a $f': C \to C'$ such that $h = F(f)$, so that $F$
+            is full. Again, by symmetry, we have that $G$ is full,
+            as desired. 
+
+            Now since $\phi: G \circ F \cong I_\cc$, we see that every
+            object $C$ is assigned an isomorphism $\phi_C: G(F(C)) \to
+            C$. Hence every object $C$ is isomorphic to some $G(D)$
+            where $D = F(C)$. 
+            
+            Similarly, since $\psi: F \circ G \cong I_\dd$, we know
+            that each object $D$ is assigned an isomorphism $\psi_D:
+            F(G(D)) \to D$. Hence every object $D$ is isomorphic to
+            some object $F(C)$ for $C = G(D)$. 
+
+            \item[$\bm{(iii) \implies (ii)}$]
+            Suppose $(iii)$ holds. For any  arbitrary object $C \in
+            \cc$, there exists an isomorphism $\eta_C: C \to G(D)$ for some
+            object $D \in \dd$. Denote such an object as $F_0(C)$. 
+            Now consider any other morphism $g: C
+            \to G(D')$. Then we have that 
+            \begin{center}
+                \begin{tikzcd}[column sep = 1.4cm, row sep = 1.4cm]
+                    C \arrow[r, "\eta_C"] \arrow[dr, swap, "g"] & G(F_0(C)) \arrow[d, dashed, "g \circ f^{-1}"]\\
+                    & G(D') 
+                \end{tikzcd}
+            \end{center}
+            is commutative. Now since $g \circ \eta_C^{-1}: G(F_0(C)) \to
+            G(D')$, and because $G$ is full, we know that there exists
+            a $h: F_0(C) \to D'$ such that $g \circ \eta_C^{-1} = G(h)$. To show
+            that this is unique, suppose there existed another $k:
+            G(F_0(C)) \to G(D')$ such that $g = k \circ \eta_C$. Then by the
+            same argument, there exists a $h': F_0(C) \to D'$ such that
+            $G(h') = k$. Furthermore, we'll have that 
+            \[
+                k = G(h') = g \circ \eta_C^{-1} \qquad G(h) = g \circ \eta_C^{-1}
+            \]
+            so that $G(h') = G(h)$. However, since $G$ is faithful, we
+            have that $h' = h$. Hence, $h$ is unique! 
+
+            Since $h$ is unique, this implies that $\eta_C : C \to G(F_0(C))$ is
+            universal from $C$ to $G$. Since such a universal
+            isomorphism exists for each object of $C$, we have by
+            Proposition 4.1 that there exists a functor $F: \cc \to
+            \dd$ with object function $F_0(C)$ which is left adjoint
+            to $G$. Hence we have an adjunction $(F, G, \eta',
+            \epsilon)$. However, since universal morphisms are unique,
+            we see that $\eta' = \eta$, so that $\eta$, our unit, is a
+            natural isomorphism. 
+            
+            Finally, observe that for any object $D$, we have that 
+            \[
+                G(\epsilon_D) \circ \eta_{G(D)} = 1_{G(D)}
+            \]
+            for our adjunction. Since $\eta_{G(D)}$ is an isomorphism,
+            we have that $G(\epsilon_D) = \eta_{G(D)}^{-1}$. Sine $G$
+            is full and faithful, we see that $\epsilon_D$ must be an isomorphism as well. 
+            
+            Thus, in total, we have an adjoint equivalence $(F, G, \eta,
+            \epsilon)$, as desired. 
+            
+            \item[$\bm{(ii) \implies (i)}$] This direction is clear,
+            since an adjoint equivalence automatically establishes an
+            equivalence of categories. 
+        \end{description}
+        With $(i) \implies (iii) \implies (ii) \implies (i)$, we see
+        that all of the conditions are equivalent. 
+    \end{prf}
+
+    \begin{example}
+        Let $R$ and $S$ be rings and consider the categories 
+        $R$\textbf{-Mod} and $S$\textbf{-Mod}. Then there are two different 
+        ``product'' categories we can form: The categories $(R \times S)$\textbf{-Mod} 
+        and $R\textbf{-Mod}\times S\textbf{-Mod}$
+    \end{example}
+
+    Next, we introduce some properties of equivalences. 
+    \begin{proposition}
+        Let $F: \cc \to \dd$ be an equivalence of categories with the
+        corresponding inverse functor $G: \dd \to \cc$. Let $f: C \to
+        C'$ be a morphism in $\cc$. Then  
+        \begin{description}
+            \item[$(i)$] $f$ is a monomorphism (epimorphism)
+            if and only if 
+            $F(f)$ is a monomorphism (epimorphism)
+            \item[$(ii)$] $C$ is initial (terminal) if and only if $F(C)$ is initial (terminal).
+        \end{description}
+    \end{proposition}
+
+    Consequently, we have that $f$ is an isomorphism (a monomorphism and epimorphism) if and only
+    if $F(F)$ is an isomorphism. 
+    \textcolor{Red!90}{Note this is not generally true!}
+    Additionally, we also have that
+    $C$ is a zero object (terminal and initial) if and only if
+    $F(C)$ is a zero object. Finally, observe that this
+    proposition is symmetric, so that the same conclusions hold
+    for morphisms and objects in $\dd$ governed by $G: \dd \to
+    \cc$. 
+
+    \begin{prf}
+        \begin{description}
+            \item[$\bm{(i)}$] 
+            \begin{description}
+                \item[$\bm{\implies}$] Suppose $f: C \to C'$ is a
+                monomorphism. Consider two morphisms $g,h: D \to F(C)$
+                such that $F(f) \circ g = F(f) \circ h$. By the
+                previous theorem, we know however that there exists an
+                object $A$ of $\cc$ such that $D \cong F(A)$. Hence
+                there exists an isomorphism $\theta: F(A) \to D$. We
+                then have the diagram:
+                \begin{center}
+                    \begin{tikzcd}
+                        F(A) \arrow[r, "\theta"]
+                        &
+                        D \arrow[r, swap, shift right =0.6ex, "g"]
+                        \arrow[r,shift right =-0.6ex, "h"] 
+                        &
+                        F(C) \arrow[r, "F(f)"]
+                        &
+                        F(C')
+                    \end{tikzcd}
+                \end{center}
+                Note that $h \circ \theta, g \circ \theta: F(A) \to
+                F(C)$. Since $F$ is full, we know that there exists 
+                morphism $k, k': A \to C$ such that $g \circ \theta =
+                F(k)$ and $h \circ \theta = F(k')$. 
+                Now observe that 
+                \begin{align*}
+                    &F(f \circ k) = F(f) \circ F(k) = F(f) \circ h \circ \theta\\
+                    &F(f \circ k')= F(f) \circ F(k') = F(f) \circ g \circ \theta.
+                \end{align*}
+                However, since $F(f) \circ h = F(f) \circ g$, we see
+                that $F(f \circ k) = F(f \circ k')$. However, since
+                $F$ is faithful, we have that $f \circ k = f \circ
+                k'$. But since $f$ is a monomorphism, we have that $k
+                = k'$. Hence $F(k) = F(k') \implies g \circ \theta = k
+                \circ \theta$, and since $\theta$ is an isomorphism,
+                we have that $h = g$. Therefore, $F(f)$ is also monic.
+
+                \item[$\bm{\impliedby}$] 
+                Suppose $f: C \to C'$ and $F(f)$ is monic. Consider
+                two morphism $g, h: A \to C'$ in $\cc$, and suppose
+                that $f \circ g = f \circ k$. Then $F(f) \circ F(g) =
+                F(f) \circ F(k) \implies F(g) = F(k)$, since $F(f)$ is
+                monic. However, $F$ is faithful, so that $g = k$. Hence $f$ is monic as well.
+            \end{description}  
+
+            \item[$\bm{(ii)}$] 
+            \begin{description}
+                \item[$\bm{\implies}$] Suppose $C$ is initial in
+                $\cc$. Let $D$ be an object in $\dd$. Then observe
+                that, since $\cc$ and $\dd$ are equivalent, there
+                exists an isomorphism $\theta: F(A) \to D$ for some
+                object $A$ of $\cc$. Since $C$ is initial, we know
+                that there exists a unique morphism $f_C: C \to A$.
+                Hence $F(f_C): F(C)\to F(A)$. We then have that $F(f_c)
+                \circ \theta : F(C) \to D$. Hence there exists a
+                morphism from $F(C)$ to $D$. 
+
+                Now suppose $f_1, f_2; F(C) \to D$. Then $\theta^{-1}
+                \circ f_1, \theta^{-1}\circ f_2: F(C) \to F(A)$. Since
+                $F$ is full, we know that there exist morphism $k_1,
+                k_1: C \to A$ such that $F(k_1) = \theta^{-1}\circ
+                f_1$ and $F(k_2) = \theta^{-1}\circ f_2$. However,
+                since $C$ is initial, we see that $k_1 = k_2 = f_C$.
+                Hence $f_1 = f_2$, so that there is exactly one
+                morphism $f_1=f_2:F(C) \to D$. 
+
+                Since $D$ was an arbitrary object of $\dd$, we have
+                that $F(C)$ is initial. 
+                
+                \item[$\bm{\impliedby}$] 
+                Suppose $F(C)$ is an initial object. Consider any
+                object $C'$ of $\cc$. Then since $F(C)$ is initial, there exists a unique
+                morphism $f: F(C) \to F(C')$. Since $F$ is full, we
+                know that this corresponds with a morphism $k: C \to
+                C'$ such that $F(k) = f$. Hence we have a unique
+                morphism $k: C \to C'$. And since $C'$ was an 
+                arbitrary object of $\cc$, we have that $C$ is
+                initial, as desired. 
+            \end{description}  
+        \end{description}
+    \end{prf}
+    The proofs in which we proved $f$ to be an epimorphism, and for $C$ 
+    to be a terminal object, are very similar. This proposition will soon be
+    generalized, but this gives us insight into how useful the concept
+    of equivalent categories truly is. 
+
+    \begin{exercise}[Exercise 4.4.3]
+        \textcolor{purple}{If $F: \cc \to \dd$ is full, faithful, and
+        surjective on objects (each $D \in \dd$ is $D = F(C)$ for some
+        $C$ in $\cc$), prove that there is an adjoint equivalence $(F,
+        G, 1, \epsilon): \dd \to \cc$ with unit the identity (and
+        thence that $G$ is a left-adjoint-right-inverse of $F$).
+        }
+    \end{exercise}
+
+    \begin{solution}
+        By Theorem 4.\ref{equivalence_theorem}, we know that an
+        equivalence of categories necessarily induces an adjoint
+        equivalence $(F, G, \eta, \epsilon)$. While we know that
+        $\eta: G \circ F \cong I_\dd$ as a natural transformation, we
+        now want to show that $\eta = I_\dd$, the identity natural
+        transformation. 
+
+        First recall what $\eta$ is. For any object $C$ of $\cc$, and
+        any morphism $f: C \to G(D)$, we have that 
+        \begin{center}
+            \begin{tikzcd}[column sep = 1.4cm, row sep = 1.4cm]
+                C \arrow[r, "\eta_C"] \arrow[dr, swap, "f"] 
+                &
+                G(F(C)) \arrow[d, dashed, "G(f')"]\\
+                & G(D) 
+            \end{tikzcd}
+            \hspace{1cm} 
+            \begin{tikzcd}[column sep = 1.4cm, row sep = 1.4cm]
+                F(C) \arrow[d, dashed, "f'"]\\
+                D
+            \end{tikzcd}
+        \end{center}
+        Since $F$ is surjective, we know that $D = F(C')$ for some $C'
+        \in \cc$. Hence $f': F(C) \to F(C')$. Since $F$ is full, we
+        know that this corresponds to a morphism $g: C \to C'$ such
+        that $F(g) = f'$.     
+    \end{solution}
+
+    \newpage
+    \section{Adjoints on Preorders.}
+
+    Interesting things happen when one applies adjoint concepts to
+    functors between preorders; ones which preserve order in a special
+    way. It's actually often the case where we have two mathematical
+    structures involving chains of arrows which reverse when
+    transferring between one and the other. We give such a concept a
+    definition first, before introducing a theorem about such structures. 
+     
+    \begin{definition}
+        Let $\pp$ and $\qqq$ be two preorders. If there exists functors 
+        $F: \pp \to \qqq$ and $G:\qqq \to \pp$ such that 
+        \[
+            F(P) \le Q \iff P \le G(Q),  
+        \]
+        That is, there exists $f:F(P) \to Q$ if and only if there
+        exists $g: P \to G(Q)$, then $F$ and $G$ are called a
+        \textbf{monotone Galois connection}. On the other hand, 
+        if we have that 
+        \[
+            F(P) \le Q \iff P \ge G(Q)
+        \]
+        then $F$ and $G$ are called a \textbf{antitone Galois
+        connection}. 
+    \end{definition}
+
+    \begin{thm}
+        Let $\mathcal{P}, \mathcal{Q}$ be two preorders, and suppose
+        $F: \mathcal{P} \to \mathcal{Q}\op$ and
+        $G:\mathcal{Q}\op \to \mathcal{P}$ are two order preserving 
+        functors. Then $F$ is
+        left adjoint to $G$ if and only if for all $P \in \mathcal{P}$
+        and $Q \in \mathcal{Q}$ 
+        \[
+            F(P) \ge Q \iff P \le G(Q).
+        \]
+        Given such an adjunction, we then have that our unit
+        establishes $P \le G(F(P))$ and the counit establishes $F(G(Q)) \le
+        Q$. 
+    \end{thm}
+
+    \begin{prf}
+        Observe that if $F$ is left adjoint to $G$, then we have the 
+        bijection 
+        \[
+            \hom_{\mathcal{Q}\op}(F(P), Q) \cong \hom_{\mathcal{P}}(P, G(Q)
+            )
+        \]
+        which gives rise to the desired correspondence; on the other
+        hand, such a bijection gives rise to an adjunction. 
+        With such an adjunction, we know that for each $P, Q$, there
+        exist morphisms $\eta_P: P \to G(F(P))$ and $\epsilon_Q:
+        F(G(Q)) \to Q$. Hence $P \le G(F(P))$  and $F(G(Q)) \ge Q$. 
+    \end{prf}
+
+    The above theorem came out of the observation that there is a
+    connection between fields, their subfields, and their groups of
+    automorphisms, an observation which arises in Galois Theory.
+    The goal of Galois Theory is to understand polynomials and their
+    roots; when they can be factorized, when and where we can find
+    their roots. The study of Galois groups is now used widely in
+    number theory. For example, part of Andrew Wiles' work in proving
+    Fermat's Last Theorem involved Galois representations.
+
+    
+    It was this theorem, rooted in Galois Theory, that motivated the
+    Theorem 4.\ref{galois_connections} at the beginning of this
+    section. 
+    The Fundamental Theorem
+    of Galois Theory is simply a \textit{stronger}, special case, since in
+    this case, the functors are literally inverses of each other. The
+    theorem we introduced, however, simply requires the functors to be
+    adjoints of one another. 
+
+    \begin{example}
+        Let $U, V$ be sets, and observe that their power sets $\mathcal{P}
+        (U)$ and $\mathcal{P}(V)$ form categories; specifically,
+        preorders, ordered by set inclusion. 
+
+        Suppose $f: U \to V$ is a function in \textbf{Set}. Then $f$
+        induces a functor $f_*: \mathcal{P}(U) \to \mathcal{P}(V)$,
+        where 
+        \[
+            f_*(X) = \{f(x) \mid x \in X\}.
+        \]
+        Note that if $X\subset X'$, then $f_*(X) \subset f_*(X')$.
+        Hence this is an order-preserving functor. Now observe that
+        $f$ also induces a functor $f^*:
+        \mathcal{P}(V) \to \mathcal{P}(U)$ where 
+        \[
+            f^*(Y) = \{x \mid f(x) \in Y\}.
+        \] 
+        Note that this also preserves order. In addition, we have that if 
+        $f_*(X) \le Y$, then this holds if  and only if $f(X) \subset
+        Y$. We then have that this holds if and only if $X \subset
+        f_*(Y)$, Hence we have a Galois connection, so that we may apply 
+        Theorem 4.\ref{galois_connections} to conclude that $f_*$ is
+        left adjoint to $f^*$.  
+    \end{example}
+
+
+
+
+
+    \begin{exercise}[4.5.2]
+        \textcolor{purple}{In a Galois connection between posets, show
+        that the subset $\{p \mid p = R(L(p))\}$ of $P$ equals $\{p
+        \mid p = R(q) \text{ for some } q\}$ and gives a bijection
+        from this set to the subset $\{q \mid q = L(R(q))\}$ of $Q$.
+        What are these sets in the case of a group of automorphisms? 
+        Does this generalize to an arbitrary adjunction?
+        }
+    \end{exercise}
+
+    \begin{solution}
+        In terms of notation, we have that $L: P \to Q\op$ and $R:
+        Q\op \to P$. In addition, let $P_1 = \{p \in P \mid p =
+        R(L(p))\}$, $P_2 = \{p \in P \mid p = R(q) \text{ for some
+        } q \}$ and $Q' = \{q \in Q \mid q=  L(R(q))\}$.
+        
+        Now let $p \in P$ be such that $p = R(L(p))$. 
+        Then clearly $p = R(q)$ for some $q \in Q$, so that $P_1
+        \subset P_2$. Now suppose $p = R(q)$ for some $q$. Since this
+        is a Galois connection, we have an adjunction, so that $q$ is
+        isomorphic to some object $L(p')$. However, an isomorphism in
+        a partially ordered category implies equality. Therefore $q =
+        L(p')$ so that $p = R(L(p'))$. 
+    \end{solution}
+
+
+    \newpage
+    \section{Exponential Objects and Cartesian Closed Categories.}
+    Before we introduce the notion of cartesian closed category, we 
+    begin with a preliminary proposition. 
+
+    \begin{proposition}
+        Suppose $\cc$ is a category, and consider the functors 
+        \[
+            U: C \to \textbf{1} \qquad \Delta: \cc \to \cc \times \cc.
+        \]
+        where $\textbf{1}$ is the one object category.
+        \begin{description}
+            \item[$\bm{(i)}$] If $U$ has a left adjoint, then 
+            $\cc$ has an initial object.   
+
+            \item[$\bm{(ii)}$] If $\Delta$ has a left adjoint, then
+            $\cc$ has finite coproducts.
+
+            \item[$\bm{(iii)}$] If $U$ has a right adjoint, then $\cc$
+            has a terminal object. 
+
+            \item[$\bm{(iv)}$] If $\Delta$ has a right adjoint, then 
+            $\cc$ has finite products.  
+        \end{description}
+    \end{proposition}
+    The proof is a straightforward, although tedious, so we sketch it
+    out as follows. 
+
+    \begin{prf}
+        
+    \textcolor{RedViolet}{\textbf{Adjoints of $\bm{U}.$}}
+    First, let $F: \textbf{1} \to \cc$ be a left adjoint of $U$. Suppose
+    $F(1) = I$ in $\cc$. Then for any $C \in \cc$, we have the bijection
+    $\hom_{\cc}(F(1), C) \cong \hom_{\textbf{1}}(1, U(C))$ which
+    implies that
+    \[ 
+        \hom_{\cc}(I, C) 
+        \cong \hom_{\textbf{1}}(1, 1).
+    \]
+    In other words, for each object $C$, there is exactly one and only
+    one morphism $i_C: I \to C$, which makes $I$ an initial object. 
+    
+    On
+    the other hand, suppose $G: {1} \to \cc$ is a right adjoint of
+    $U$. Then if $G(1) = T$, we have the bijection 
+    $\hom_{\textbf{1}}(U(C), 1) \cong \hom_{\cc}(C, G(1))$
+    which implies that 
+    \[
+        \hom_{\textbf{1}}(1, 1) \cong \hom_{\cc}(C, T)
+    \]
+    so that for each object $C$ there exists a unique morphism $t_C: C
+    \to T$, which makes $T$ a terminal object. Hence left and right
+    adjoints guarantee the existence of initial and terminal objects.\\
+    \\
+    \textcolor{RedViolet}{\textbf{Adjoints of $\bm{\Delta}$.}}
+    Let $F: \cc \times \cc \to \cc$ be a left adjoint of $\Delta$, so
+    that we have the relation
+    \begin{center}
+        \begin{tikzcd}[column sep = 1.4cm, row sep = 1.4cm]
+            \cc \times \cc \arrow[r, shift left=0.6ex,"F"] & \cc 
+            \arrow[l,shift right =-0.6ex, "\Delta"]
+        \end{tikzcd}
+    \end{center}
+    Then for each object $(A, B) \in \cc \times \cc$, we have the
+    morphism $\eta_{(A,B)}: (A, B) \to \Delta(F(A,B))$, which we can 
+    rewrite as $\eta_{(A,B)}: (A, B) \to (F(A,B), F(A,B))$.
+    We can put this into a universal diagram 
+    \begin{center}
+        \begin{tikzcd}[column sep = 1.4cm, row sep = 1.4cm]
+            (A, B) \arrow[r, "\eta_{(A,B)}"] 
+            \arrow[dr, swap, "f"]
+            & (F(A, B), F(A,B)) 
+            \arrow[d, dashed, "{(g' , g')}"]
+            \\
+            & (C, D)
+        \end{tikzcd}
+        \hspace{1cm}
+        \begin{tikzcd}[column sep = 1.4cm, row sep = 1.4cm]
+            (A, B) \arrow[r, "{(i,j)}"]
+            \arrow[dr,swap, "f"]
+            & (A \amalg B, A \amalg B) 
+            \arrow[d, dashed, "{(f', f')}"]
+            \\
+            & (C, D) 
+        \end{tikzcd}
+    \end{center}
+    where the diagram on the right is the coproduct diagram of $A \times
+    B$. Since both of the pairs $\Big((F(A,B), F(A,B)), \eta_{(A,B)}\Big)$ 
+    and $\Big((A\times B, A \times B), (\pi_A, \pi_B)\Big)$ are universal
+    from $(A, B)$ to $\Delta$, they must be isomorphic. As two
+    universal objects are isomorphic, we therefore have, 
+    \[
+        F(A, B) \cong A \amalg B
+    \]
+    so that a left adjoint gives rise to products. 
+    
+
+    Let $G: \cc \times \cc \to \cc$ be a right adjoint of $\Delta$, so
+    that we have 
+    \begin{center}
+        \begin{tikzcd}[column sep = 1.4cm, row sep = 1.4cm]
+            \cc \arrow[r, shift left=0.6ex,"\Delta"] & \cc \times \cc
+            \arrow[l,shift right =-0.6ex, "G"]
+        \end{tikzcd}
+    \end{center}
+    The adjunction gives rise to a universal morphism
+    $\epsilon_{(A,B)}: \Delta(G(A,B)) \to (A,B)$, which we can rewrite
+    as $\epsilon_{(A,B)}: (G(A,B), G(A,B)) \to (A,B)$. We then have
+    the diagram 
+    \begin{center}
+        \begin{tikzcd}[column sep = 1.4cm, row sep = 1.4cm]
+            (A, B) 
+            & (G(A, B), G(A,B)) 
+            \arrow[l, swap, "\epsilon_{(A,B)}"] 
+            \\
+            & (C, D) \arrow[ul, "f"]
+            \arrow[u, dashed, swap, "{(g' , g')}"]
+        \end{tikzcd}
+        \hspace{1cm}
+        \begin{tikzcd}[column sep = 1.4cm, row sep = 1.4cm]
+            (A, B) 
+            & (A \times B, A \times B) 
+            \arrow[l, swap, "{(\pi_A, \pi_B)}"]
+            \\
+            & (C, D) 
+            \arrow[ul, "f"]
+            \arrow[u, swap, dashed, "{(f', f')}"]
+        \end{tikzcd}
+    \end{center}
+    where the diagram on the right is the product diagram of $A \times B$. 
+    Thus we see that\\
+    $\Big((G(A,B), G(A, B)), \epsilon_{(A,B)}\Big)$ 
+    and $\Big((A\times B, A \times
+    B), (\pi_A, \pi_B)\Big)$ are both universal from $\Delta$ to $(A, B)$.
+    As universal objects from the same construction are isomorphic, we
+    have that 
+    \[
+        G(A, B) \cong A \times B
+    \]
+    so that this adjunction gives rise to coproducts. 
+    \end{prf}
+    
+    \textcolor{MidnightBlue}{Thus if we have left and right adjoints
+    of the functors $U$ and $\Delta$, we get intial and terminal
+    objects as 
+    well as finite products and coproducts. Note, however, that finite
+    products require (and give rise to) initial objects, and similarly
+    that finite coproducts require (and give rise to) terminal
+    objects.} 
+
+    Next, we make the following definition. 
+    \begin{definition}
+        Let $\cc$ be a category with finite products. Suppose $Y, Z$ are 
+        objects in $\cc$. We say $Z^Y$ is an \textbf{exponent object} in
+        $\cc$ if there exists a morphism $\textbf{eval}: (Z^Y \times Y)
+        \to Z$ which is universal from $-\times Y: \cc \to \cc$ to the
+        object $Z$. 
+
+        Visually, this translates into requiring that the following
+        diagram commutes. 
+        \begin{center}
+            \begin{tikzcd}[column sep = 1.4cm, row sep = 1.4cm]
+                Z & Z^Y \times Y \arrow[l, swap, "{\textbf{eval}}"]\\
+                & X \times Y \arrow[ul, "g"] 
+                \arrow[u, swap, dashed, "{(h, \text{id}_Y)}"]
+            \end{tikzcd}
+            \hspace{1cm}
+            \begin{tikzcd}[column sep = 1.4cm, row sep = 1.4cm]
+                Z^Y \\
+                X \arrow[u, dashed, swap, "h"]
+            \end{tikzcd}
+        \end{center}
+    \end{definition}
+    \textcolor{Purple}{Hence, every morphism,
+    with the domain being any product with $\bm{Y}$, and codomain being
+    $\bm{Z}$, uniquely factors through $\bm{Z^Y \times Y}$.}
+
+    Here, we'll stop and look at a pretty cool real world example.
+
+    \begin{example}
+        Consider the category \textbf{Set}. Then we know that, for any
+        two given objects $Y$ and $Z$, we can form a set of functions 
+        between the objects:
+        \[
+            \hom_{\textbf{Set}}(Y, Z).
+        \]
+        Thus, the collection of morphisms from sets $Y$ to $Z$ is
+        \textit{itself a set}, and hence a member of \textbf{Set}.
+        Now let $A$ be any object in $\textbf{Set}$, and let 
+        \[
+            X = \{f \in \textbf{Set} \mid f: A \times Y \to Z\}.            
+        \]
+        Define $\textbf{eval}: \hom_{\textbf{Set}}(Y, Z)\times Y \to
+        Z$ as, who would've guessed, the evaluation:
+        \[
+            \textbf{eval}(f(y), y') = f(y').
+        \] 
+        Now for each $a \in A$, we can define a function $g_a: X
+        \times Y \to Z$ where for each $f: A \times Y \to Z$
+        \[
+            g_a(f, y') = f(a, y') \in Z
+        \]
+        so this is sort of a "double" evaluation function.
+        Then for every such $g_a$, there exists a unique $h_a: X \to
+        \hom_{\textbf{Set}}(Y, Z)$ where for each $f: A \times Y \to Z$
+        \[ 
+            h_a(f) = f(a, y): Y \to Z.
+        \] 
+        Thus we get the following commutative diagram:
+        \begin{center}
+            \begin{tikzcd}[column sep = 1.4cm, row sep = 1.4cm]
+                Z & \hom_{\textbf{Set}}(Y, Z) \times Y \arrow[l, swap, "
+                {\textbf{eval}}"]\\
+                & X \times Y \arrow[ul, "g_a"] 
+                \arrow[u, swap, dashed, "{(h_a, \text{id}_Y)}"]
+            \end{tikzcd}
+            \hspace{1cm}
+            \begin{tikzcd}[column sep = 1.4cm, row sep = 1.4cm]
+                Z^Y \\
+                X \arrow[u, dashed, swap, "h_a"]
+            \end{tikzcd}
+        \end{center}
+        What is this? What's really going on and why do we care?\\
+        \textcolor{MidnightBlue}{This construction relates to a concept in
+        computer science called
+        \textbf{currying}. Applied category theory in computer science
+        generally works in \textbf{Set}, so that's why this idea
+        transfers over.
+        \\
+        \\
+        The idea is: given a multivariable function, do we evaluate
+        all arguments at once, or evaluate just one argument, thereby
+        sending a function to another function? Both methods can offer 
+        advantages. But universality tells us that, in the end, they're the same thing.}
+
+        We can think of $X \times Y$ as being elements $(f(a, y),
+        y')$ where $f: A \times Y \to Z$. Then $h$ evaluates $f(a',y)$ for
+        some $a'$, thus sending the function $f: A \times Y \to Z$ to the 
+        function $f:Y \to Z$. That is, 
+        \[
+            (h \times \id_y) \circ \big( (f(a, y), y') \big) = (f(a', y), 
+            y').
+        \]
+        Finally, $\textbf{eval}$ evaluates $f(a', y)$
+        at $y'$, returning an object in $Z$.
+
+        Alternatively, we can start with the object $(f(a, y), y')$, and
+        simply act on $g$, which evaluates it at both $a'$ and $y'$,
+        returning the same object $f(a', y')$. 
+        Thus in the realm of computer science, we may think of the
+        morphisms $(h, \id_y)$, $g$ and \textbf{eval} as commands, as this
+        is how currying is often done. 
+
+        The universality of this constructions states that both methods
+        are the same; that is, 
+        \[
+            g = \textbf{eval}\circ (h \times \id_Y).
+        \]
+
+        Since we started with arbitrary objects in \textbf{Set}, the
+        consequence for computer science is that we can always curry
+        these functions. Typically what is curried are types, such as 
+        \textbf{Bool} or \textbf{Int}. 
+    \end{example}
+
+    In an arbitrary category of finite products, the exponential
+    object is just a generalization of currying. But in \textbf{Set},
+    we see that an exponential object exists for any two pairs of
+    sets. Thus, can we turn this exponential assignment into a
+    functor? Yes,we can. 
+
+    \begin{definition}
+        Let $\cc$ have finite products and exponential objects for
+        every pair of objects. Then for each $Y$ in $\cc$ we can create an 
+        \textbf{exponential functor} $E^Y: \cc \to \cc$ as follows. 
+        \begin{description}
+            \item[Objects.] For each $Z \in \cc$, we define $E^Y(Z) =
+            Z^Y$. 
+
+            \item[Morphisms.] Let $f: A \to B$ be in $\cc$. Then we 
+            note that we have the following diagrams. 
+            \begin{center}
+                \begin{tikzcd}[column sep = 1.4cm, row sep = 1.4cm]
+                    A & A^Y \times Y \arrow[l, swap, Red,
+                    "{\textbf{eval}_A}"]\\
+                    & X \times Y \arrow[ul, "g"] 
+                    \arrow[u, swap, dashed, "{(h, \text{id}_Y)}"]
+                \end{tikzcd}
+                \hspace{0.5cm}
+                \begin{tikzcd}[column sep = 1.4cm, row sep = 1.4cm]
+                    A^Y \\
+                    X \arrow[u, dashed, swap, "h"]
+                \end{tikzcd}
+                \hspace{1cm}
+                \begin{tikzcd}[column sep = 1.4cm, row sep = 1.4cm]
+                    B & B^Y \times Y \arrow[l, swap, RoyalBlue,
+                     "{\textbf{eval}_B}"]\\
+                    & X \times Y \arrow[ul, "g'"] 
+                    \arrow[u, swap, dashed, "{(h', \text{id}_Y)}"]
+                \end{tikzcd}
+                \hspace{0.5cm}
+                \begin{tikzcd}[column sep = 1.4cm, row sep = 1.4cm]
+                    B^Y \\
+                    X \arrow[u, dashed, swap, "h'"]
+                \end{tikzcd}
+            \end{center}
+            Now observe that we can form the morphism $f \circ
+            \textcolor{Red}{\textbf{eval}_A} : A^Y \times Y \to B$. 
+            Hence by universality
+            of $B^Y$, there exists a unique morphism $h': A^Y \to B^Y$.
+            Diagramatically, we take the above diagram on the right, and
+            replace $X$ with $A^Y$ and $g$ with $f \circ \textbf{eval}_A$.
+            \begin{center}
+                \begin{tikzcd}[column sep = 1.4cm, row sep = 1.4cm]
+                    B & B^Y \times Y \arrow[l, swap, RoyalBlue, 
+                    "{\textbf{eval}_B}"]\\
+                    & A^Y \times Y 
+                    \arrow
+                    [ul, "f \circ \textcolor{Red}{\textbf{eval}_A}"] 
+                    \arrow[u, swap, dashed, "{(h', \text{id}_Y)}"]
+                \end{tikzcd}
+                \hspace{0.5cm}
+                \begin{tikzcd}[column sep = 1.4cm, row sep = 1.4cm]
+                    B^Y \\
+                    A^Y \arrow[u, dashed, swap, "h'"]
+                \end{tikzcd}
+            \end{center}
+            Since $h$ exists if $f: A \to B$ exists, we therefore define 
+            \[
+                E^Y(f: A \to B) = h': A^Y \to B^Y
+            \]
+            where $h'$ is the unique morphism such that 
+            \[
+                f \circ \textcolor{Red}{\textbf{eval}_A}
+                = \textcolor{RoyalBlue}{\textbf{eval}_A} \circ (h', \id_Y).
+            \]
+        \end{description}    
+    \end{definition}
+    Note that there's one more cool connection here. If we have a
+    category 
+    with finite products, and one in which exponential objects exist,
+    then we have a morphism $\textbf{eval}_A: A^Y \times Y
+    \to A$ which is universal from the functor $-\times Y: \cc \to
+    \cc$ 
+    to $A$.
+    \textbf{Therefore, this is a counit!} There's an adjunction hiding
+    here. 
+
+    \begin{proposition}
+        Let $\cc$ be a category with finite products and exponential
+        objects. Let $Y$ be an object, and define the functors 
+        \begin{align*}
+            P_Y &= (-) \times Y: \cc \to \cc\\
+            E^Y &= (-)^Y: \cc \to \cc.
+        \end{align*}
+        Then $E^Y$ is right adjoint to $P_Y$ for every $Y \in \cc$.
+        Therefore, 
+        \[
+            \hom_{\cc}(X \times Y, Z) \cong \hom_{\cc}(X, Z^Y)
+        \]
+        which is natural for all objects $X, Y, Z \in \cc$. 
+    \end{proposition}
+
+    \begin{prf}
+        For each object $A \in \cc$, the exponential object gives rise
+        to a universal morphism $\textbf{eval}_A: A^Y \times Y \to A$.
+        So on one hand, we get the diagram on the left
+        \begin{center}
+            \begin{tikzcd}[column sep = 1.4cm, row sep = 1.4cm]
+                A & A^Y \times Y \arrow[l, swap,
+                "{\textbf{eval}_A}"]\\
+                & X \times Y \arrow[ul, "g"] 
+                \arrow[u, swap, dashed, "{(h, \text{id}_Y)}"]
+            \end{tikzcd}
+            \hspace{0.5cm}
+            \begin{tikzcd}[column sep = 1.4cm, row sep = 1.4cm]
+                A^Y \\
+                X \arrow[u, dashed, swap, "h"]
+            \end{tikzcd}
+            \hspace{1cm}
+            \begin{tikzcd}[column sep = 1.4cm, row sep = 1.4cm]
+                A & P_Y(E^Y(A)) \arrow[l, swap,
+                "{\textbf{eval}_A}"]\\
+                & P_Y(X) \arrow[ul, "g"] 
+                \arrow[u, swap, dashed, "{(h, \text{id}_Y)}"]
+            \end{tikzcd}
+            \hspace{0.5cm}
+            \begin{tikzcd}[column sep = 1.4cm, row sep = 1.4cm]
+                A^Y \\
+                X \arrow[u, dashed, swap, "h"]
+            \end{tikzcd}
+        \end{center}
+        but on the other hand, the diagram on the right is exactly
+        equivalent. Hence we see that $\textbf{eval}$ is actually a
+        counit $\epsilon_A: P_Y(E^Y(A)) \to A$. Since such a counit
+        exists for each $A$, this gives rise to an adjunction, so that
+        $E^Y$ is right adjoint to $P_Y$ for every object $Y$ in $\cc$.
+    \end{prf}
+
+    Finally, we have everything we need to move onto to the main point
+    of this section. 
+
+    \begin{definition}
+        Let $\cc$ be a category. We say $\cc$ is a \textbf{cartesian closed 
+        category} if the functors 
+        \[
+            U: \textbf{C} \to \textbf{1} 
+            \qquad
+            \Delta: \cc \to \cc  \times \cc 
+            \qquad 
+            P_Y = (-)\times Y: \cc \to \cc
+        \]
+        have right adjoints. In other words, $\cc$ is 
+        \textbf{cartesian closed} if 
+        \begin{itemize}
+            \item[1.] There exists a terminal object $T$ 
+            \item[2.] $\cc$ has finite products 
+            \item[3.] An exponential object $A^Y$ for every $A \in
+            \cc$ for all $Y$.   
+        \end{itemize}
+    \end{definition}
+
+    Thus the work we just did was used in showing that our
+    three-bullet point list is another definition of a cartesian
+    closed category. Often, only one definition or the other is
+    offered, and it's not trivial how they're equivalent, so it can be
+    confusing. Thus our work shows that either definition is
+    equivalent. 
+
+    Some examples include \textbf{Set}, which we already dealt with.
+    \textbf{Set} has a terminal object (empty set), has finite
+    products, and has an exponential object. More interesting is
+    \textbf{Cat}, which is catesian closed. In this case, \textbf{1}
+    is the terminal object, \textbf{Cat} is closed under finite
+    products, and the exponential object exists. In this case,
+    $\cc^{\bb}$ is simply the functor category! 
+
+    \textcolor{MidnightBlue}{At first, it seemed silly to define
+    $\cc^\bb$ as the category of functors \textit{from} $\bb$ to
+    $\cc$, since it seemed that it ought to be denoted $\bb^\cc$.
+    However, we see that this was really just because of the concept
+    of exponentials, which isn't known when being introduced functor
+    categories.}
+    
+    \begin{exercise}[Exercise 4.6.1]
+        \begin{enumerate}
+            \item \textcolor{purple}{If 
+            $U$ is any set, show that the preorder
+            $\mathcal{P}(U)$ of all subsets of $U$ is a cartesian 
+            closed category.}
+
+            \item \textcolor{purple}{
+            Show that any Boolean algebra, regarded as a
+            preorder, is cartesian closed.}
+        \end{enumerate}
+        \vspace{-0.8cm}
+    \end{exercise}
+
+    \begin{solution}
+        \begin{enumerate}
+            \item To show that $\mathcal{P}(U)$ is cartesian closed, 
+            we simply check the criteria. First, $\mathcal{P}(U)$ contains 
+            a terminal object; since every $X \in \mathcal{P}(U)$ is a
+            subset of $U$, we have that there exists a unique 
+            morphism $t_X: X \to U$. 
+
+            In addition, we have finite products. Let $A, B$ be two
+            elements of $\mathcal{P}(U)$. Then if $D \le A$ and $D \le
+            B$, we have that $D \le A \cap B$. Hence the following
+            diagram commutes. 
+            \begin{center}
+                \begin{tikzcd}[column sep = 1.4cm, row sep = 1.4cm]
+                    & \arrow[dl, swap, "f"] D \arrow[d, dashed, "h"]
+                    \arrow[dr, "g"]& \\
+                    A & \arrow[l, "i"] A \cap B \arrow[r, swap, "j"] & B 
+                \end{tikzcd}
+            \end{center}
+            Hence we see  that $\cap$ is actually a product in our 
+            preorder! Since we may take finite intersections in 
+            $\mathcal{P}(U)$, we have finite "products".
+            
+            Finally, observe that the left diagram 
+            \begin{center}
+                \begin{tikzcd}[column sep = 1.4cm, row sep = 1.4cm]
+                    A & A^Y \times Y \arrow[l, swap,
+                    "{\textbf{eval}_A}"]\\
+                    & X \times Y \arrow[ul, "g"] 
+                    \arrow[u, swap, dashed, "{(h, \text{id}_Y)}"]
+                \end{tikzcd}
+                \hspace{1cm}
+                \begin{tikzcd}[column sep = 1.4cm, row sep = 1.4cm]
+                    A & A^Y \cap Y \arrow[l, swap,
+                    "i"]\\
+                    & X \cap Y \arrow[ul, "g"] 
+                    \arrow[u, swap, dashed, "h"]
+                \end{tikzcd}
+            \end{center}
+            becomes the diagram on the right in this category. Here 
+            we denote $i$ has the inclusion.
+            Now
+            suppose that $g: X \cap Y \to A$, meaning that $X \cap Y \le A$.
+            Then $X \le A$, so  that there exists 
+            a morphism $h: X \to A^Y = X \to A$. Hence we get the
+            diagram 
+            \begin{center}
+                \begin{tikzcd}[column sep = 1.4cm, row sep = 1.4cm]
+                    A & A \cap Y \arrow[l, swap,
+                    "i"]\\
+                    & X \cap Y \arrow[ul, "g"] 
+                    \arrow[u, swap, dashed, "h"]
+                \end{tikzcd}
+                \hspace{1cm}
+                \begin{tikzcd}[column sep = 1.4cm, row sep = 1.4cm]
+                    A \\
+                    X \arrow[u, "h"]
+                \end{tikzcd}
+            \end{center}
+            and from this perspective, we see that $A^Y = A$. Hence
+            exponentials trivially exist in our preorder. 
+
+            Since $\mathcal{P}(U)$ contains a terminal object, finite
+            products, and exponential objects, we have that any
+            preorder $\mathcal{P}(U)$ is cartesian closed. 
+
+            Obviously wrong, so what's the exponential?
+        \end{enumerate}
+    \end{solution}
