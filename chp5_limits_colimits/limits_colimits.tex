@@ -1,0 +1,2371 @@
+\chapter{Limits and Colimits.}
+    Before we begin, we reintroduce certain terminology. 
+    \begin{definition}
+        Let $\cc$ be a category. We define a \textbf{diagram} of a
+        \textbf{shape} $J$ to be a functor $F:J \to \cc$. 
+        \\
+        Here, $J$ is
+        generally thought of as an indexing category.
+        We use the word diagram because the image of $J$ under $F$ is
+        literally a diagram of morphisms. 
+    \end{definition}
+    
+    \begin{center}
+        \begin{tikzcd}[column sep =  1.4cm, row sep = 1.4cm]
+            & i \arrow[dr, "g"]& \\
+            j \arrow[ur, "f"] \arrow[rr, swap, "h"]& & k
+        \end{tikzcd}
+        \begin{tikzcd}
+            \textcolor{white}{b} \arrow[r, scale = 1.5, "F"] 
+            & \textcolor{white}{b}
+        \end{tikzcd}
+        \begin{tikzcd}[column sep =  1.4cm, row sep = 1.4cm]
+            & F(i) \arrow[dr, "F(g)"]& \\
+            F(j) \arrow[ur, "F(f)"] \arrow[rr, swap, "F(h)"]& & F(k) 
+        \end{tikzcd}
+    \end{center}
+    In this example, on the left we have the category $J$, and on the
+    right we have the diagram of $J$ in $\cc$. Now recall the \textbf{diagonal functor}
+    \[
+        \Delta : \cc \to \cc^J   
+    \]
+    is a functor which sends each object $C \in \cc$ to the functor
+    $\Delta(C): J \to \cc$, where, for each $j \in J$, we have 
+    \[
+        \Delta(C)(j) = C.  
+    \]
+    This motivates the following concept.
+    \begin{definition}
+        Let $\cc$ be a category and $F: J \to \cc$ be a functor, where
+        $J$ is a small category. We define a 
+        \textbf{cone over $\bm{F}$ with apex $\bm{C}$}
+        to be a natural transformation 
+        \[
+            \Delta(C) \to F.  
+        \]
+        \textbf{\textcolor{purple}{Equivalently}}, it
+        is an object $C$ equipped with morphisms 
+        $u_i: C \to F(i)$ for each $i \in J$ 
+        such that, for every $f: i \to j$ in $J$,
+        the diagram 
+        \begin{center}
+            \begin{tikzcd}[column sep =  1.4cm, row sep = 1.4cm]
+                & C \arrow[dl, swap, "u_i"] \arrow[dr, "u_j"]& \\
+                F(i) \arrow[rr, swap, "f"]
+                &  & F(j) 
+            \end{tikzcd} 
+        \end{center}
+        commutes.
+
+        In the same fashion, we may define a \textbf{cocone with base
+        $C$ under $F$} as a natural transformation 
+        \[
+            F \to \Delta(C).
+        \]
+        \textbf{\textcolor{purple}{Equivalently}}, it 
+        is an object $C$ equipped with morphisms $u_i: F(i) \to C$ 
+        for each $i \in J$ such that, for every $f: i \to j$ in $J$,
+        the diagram
+        \begin{center}
+            \begin{tikzcd}[column sep =  1.4cm, row sep = 1.4cm]
+                F(i) \arrow[rr, "f"]
+                \arrow[dr,swap, "u_i"]
+                &  & F(j) \arrow[dl, "u_j"]\\
+                & C &
+            \end{tikzcd} 
+        \end{center}
+        commutes. 
+    \end{definition}
+
+    \textcolor{MidnightBlue}{Alternatively, we could have defined the
+    above, second definition as a "cone," and then defined the first
+    definition as the "cocone". Why? Well, it's the same arbitrary
+    nature in which physicists encountered electrical charge; one was
+    named negative, the other was named positive. 
+    For all we know, in a parallel
+    universe protons were said to have "negative" charge and 
+    electrons were said to have "positive" charge. In the end, nomenclature  
+    is arbitrary when it comes to duality.
+    }
+
+    Try to recall: what is a \textbf{limit} in a category $\cc$?
+    When we speak of one, we're talking about the limit of a functor 
+    \[
+        F: J \to \cc.        
+    \]
+    There are multiple, but 
+    equivalent ways to think about it. 
+    \begin{itemize}
+        \item A limit can be thought of as a \textbf{universal object} 
+        $(\Lim F, u: \Delta(\Lim F) \to F)$ from $\Delta$ to $F$. 
+        \begin{center}
+            \begin{tikzcd}[column sep =  1.4cm, row sep = 1.4cm]
+                F & \Delta(\Lim F) \arrow[l, swap, "u"]\\
+                & \Delta(C) \arrow[ul, "f"] \arrow[u, dashed, swap, "\Delta(h)"]
+            \end{tikzcd}
+            \hspace{1cm}
+            \begin{tikzcd}[column sep =  1.4cm, row sep = 1.4cm]
+                \Lim F \\ 
+                C \arrow[u, dashed, swap, "h"]
+            \end{tikzcd}
+        \end{center}
+        
+        \item A limit can also be thought of as a \textbf{universal
+        cone}. We know that if we have a limit, then we have an 
+        object $\Lim F$ and
+        a natural transformation $\Delta(\Lim F) \to F$. Hence, this
+        forms a cone. As we also pointed out, a cone induces a family 
+        of morphisms $u_i: \Lim F \to F(i)$. 
+
+        What makes this cone a "universal" cone is the fact that, 
+        for any other cone $\Delta(C) \to F$, the above diagram establishes
+        the diagram below. 
+        \begin{center}
+            \begin{tikzcd}[column sep = 1.4cm, row sep = 1.4cm]
+                & C \arrow[d, dashed, "h"] \arrow[ddl,swap, bend right = 20,
+                "f_i"] \arrow[ddr, bend left = 20, "f_j"] &\\
+                & \arrow[dl, swap, "u_i"] \Lim F 
+                \arrow[dr, "u_j"] & \\
+                F(i)
+                \arrow[rr, "F(g)"] 
+                & 
+                &
+                F(j) 
+            \end{tikzcd}
+        \end{center}
+
+        \item In a better way, one can think of it as being a
+        \textcolor{NavyBlue}{\textit{universal spider!}} One could also
+        think of it as a squished spider, or more optimistically, a two
+        dimensional spider. 
+        \begin{center}
+            \begin{tikzcd}[column sep =  1.4cm, row sep = 1.4cm]
+                & & C \arrow[d, dashed, "f"] 
+                \arrow[ddll, bend right, swap, "v_i"]
+                \arrow[ddl, bend right, crossing over, swap, "v_j"]
+                \arrow[ddr, bend left, crossing over, "v_k"]
+                \arrow[ddrr, bend left, "v_l"]
+                & &  \\
+                & & \textcolor{NavyBlue}{\Lim F}
+                \arrow[dll, NavyBlue, near start, swap, "u_i"]
+                \arrow[dl, NavyBlue, "u_j"] 
+                \arrow[dr, NavyBlue, swap, "u_k"]
+                \arrow[drr, NavyBlue, near start, "u_l"] & & \\
+                F(i) & F(j) & \cdots & F(k) & F(l)
+            \end{tikzcd}
+        \end{center}
+    \end{itemize}
+
+    Now try to recall what \textbf{Colimits} of a diagram $F: J \to
+    \cc$ are. As before, there are multiple, but 
+    equivalent ways to think about it. 
+    \begin{itemize}
+        \item A colimit can be thought of as a \textbf{universal object} 
+        $(\Colim F, u: F \to \Delta(\Colim F))$ from $F$ to $\Delta$. 
+        \begin{center}
+            \begin{tikzcd}[column sep =  1.4cm, row sep = 1.4cm]
+                F \arrow[r, "u"] \arrow[dr, swap, "f"]
+                & \Delta(\Colim F) \arrow[d, dashed, "\Delta(h)"]\\
+                & \Delta(C)  
+            \end{tikzcd}
+            \hspace{1cm}
+            \begin{tikzcd}[column sep =  1.4cm, row sep = 1.4cm]
+                \Lim F \arrow[d, dashed, swap, "h"]\\ 
+                C 
+            \end{tikzcd}
+        \end{center}
+        
+        \item A colimit can also be thought of as a \textbf{universal
+        cocone} (or just cone). Given a colimit of $F: J \to \cc$, we have an 
+        object $\Colim F$ and
+        a natural transformation $u: F \to \Delta(\Colim F)$. Hence, this
+        forms a cocone (again, or just cone). 
+        As we also pointed out, a cocone induces a family 
+        of morphisms $u_i: F(i) \to \Colim F $. 
+
+        What makes this cocone a "universal" cocone is the fact that, 
+        for any other cocone $F \to \Delta(C)$, the above diagram establishes
+        the diagram below. 
+        \begin{center}
+            \begin{tikzcd}[column sep = 1.4cm, row sep = 1.4cm]
+                F(i) \arrow[rr, "F(g)"] \arrow[ddr,swap, bend right = 20,
+                "f_i"] \arrow[dr, swap, "u_i"]
+                & 
+                &
+                F(j) \arrow[ddl, bend left = 20, "f_j"]
+                \arrow[dl, "u_j"]
+                \\
+                & \Lim F \arrow[d, dashed, "h"] &\\
+                & C &
+            \end{tikzcd}
+        \end{center}
+
+        \item One can also think of this as a 
+        \textcolor{NavyBlue}{\textit{universal spider!}} 
+        Or it can be thought of as a 
+        \textcolor{NavyBlue}{\textit{jealous object}}; if any other
+        object $C$ is "the center of attention,"i.e. has morphisms 
+        pointing to it, $\Colim F$ will get
+        angry, so the morphisms have to go through $\Colim F$ via $f$ 
+        first before they reach $C$.
+        \begin{center}
+            \begin{tikzcd}[column sep =  1.4cm, row sep = 1.5cm]
+                & & C \arrow[<-, d, dashed, "h"] 
+                \arrow[<-, ddll, bend right, swap, "f_i"]
+                \arrow[<-, ddl, bend right, crossing over, swap, "f_j"]
+                \arrow[<-, ddr, bend left, crossing over, "f_k"]
+                \arrow[<-, ddrr, bend left, "f_l"]
+                & &  \\
+                & & \textcolor{NavyBlue}{\Colim F}
+                \arrow[<-, dll, NavyBlue, near start, swap, "u_i"]
+                \arrow[<-, dl, NavyBlue, "u_j"] 
+                \arrow[<-, dr, NavyBlue, swap, "u_k"]
+                \arrow[<-, drr, NavyBlue, near start, "u_l"] & & \\
+                F(i) & F(j) & \cdots & F(k) & F(l)
+            \end{tikzcd}
+        \end{center}
+    \end{itemize}
+
+    \newpage
+    \section{Every Limit in Set; Creation of Limits}
+    
+    While we have been discussing limits and colimits of functors, we generally 
+    consider the case in which they exist. However, they sometimes don't exist; after all, 
+    limits and colimits are universal objects. 
+    Categories which do admit 
+    these constructions are  often convenient places to work inside of.  
+    This is analogous to \textbf{complete metric spaces} $X$,  
+    where  every Cauchy sequence is convergent in $X$. With such an 
+    analogy in  mind, the following definition should make sense.
+
+    \begin{definition}
+        Let $\cc$ be a category. We say $\cc$ is \textbf{complete} if
+        all small diagrams in $\cc$ has limits in $\cc$; in other words, 
+        if every functor $F: J \to \cc$, where $J$ is a small 
+        category, has a limit in $\cc$.  
+    \end{definition}
+    Similarly, we define:       
+    \begin{definition}
+        Let $\cc$ be a category. We say $\cc$ is \textbf{cocomplete}
+        if all small diagrams in $\cc$ has colimits in $\cc$. In other words, 
+        every functor $F: J \to \cc$, where $J$ is a small category, 
+        has a colimit in $\cc$.
+    \end{definition}
+
+    Now we show how to construct limits inside of \textbf{Set},
+    thereby showing that this category is complete. 
+
+    \begin{example}
+        For this example, let $J = \omega\op$, where $\omega$ is the 
+        preorder of natural numbers. Since we are asking for the 
+        opposite category, we reverse the arrows and 
+        get the diagram below.
+        \begin{center}
+            \begin{tikzcd}
+                0 \arrow[out=120,in=60,looseness=3,loop]
+                &
+                1 \arrow[l] \arrow[out=120,in=60,looseness=3,loop]
+                &
+                2 \arrow[l] \arrow[out=120,in=60,looseness=3,loop]
+                &
+                3 \arrow[l] \arrow[out=120,in=60,looseness=3,loop]
+                &
+                \arrow[l]
+                \cdots
+            \end{tikzcd}
+        \end{center}
+        Now suppose $F: \omega\op \to \textbf{Set}$ is a functor. 
+        Then if we write $F(i) = A_i$ with $A_i \in \textbf{Set}$, 
+        then we see that the image of $F$ is a family of sets 
+        $F_n$ with functions $f_{n}:A_{n+1} \to A_{n}$: 
+        \begin{center}
+            \begin{tikzcd}
+                A_0
+                &
+                A_1 \arrow[l,swap, "f_0"]
+                &
+                A_2 \arrow[l,swap, "f_1"]
+                &
+                A_3 \arrow[l,swap, "f_2"]
+                &
+                \arrow[l, swap, "f_3"]
+                \cdots
+            \end{tikzcd}
+        \end{center}
+        One way we could try forming a limit of this diagram is by
+        constructing a cone, using the product of these sets. 
+        \begin{center}
+            \begin{tikzcd}[row sep = 1.6cm]
+                A_0
+                &
+                A_1 \arrow[l,swap, "f_0"]
+                &
+                A_2 \arrow[l,swap, "f_1"]
+                &
+                A_3 \arrow[l,swap, "f_2"]
+                &
+                \arrow[l, swap, "f_3"]
+                \cdots
+                \\
+                \prod\limits_{i = 0}^{\infty}A_i 
+                \arrow[u, "\pi_0"]
+                \arrow[ur, "\pi_1"]
+                \arrow[urr, "\pi_2"]
+                \arrow[urrr, swap, "\pi_3"]
+                & & & & 
+            \end{tikzcd}
+        \end{center}
+        However, this isn't exactly what we want. A cone must
+        form a commutative diagram and it's not always true
+        that $f_n \circ \pi_{n+1} = \pi_n$. So let's instead restrict 
+        our attention to a subset $\displaystyle L \subset \prod_{i = 0}A_i$ 
+        where the points $(a_0, a_1, \dots, a_n, \dots)$ do satisfy this relation.
+        \[
+            L = \big\{x = (a_0, a_1, a_2, \dots,) 
+            \mid f_{n}\circ \pi_{n+1}(a_) = \pi_n(x) \big\}.
+        \]
+        and equip $L$ with the functions $\pi'_{n}$ where 
+        \[
+            \textcolor{NavyBlue}{\pi'_n} = \pi_n \circ i  : L \to A_n
+        \]
+        where $i: L \to \prod\limits_{i = 1}^{\infty} F_i$ is the
+        inclusion function. Then we have
+        \begin{center}
+            \begin{tikzcd}[row sep = 1.6cm]
+                A_0
+                &
+                A_1 \arrow[l,swap, "f_0"]
+                &
+                A_2 \arrow[l,swap, "f_1"]
+                &
+                A_3 \arrow[l,swap, "f_2"]
+                &
+                \arrow[l, swap, "f_3"]
+                \cdots
+                \\
+                L
+                \arrow[u, NavyBlue, "\pi'_0"]
+                \arrow[ur, NavyBlue, "\pi'_1"]
+                \arrow[urr, NavyBlue, "\pi'_2"]
+                \arrow[urrr, NavyBlue, swap, "\pi'_3"]
+                & & & & 
+            \end{tikzcd}
+        \end{center}
+        so that $L$ forms a cone. We now prove that this cone is universal. 
+
+    \begin{lemma}
+        The set $L$ is the limit of the functor $F: \omega\op \to \textbf{Set}$.
+    \end{lemma}
+
+    \begin{prf}
+        Suppose $K$ is another cone over our diagram, 
+        equipped with morphisms $\textcolor{Red}{\mu_n}: K \to
+        F_n$. Since this is another 
+        cone, we have that $f_n \circ \mu_{n+1} = \mu_n$. 
+        Now let $k \in K$.  Then we can form an element 
+        \[
+            x = (\mu_0(k), \mu_1(k), \mu_2(k), \dots) \in 
+            \prod_{i = 1}^{\infty}F_i
+        \]  
+        since each $\mu_n(k) \in F_n$. Now observe that 
+        \[
+            f_n \circ \pi_{n+1}(x) = f_n(\mu_{n+1}(k)) = 
+            \mu_n(k) = \pi_n(x). 
+        \]
+        Thus we see that $f_n \circ \pi_{n+1}(x) = \pi_n(x)$, so that
+        by definition,  $x \in L$. Hence we can create a unique
+        function $g: K \to L$ where for each $k \in K$,
+        \[
+            g(k) = (\mu_0(k), \mu_1(k), \mu_2(k), \dots)
+        \]
+        so we then have that 
+        \[
+            \pi'_n \circ g = \mu_n.
+        \]
+        Hence, this shows that $(L, \pi_n: L \to F_n)$ is universal,
+        so that $L = \Lim F$! 
+        \begin{center}
+            \begin{tikzcd}[row sep = 1.6cm]
+                F_0
+                &
+                F_1 \arrow[l,swap, "f_0"]
+                &
+                F_2 \arrow[l,swap, "f_1"]
+                &
+                F_3 \arrow[l,swap, "f_2"]
+                &
+                \arrow[l, swap, "f_3"]
+                \cdots
+                \\
+                L = \Lim F
+                \arrow[u, NavyBlue]
+                \arrow[ur, NavyBlue]
+                \arrow[urr, NavyBlue]
+                \arrow[urrr, NavyBlue]
+                & & & 
+                K \arrow[lll, dashed, "g"]
+                \arrow[u, Red]
+                \arrow[ul, crossing over, Red]
+                \arrow[ull, crossing over, Red]
+                \arrow[ulll, crossing over, Red]
+                & 
+            \end{tikzcd}
+        \end{center}
+
+    \end{prf}
+        
+    If we want to view this in terms of the spider diagrams, then we
+    have 
+    \begin{center}
+        \begin{tikzcd}[column sep =  1.4cm, row sep = 1.4cm]
+            & & K \arrow[d, dashed, "g"] 
+            \arrow[ddll, bend right,Red,  swap, "\mu_0"]
+            \arrow[ddl, bend right, Red, crossing over, swap, "\mu_1"]
+            \arrow[ddr, bend left, Red, crossing over, "\mu_2"]
+            \arrow[ddrr, bend left, Red, "\mu_3"]
+            & & & \\
+            & & \textcolor{NavyBlue}{L = \Lim F}
+            \arrow[dll, NavyBlue, near start, swap, "\pi'_0"]
+            \arrow[dl, NavyBlue, "\pi'_1"] 
+            \arrow[dr, NavyBlue, swap, "\pi'_2"]
+            \arrow[drr, NavyBlue, near start, "\pi'_3"] & & & \\
+            F_0 & \arrow[l, "f_0"] F_1  
+            &  & \arrow[ll, "f_1"] F_2
+            & \arrow[l, "f_2"] F_3 
+            & \arrow[l, "f_3"] \cdots
+        \end{tikzcd}
+    \end{center}
+    
+    \end{example}
+
+    Here, we've taken a nice, simple diagram 
+    $F: \omega\op \to \textbf{Set}$ and
+    shown that there exists a limit $L$ of the diagram 
+    inside of $\textbf{Set}$. However, we can do
+    this more generally, so that \textbf{Set} is complete.
+    To  illustrate this we need the notion of a set of cones. 
+
+    Note that in the last example, we can
+    actually think of each $x = (x_0, x_1, x_2, \dots)
+    \in \Lim F$ as a cone. How so? 
+    \begin{itemize}
+        \item[1.] For each $x = (x_0, x_1, x_2, \dots) \in \Lim F$, 
+        consider the one-point set $\{*\}$.
+        
+        \item[2.] Associate $\{*\}$ with 
+        the family of functions $\pi^*_n: \{*\} \to F_n$, defined as
+        \[
+            \pi^x_n(*) = x_n.
+        \] 
+    \end{itemize}
+    Now since $x \in \Lim F$, we know that $f_n(x_{n+1}) = x_{n}$.
+    But, note that this is equivalent to stating that $f_n \circ
+    \pi_{n+1}(*) = \pi_{n-1}(*)$. Therefore the diagram 
+    \begin{center}
+        \begin{tikzcd}[column sep =  1.4cm, row sep = 1.4cm]
+            & \{*\} \arrow[dl, swap, "\pi^x_n"] 
+            \arrow[dr, "\pi^x_{n+1}"]& \\
+            F_n
+            & & F_{n+1} \arrow[ll, "f_n"]
+        \end{tikzcd} 
+    \end{center}
+    commutes for every $f_n: F_{n+1} \to F_n$, so that's how we can
+    regard every $x \in \Lim F$ as a cone.
+    Therefore, if we denote $\cone(*, F)$ as the set of all cones of
+    $\{*\}$ over $F$, we see that $\cone(*, F) = \Lim F$. 
+    \begin{thm}
+        The category \textbf{Set} is complete. That is, if $J$ is a
+        small category, every functor $F: J \to \textbf{Set}$ has a 
+        limit 
+        \[
+            \Lim F = \cone(*, F)
+        \]
+        where $\cone(*, F)$ is the set of all cones of $\{*\}$ over
+        $F$. The set $\cone(*, F)$ forms the limit cone with the
+        morphisms $v_i: \cone(*, F) \to F_i$ described as follows.
+        If $x \in \cone(*, F)$, then $x$ has a family of 
+        morphisms $\sigma^x_i: \{*\} \to F_i$. Therefore,
+        \[
+            v_i: \cone(*, F) \to F_i \qquad v_i(x) = \sigma^x_i(*).
+        \]
+        \vspace{-0.8cm}
+    \end{thm}
+
+    \begin{prf}
+        First, since $J$ is small, we know that $\cone(*, F)$ is a 
+        set. For each $j \in J$, establish the morphism $v_j: \cone(*,
+        F) \to F_j$ where $v_j(x) = \sigma^x_j(x)$, and $\sigma^x_j: \{*\}
+        \to F_j$ is the morphism associated with $x$ as a cone over $F$. 
+
+        We now show that it is a cone. 
+        Suppose $f: i \to j$ is a morphism in $J$. Then observe that 
+        $F(f) \circ v_i(x) = F(f) \circ \sigma^x_i(x) = \sigma^x_j(x)
+        = v_j(x)$. Hence the diagram 
+        \begin{center}
+            \begin{tikzcd}[column sep =  1.4cm, row sep = 1.4cm]
+                & \cone(*, F) \arrow[dl, swap, "v_i"] 
+                \arrow[dr, "v_{j}"]& \\
+                F_i \arrow[rr, swap, "F(f)"]
+                & & F_j 
+            \end{tikzcd} 
+        \end{center}
+        commutes, so $\cone(*, F)$ really does form a cone over $F$. 
+        To show this is universal, and hence our limit, suppose that 
+        $A$ in \textbf{Set} also forms a cone over $F$ with morphisms 
+        $\tau_j: X \to F_j$. Note that for each $a \in A$, we can form
+        a cone from $\{*\}$ to $F$, if we define $\sigma^a_j: \{*\} 
+        \to F_j$ as $\sigma^a_j(*) = \tau_j(a)$. Then the diagram 
+        \begin{center}
+            \begin{tikzcd}[column sep =  1.4cm, row sep = 1.4cm]
+                & \cone(*, F) \arrow[dl, swap, "\sigma^a_i"] 
+                \arrow[dr, "\sigma^a_j"]& \\
+                F_i \arrow[rr, swap, "F(f)"]
+                & & F_j 
+            \end{tikzcd} 
+        \end{center}
+        must also commutes since it commutes for each $\tau_j$. 
+        Thus we can define a unique 
+        function $g: A \to \cone(*, F)$, where each point $a$ is sent to
+        the cone which it forms from $\{*\}$ over $F$. Therefore,
+        $\cone(*, F)$ is universal, so that 
+        \[
+            \Lim F = \cone(*, F)
+        \]
+        as desired. 
+    \end{prf}
+
+    The above proof can be repeated to show that others categories are
+    complete, like \textbf{Grp} or \textbf{Rng}. 
+
+    In attempting to find the limit $F: J \to \cc$ in some category
+    $\cc$, one strategy is to to compose this functor with another one
+    $G: \cc \to \dd$, with the prior knowledge that $\dd$ is complete.
+    If one knows $\dd$ is complete, one then use this information to find 
+    the limit of $F: J \to \cc$. 
+    
+    \begin{definition}
+        Let $F: J \to \cc$ be a functor. A functor $G: \cc \to \dd$ 
+        \textbf{creates limits for $F$} if whenever $(\Lim G \circ F, \tau: \Delta(\Lim G \circ F) \to G \circ F)$
+        exists, 
+        the limit $(\Lim F, \sigma: \Delta(\Lim F) \to F)$
+        such that 
+        \[
+            G(\Lim F) = \Lim G \circ F \qquad G(\sigma) = \tau.
+        \]
+        Similarly, a functor $G: \cc \to \dd$ \textbf{creates colimits for $F$}
+        if whenever $(\Colim G \circ F, \tau: G \circ F \to \Delta(\Lim G \circ F)$ 
+        exists, the colimit $(\Colim F, \sigma: F \to \Delta(\Colim F)$ exists 
+        and 
+        \[
+            G(\Colim F) = \Colim G \circ F \qquad G(\sigma) = \tau.
+        \]
+    \end{definition}
+
+    The diagram below visually explains this process; the existence of limit 
+    in $\dd$ on the left implies the existence of the limit in $\cc$ on the right. 
+    Moreover, the diagram on the left is the image of the diagram on the right 
+    under $G$. 
+    \begin{center}
+        \begin{tikzcd}[column sep = 1cm, row sep = 1.4cm]
+            & D \arrow[d, dashed, "h"] \arrow[ddl,swap, bend right = 20,
+            "f_i"] \arrow[ddr, bend left = 20, "f_j"] &\\
+            & \arrow[dl, swap, "\tau_i"] \Lim G \circ F 
+            \arrow[dr, "\tau_j"] & \\
+            G(F(i))
+            \arrow[rr, swap, "G(F(u))"] 
+            & 
+            &
+            G(F(j))
+        \end{tikzcd}
+        $\implies$
+        \begin{tikzcd}[column sep = 1.4cm, row sep = 1.4cm]
+            & C \arrow[d, dashed, "h"] \arrow[ddl,swap, bend right = 20,
+            "f_i"] \arrow[ddr, bend left = 20, "f_j"] &\\
+            & \arrow[dl, swap, "\sigma_i"] \Lim F 
+            \arrow[dr, "\sigma_j"] & \\
+            F(i)
+            \arrow[rr, swap, "F(u)"] 
+            & 
+            &
+            F(j) 
+        \end{tikzcd}
+    \end{center}
+    
+    \begin{example}
+        Consider a functor $F: J \to \textbf{Grp}$. We'll show that
+        the forgetful functor $U:\textbf{Grp} \to \textbf{Set}$
+        creates limits for $\textbf{Grp}$.
+
+        By the previous theorem, we know that $U \circ F; J \to
+        \textbf{Set}$ must have a limit $\cone(*, U \circ F)$ 
+        with the family of morphisms $v_i: \cone(*, U\circ F) \to
+        U\circ F_i$. 
+        Now denote the set $\cone(*,U \circ F)$ as $L$. 
+        Then we can endow $L$ with a group structure.
+        \begin{itemize}
+            \item For any $\sigma, \tau \in L$, we define $\sigma
+            \times \tau$ to be the cone where $(\sigma \times \tau)_i =
+            \sigma_i \cdot \tau_i$, where $\cdot$ is the product in
+            $F_i$. 
+
+            \item For $\sigma \in L$, we define the inverse to be   
+            the function $\sigma^{-1}$ where $(\sigma^{-1})_i =
+            \sigma_i^{-1}$, with the inverse being taken in $F_i$. 
+        \end{itemize}
+        All we're really doing here is taking advantage of the fact 
+        that each $\sigma, \tau$ is really just a family of functions 
+        $\sigma_i, \tau_i: \{*\} \to F_i$. Thus we're taking advantage
+        of the group structure in each $F_i$. 
+
+        Thus $L = \cone(*, U \circ F)$ is a group, which then makes
+        the family of morphisms $v_i: \cone(*, U \circ F)$ into a
+        family of group homomorphisms. To show this, simply observe
+        that 
+        \[
+            v_i(\sigma \times \tau) = (\sigma \times \tau)_i = \sigma_i \cdot \tau_i = v_i(\sigma)\cdot v_i(\tau).           
+        \]
+        Now we claim that the cone $\cone(*, U \circ F)$ with the
+        morphisms $v_i: \cone(*, U \circ F) \to F_i$ is universal. To
+        show this, let $G$ be a group and suppose $G$ forms a cone over $F$ 
+        with morphisms $\phi_i: G \to F_i$. Then $U(G)$ forms a cone
+        over $\cone(*, U \circ F)$ in \textbf{Set} with morphisms 
+        $U(\phi_i): U(G) \to U(F_i)$. 
+
+        Since we know $\cone(*, U \circ F)$ is a universal cone in \textbf{Set}, 
+        there exists a $h: U(G) \to L$ such that $U(\phi_i) =
+        U(v_i)\circ h_i$. However, note that $h$ can be thought of as a 
+        group homomorphism. For any $g, g' \in G$, we have
+        \begin{align*}
+            h_i(g \cdot g') = \phi_i(g \cdot g') 
+            = \phi_i(g) \times \phi_i(g')
+            &= h_i(g) \times h_i(g')\\
+            &= (h(g) \cdot h(g'))_i.
+        \end{align*}
+        Therefore, $h:U(G) \to L$ can be realized back into \textbf{Grp}
+        as a group homomorphism $h: G \to L$, thereby showing $\cone(*, U \circ F)$ 
+        is a universal cone in \textbf{Grp}. This is one way in showing 
+        \textbf{Grp} is complete.
+    \end{example}
+    What we really did in the last example was nothing special. Using the fact that 
+    \textbf{Set} is complete, we transferred $F: J \to \textbf{Grp}$
+    over to \textbf{Set} via the forgetful functor $U: \textbf{Grp} 
+    \to \textbf{Set}$. We calculated the limit, and showed that this can
+    be realized as a limit in \textbf{Grp}. In this sense, $U: \textbf{Grp} \to 
+    \textbf{Set}$ \textbf{creates limits} in \textbf{Grp}. A similar
+    strategy can be carried out for other forgetful functors. 
+
+    \begin{example}
+        Let $\cc$ be a category and $A$ an object of $\cc$. Recall that 
+        with the comma category $(A \downarrow \cc)$, we have a projection 
+        functor $P: (A \downarrow \cc) \to \cc$ where on objects 
+        $(C, f: A \to C)$ and morphisms $h: (C, f: A \to C) \to (C', f: A \to C')$ 
+        we have that 
+        \[
+            P(C, f: A \to C) = C \qquad P(h) = h: C \to C'.            
+        \]
+        Now for any functor $F:J \to (A \downarrow \cc)$, the functor 
+        $P: (A \downarrow \cc) \to \cc$ creates limits. To see this, we first interpret 
+        a functor $F: J \to (A \downarrow \cc)$. For each $j$, we have that  
+        \[
+            F(j) = (C_j , f_j: A \to C_j) 
+        \]
+        for some $C_j \in \cc$ and $f_j: A \to C_j$. If $u: j \to k$ is a morphism in
+        $J$, then $F(u) : C_j \to C_k$ is a morphism in $\cc$ 
+        such that the diagram below commutes (as, that's what morphisms  
+        do in comma categories). 
+        \begin{center}
+            \begin{tikzcd}[column sep = 1.4cm, row sep = 1.4cm]
+                & A 
+                \arrow[dr, "f_k"]
+                \arrow[dl, swap, "f_j"]
+                &
+                \\
+                C_j
+                \arrow[rr, swap, "F(u)"]
+                &
+                &
+                C_k
+            \end{tikzcd}
+        \end{center}
+        Note that this is a cone over $F$ in $\cc$. 
+        Now suppose we have a limit $\Lim P \circ F$ in $\cc$ with 
+        morphisms $\mu_i: \Lim P \circ F \to C_i$ with $i \in J$. 
+        Then because $\Lim P \circ F$ is a limiting cone, and we must 
+        have a unique $v$ such that the diagram below commutes. 
+        \begin{center}
+            \begin{tikzcd}[column sep = 1.4cm, row sep = 1.4cm]
+                & A \arrow[d, dashed, "v"] 
+                \arrow[ddl,swap, bend right = 20,"f_i"] 
+                \arrow[ddr, bend left = 20, "f_j"] &\\
+                & \arrow[dl, swap, "\mu_i"] \Lim P \circ F 
+                \arrow[dr, "\mu_j"] & \\
+                F(i)
+                \arrow[rr, swap, "F(u)"] 
+                & 
+                &
+                F(j) 
+            \end{tikzcd}
+        \end{center}
+        The claim now is that $(\Lim P \circ F, v: A \to  \Lim P \circ F)$ 
+        is the limit $\Lim F$ of $F: J \to (A \downarrow \cc)$, which is left 
+        for the reader to show.
+    \end{example}
+
+    {\large \textbf{Exercises}
+    \vspace{0.2cm}}
+    \begin{itemize}
+        \item[\textbf{1.}] 
+        \begin{itemize}
+            \item[\emph{i.}]
+            Let $J = \omega$, and let $F: J \to \textbf{Set}$ be a functor 
+            were $F(i) = A_i$. Show that $\Colim F$ exists and give an expicit 
+            description of it. 
+            \\
+            \emph{Hint}: It will be a set endowed with an equivalence relation.
+            
+            \item[\emph{ii.}] How does your answer chance when $F: J \to \textbf{Set}$ 
+            is contravariant? 
+        \end{itemize}
+        
+
+    \end{itemize}
+    
+    \newpage
+    \section{Inverse and Direct Limits.}
+    In the previous example, we calculated the limit of the diagram
+    indexed by $\omega\op$. It turns out that in general, we can construct 
+    a lot of mathematical ideas by first modeling them as the limit 
+    of a functor $F: J \to \cc$, where $J$ is a partially ordered set.
+    Thus we give a special name to this concept.
+    
+    \begin{definition}
+        Let $\cc$ be a category, and suppose the $F: J\op \to
+        \cc$ has 
+        a limit object $\Lim F$ in $\cc$, where $J$ is a partially
+        ordered set (where, if $i \le j$, then there exists $f: i \to
+        j$). 
+        Then $\Lim F$ is
+        said to be a \textbf{inverse limit} or \textbf{projective limit}. 
+        
+        Dually, we define the colimit of a functor $F: J \to F$ 
+        to be \textbf{direct limit}. 
+    \end{definition}
+
+    There are many famous examples of these limits, with the
+    following example probably being the most familiar. 
+
+    \begin{example}
+        Consider the functor $F: \omega\op \to \textbf{Rng}$ where 
+        we define $F(n) = F_n = \zz/p^n\zz$ with $p$ being a prime. 
+        Then we have a diagram 
+        \begin{center}
+            \begin{tikzcd}[column sep =  1.4cm, row sep = 1.4cm]
+                \zz 
+                & 
+                \zz/p\zz \arrow[l, swap, "f_0"]
+                &
+                \zz/p^2\zz \arrow[l, swap, "f_1"]
+                & 
+                \arrow[l, swap, "f_2"]
+                \zz/p^3\zz
+                &
+                \arrow[l, swap, "f_3"]
+                \cdots
+            \end{tikzcd}
+        \end{center}
+        where the maps $f_n: \zz/p^{n+1}\zz \to \zz/p^n\zz$ are the 
+        projection maps. The limit of this diagram turns out to be the  
+        \textbf{$\bm{p}$-adic integers} $\zz_p$, and this is one way of
+        defining them. The most popular way to define them it to work
+        in ring theory, establish $p$-adic valuations, and realize
+        that the 
+        valuations turn $\zz$ into a metric space; one which can be 
+        completed with respect to the metric to give rise to $\zz_p$.
+
+        First, observe that they form a cone. Define the map 
+        \[
+            \pi_{n}: \zz_p \to \zz/p^{n}\zz 
+            \qquad \pi\left( \sum_{k = 0}^{\infty}
+            a_kp^k \right) = 
+            \sum_{k =0}^{n-1}a_kp^k + p^{n}\zz.
+        \]
+        Now observe that 
+        \begin{align*}
+            f_n \circ \pi_{n+1} \left( \sum_{k = 0}^{\infty}a_kp^k \right)
+            = f_n\left( \sum_{k =0}^{n}a_kp^k + p^{n+1}\zz \right)
+            &= \sum_{k =0}^{n-1}a_kp^k + p^{n}\zz\\
+            &= \pi_n\left(  \sum_{k = 0}^{\infty}a_kp^k \right)
+        \end{align*}
+        so we may conclude that $f_n \circ \pi{n+1} = \pi_n$.
+        Therefore, $\zz_p$ does in fact form a cone with the 
+        morphisms $\pi_n$, so the following diagram commutes.
+        \begin{center}
+            \begin{tikzcd}[column sep =  1.4cm, row sep = 1.6cm]
+                \zz_p \arrow[d, swap, "\pi_0"] 
+                \arrow[dr, swap,  "\pi_1"]
+                \arrow[drr, swap, "\pi_2"]
+                \arrow[drrr, "\pi_3"]
+                & & & & \\
+                \zz
+                &
+                \zz/p\zz \arrow[l,swap, "f_0"]
+                &
+                \zz/p^2\zz \arrow[l,swap, "f_1"]
+                &
+                \zz/p^3\zz \arrow[l, swap, "f_2"]
+                &
+                \arrow[l, swap, "f_3"]
+                \cdots
+            \end{tikzcd}
+        \end{center}
+        Showing this is universal is simple once we realize that each
+        element of $\zz_p$ may be thought of as a cone, in the same
+        fashion as we did with \textbf{Set}. That is, we can just 
+        apply the previous theorem to \textbf{Rng}. 
+        This then shows that it's the universal object which we desire.
+    \end{example}
+
+    What about direct limits? A less-talked about idea
+    , although definitely not less interesting, is the 
+    dual of the above construction.
+
+    \begin{example}
+        Consider the functor $F: \omega \to \textbf{Grp}$ where we have 
+        $F(n) = F_n = \zz/p^n\zz$, with $p$ being a prime. This time however 
+        we have the diagram 
+        \begin{center}
+            \begin{tikzcd}[column sep =  1.4cm, row sep = 1.4cm]
+                \zz 
+                & 
+                \zz/p\zz \arrow[<-, l, swap, "f_0"]
+                &
+                \zz/p^2\zz \arrow[<-, l, swap, "f_1"]
+                & 
+                \arrow[<-, l, swap, "f_2"]
+                \zz/p^3\zz
+                &
+                \arrow[<-, l, swap, "f_3"]
+                \cdots
+            \end{tikzcd}
+        \end{center}
+        where we define each $f_n: \zz/p^n\zz \to \zz/p^{n+1}\zz$ 
+        as the homomorphism 
+        \[
+            f_n\left( \sum_{k =0}^{n-1}a_kp^k + p^{n}\zz \right)
+            = 
+            \sum_{k =0}^{n}a_kp^{k+1} + p^{n+1}\zz.
+        \]
+        That is, we simply multiply the sum by a power of $p$. It turn outs 
+        that the direct limit is the \textbf{Prüfer $\bm{p}$-Group} $\zz(p^\infty)$.
+        The Prüfer 2-Group is pictured below.
+        \begin{center}
+            \includegraphics{../pictures/chapter5_pic/prufer_2_group/prufer_2_group.pdf}
+        \end{center}
+        
+        The Prüfer $p$-group is the set of all $p^n$ roots of unity,
+        as $n$ ranges over all positive integers. Hence the points lie
+        on the complex unit circle. Specifically, it is the group  
+        \[
+            \zz(p^{\infty})
+            =
+            \left\{\text{exp}\left({\dfrac{2\pi i m}{p^n}}\right) \mid 0 \le m < p^n, n \in \mathbb{Z}^{+}  \right\}  
+        \]
+        which forms a group under complex multiplication. 
+        How does this form a limit for our diagram? 
+ 
+        
+        
+
+    \end{example}       
+
+    Inverse limits are also used in Galois Theory. In Galois Theory,
+    one can define a field extension $L/F$ to be a finite, normal, separable extension. 
+    However, it turns out that one can remove the requirement for  
+    the extension to be finite. We then obtain infinite Galois groups,
+    which are constructed as follows. 
+
+    \begin{example}
+        Let $F$ be a field, and suppose $L/F$ is normal, separable
+        extension (\textcolor{Red}{not necessarily finite!}).
+        Then we can define $L/F$ to be a Galois extension,
+        and we may speak of a Galois group $\gal(L/F)$, as follows.
+
+        Let $\mathcal{F}(L/F)$ be the category of all
+        finite, normal extensions $K$ of $F$ such that $F \subset K
+        \subset L$, and $\mathcal{G}(L/F)$ is the category of all
+        their Galois groups. Note that both $\mathcal{F}(L/F)$ and 
+        $\mathcal{G}(L/F)$ are partially ordered sets, ordered by subset inclusion. 
+        To be precise, if $K_i \subset K_j$ are in $\mathcal{F}(L/F)$,
+        then 
+        \[
+            \gal(K_j/F) \subset \gal(K_i/F)
+        \]
+        and because $\mathcal{G}(L/F)$ is a preorder on subset
+        inclusion, this implies the existence of some arrow $f:
+        \gal(K_j/F) \to \gal(K_i/F)$. We can describe 
+        $f = \proj_{K_j/K_i}$ where 
+        \[
+            \proj_{K_j/K_i}: \gal(K_j/F) \to \gal(K_i/F) \qquad \proj_{K_j/K_i}(\sigma) = \sigma\big|_{K_i}.  
+        \]
+        That is, we take each permutation $\sigma \in \gal(K_j/F)$
+        and restrict its action to $K_i$, thereby making it a
+        permutation of $K_i$ which fixes $F$, 
+        and therefore a member of $\gal(K_i/F)$. 
+
+        Now consider the product with the associated morphisms
+        \[  
+            \prod_{K \in\mathcal{F}(L/F)}\gal(K/F)
+            \qquad 
+            \pi_{K_i}: \prod_{K \in\mathcal{F}(L/F)}\gal(K/F) 
+            \to \gal(K_i/F)
+        \]
+        Then we define
+        \[
+            \gal(L/F)
+            =
+            \left\{ x = (\cdots, \sigma_k, \cdots) \in \prod_{K \in \mathcal{F}(L/F)}\gal(K/F) 
+            \mid \proj_{K_i/K_j} \circ \pi_{K_i}(x) = \pi_{K_j}(x) \right\}.
+        \]
+        So $\gal(L/F)$ forms a cone with morphisms $\pi_{K_i}$:
+        \begin{center}
+            \begin{tikzcd}[column sep =  1.4cm, row sep = 1.6cm]
+            & \gal(L/F) \arrow[dl, swap, "\pi_{K_i}"] \arrow[dr, "\pi_{K_j}"] & \\
+            \gal(K_i/F) \arrow[rr, swap, "\proj_{K_i/K_j}"] & & 
+            \gal(K_j/F)
+            \end{tikzcd}
+        \end{center}
+        We then have to work to show that this cone is universal.
+        However, the faster route is to simply recognize that we can 
+        index $\mathcal{G}(L/F)$ in a monotonic way, since it is a partially order set.
+        Thus there exists a partially ordered set $J$ such that 
+        if $f: i \to j$ exists in $J$, then 
+        \[
+            F(i)= \gal(K_i/F) \quad F(j) = \gal(K_j/F) 
+            \implies 
+            F(f): \gal(K_i/F) \to \gal(K_j/F)  
+        \]
+        Thus we have a functor $F: J \to \mathcal{G}(L/F)$ which hits every 
+        Galois group $\gal(K/F)$ in such
+        a way that it preserves the order in $\mathcal{G}(L/F)$. Since
+        the limit of every small diagram exists in \textbf{Grp},
+        we can define $\gal(L/F)$ to be the \textbf{inverse limit} of this
+        functor, and we already know that the limit will have the form
+        \[
+            \gal(L/F)
+            =
+            \left\{ (\cdots, \sigma_k, \cdots) \in \prod_{K \in \mathcal{F}(L/F)}\gal(K/F) \mid \proj_{K_i/K_j} \circ \pi_{K_i} = \pi_{K_j} \right\}.
+        \]
+        and that it will be universal. So, this is how we extend the
+        definition of Galois group from a finite, normal, separable
+        extension to simple a normal, separable extension.
+    \end{example}
+
+    \noindent This construction can be done more generally on a partially
+    ordered system of groups, to create these things called 
+    \textbf{profinite groups}. 
+
+    \begin{definition}
+        Suppose we
+        are given a partially ordered set of finite groups $G_i$, indexed by some
+        set $I$, equipped with morphisms $\{f^j_i: G_j \to G_i \mid i,
+        j \in I \quad i \le j\}$ such that 
+        \begin{itemize}
+            \item[1.] $f_i^i: G_i \to G_i$ is the identity $\id_{G_i}$ 
+            \item[2.] $f_i^j \circ f_j^k = f_i^k$. 
+        \end{itemize}
+        Then we define the \textbf{profinite group} $G$ 
+        of this system to be the inverse limit:
+        \[
+            G = \left\{(g_i)_{i \in I} \in \prod_{i \in I} G_i \
+            \mid f_i^j(g_i) = g_j \right\}.
+        \]
+        Note that requiring $f_i^j(g_i) = g_j$ is the same as
+        requiring $f_i^j\circ \pi_i(x) = \pi_j(x)$, where $x \in G$, 
+        which is how we defined $\gal(L/F)$. 
+    \end{definition}
+    \textcolor{MidnightBlue}{Thus in the previous example, we have
+    that not only can we actually define $\gal(L/F)$, but our construction 
+    leads to it to becoming a profinite group. Profinite groups are actually very 
+    special, in that they can be interpreted topologically.}
+
+    
+
+
+    \newpage
+    \section{Limits from Products, Equalizers, and Pullbacks.}
+    In our construction of limits for \textbf{Sets}, we basically forced 
+    the existence of a cone, because we could. This is usually the general strategy 
+    when it comes to calculating the limit of a diagram in a given category; 
+    one uses available, useful constructions which are already present 
+    inside of a category. For example; in \textbf{Set}, we used 
+    the fact that it is cartesian closed to formulate infinite products.
+
+    Since the general strategy for showing \textbf{Set} is complete can 
+    be extended to other categories, one may wonder "well, why? And when 
+    will I no longer be able to apply this strategy?" The theorem 
+    below answers this question. 
+    
+    \begin{thm}\label{products_equalizers_all_limits}
+        Let $\cc$ be a category and $J$ a small category. 
+        Suppose $\cc$ has equalizers for every
+        pair of morphisms in $\cc$, and all products indexed by
+        objects of $J$ and morphisms of $J$. Then every functor 
+        $F: J \to \cc$ has a limit in $\cc$. 
+    \end{thm}
+
+    \textcolor{purple}{What do we mean by all products "indexed by 
+    objects of $J$ and morphisms of $J$"?} What we want to do is be able 
+    to \textit{create} products of the form 
+    \[
+        \prod_{j \in J}F_j \qquad\qquad \prod_{u:i \to k} F_\text{\text{cod}(u)} = \prod_{u:j \to k}F_k.   
+    \]
+    and \textit{know} that they're in $\cc$. 
+    The product on the far left is indexed by objects of $J$, while the equal  
+    ones on the right are indexed by morphisms $u: i \to k$ in $J$. It's a
+    bit weird to think of a product "indexed by morphisms," but it's   
+    exactly what it sounds like: we index over all the morphisms, and 
+    take the product of the domain or codomain (in the above, we did codomain).
+    
+    \textcolor{purple}{Why do we need this weird concept?} To 
+    answer this, let's go over the construction of limits in \textbf{Set}
+    in a bit different way. 
+
+    When we had a diagram $F: J \to \cc$ in $\cc$, our first guess 
+    in constructing the limit was designing the $\displaystyle \prod_{j}F_j$
+    with morphisms $\displaystyle \pi_i : \prod_{j}F_j \to F_i$. However, 
+    this doesn't actually form a cone, since for each $u: j \to k$,
+    we can't guarantee 
+    \[
+        F(u) \circ \pi_j = \pi_k
+    \]
+    That is, we can't guarantee the diagram 
+    \begin{center}
+        \begin{tikzcd}[column sep =  1.4cm, row sep = 1.4cm]
+            & \displaystyle \prod\limits_{j \in J}F_j \arrow[dr, "\pi_k"] \arrow[dl, swap, "\pi_j"]
+            &\\
+            F_k \arrow[rr, swap, "u"] & & F_k
+        \end{tikzcd}
+    \end{center}
+    will commute, which is what we need for a cone. Since we needed 
+    $F(u) \circ \pi_j = \pi_k$, we forced it. But this forcing is 
+    simply realizing that, all $\displaystyle x \in \prod_{j \in J}F_j$ 
+    which satisfy $F(u) \circ \pi_j = \pi_k$, are simply 
+    members of the equalizer of $F(u) \circ \pi_j$ and $\pi_k$. 
+
+    \begin{prf}
+        Consider the products $\displaystyle \prod_{j \in J}F_j$ and 
+        $\displaystyle \prod_{u: i \to k}F_k$ where in the last product we 
+        index over all morphisms in $J$. 
+        With both products, consider the projection morphisms
+        \begin{align*}
+            &\pi'_j: \prod_{u:i \to k}F_k \to F_j\\
+            &\pi_j: \prod_{i \in J}F_i \to F_j.
+        \end{align*}
+        Note that because we have products, we have universal
+        properties which we can take advantage of. That is, 
+        the following diagrams must commute for some $f$ and $g$. 
+        \begin{center}
+            \begin{tikzcd}[column sep =  1.4cm, row sep = 1.4cm]
+                & \displaystyle \prod_{i \in J} F_i 
+                \arrow[dl, swap, "\pi_k"] \arrow[d, dashed, Red, "f"]\\
+                F_k & \displaystyle \prod_{u:j \to k} F_k \arrow[l,swap, "\pi'_k"]
+            \end{tikzcd}
+            \hspace{1cm}
+            \begin{tikzcd}[column sep =  1.4cm, row sep = 1.4cm]
+                \displaystyle \prod_{i \in J}F_i \arrow[r, Blue, dashed, "g"]
+                \arrow[d, swap, "\pi_i"] 
+                &
+                \displaystyle \prod_{u:i \to k}F_k 
+                \arrow[d, "\pi'_k"]\\
+                F_i \arrow[r, swap, "F(u)"] 
+                &
+                F_k
+            \end{tikzcd}
+        \end{center}
+        Note however that we can stack these diagrams on top of each other, to obtain  
+        \begin{center}
+            \begin{tikzcd}[column sep =  1cm, row sep = 1.4cm]
+                & F_k & \\
+                \displaystyle \prod_{i \in J}F_i 
+                \arrow[rr,shift right =0.6ex, Red, swap, "f"]
+                \arrow[rr,shift right =-0.6ex, Blue, "g"]
+                \arrow[ur, "\pi_k"] 
+                \arrow[d, swap, "\pi_i"] 
+                &
+                &
+                \displaystyle \prod_{u:i \to k}F_k 
+                \arrow[d, "\pi'_k"]
+                \arrow[ul, swap, "\pi'_k"]
+                \\
+                F_i \arrow[rr, swap, "F(u)"] 
+                &
+                &
+                F_k
+            \end{tikzcd}
+        \end{center}
+        Since we have equalizers for every pair of arrows, we can form
+        the equalizer $\displaystyle e:D \to \prod_{i \in J}F_i$ 
+        of both $f$ and $g$ for some object $D$.
+        \begin{center}
+            \begin{tikzcd}[column sep =  1.4cm, row sep = 1.4cm]
+                D \arrow[r, dashed, "e"]
+                &
+                \displaystyle \prod_{i \in J}F_i 
+                \arrow[r,shift right =0.6ex, Red, swap, "f"]
+                \arrow[r,shift right =-0.6ex, Blue, "g"]
+                &
+                \displaystyle \prod_{u:i \to k}F_k 
+            \end{tikzcd}
+        \end{center}   
+        Now that we have a morphism 
+        $\displaystyle e: D \to \prod_{i \in J}F_i$,  
+        we can compose this with projections $\displaystyle 
+        \prod_{i \in J}F_i \to F_i$ to produce a family of
+        morphisms $\pi_i \circ e: D \to F_i$. If we like, we can even 
+        add this to our diagram above to get the following:
+        \begin{center}
+            \begin{tikzcd}[column sep =  1cm, row sep = 1.4cm]
+                & & F_k & \\
+                D \arrow[r, dashed, "e"] \arrow[dr,swap, dashed,
+                "\mu_i"]
+                &
+                \displaystyle \prod_{i \in J}F_i 
+                \arrow[rr,shift right =0.6ex, Red, swap, "f"]
+                \arrow[rr,shift right =-0.6ex, Blue, "g"]
+                \arrow[ur, "\pi_k"] 
+                \arrow[d, swap, "\pi_i"] 
+                &
+                &
+                \displaystyle \prod_{u:i \to k}F_k 
+                \arrow[d, "\pi'_k"]
+                \arrow[ul, swap, "\pi'_k"]
+                \\
+                &
+                F_i \arrow[rr, swap, "F(u)"] 
+                &
+                &
+                F_k
+            \end{tikzcd}
+        \end{center}
+        (\textcolor{Red}{It looks like a boat!}) Denote $\mu_i = \pi_i \circ e: D \to F_i$. Then what the above boat diagram 
+        tells us is that 
+        \[
+            \pi'_k \circ g = \pi_k \qquad F(u)\circ \pi_i = \pi'_k \circ f.
+        \]
+        Composing both equations with $e$, we get 
+        \[
+            \pi'_k \circ g \circ e = \pi_k \circ e \qquad F(u)\circ \pi_i \circ e= \pi'_k \circ f\circ e.
+        \]
+        but since $g \circ e = f \circ e$, what this really tells us is that
+        \[
+            F(u) \circ \pi_i \circ e = \pi_k \circ e \implies F(u) \circ \mu_i = \mu_k.
+        \]
+        for every $u: i \to k$ in $J$. 
+        Therefore, we see that we have that 
+        \begin{center}
+            \begin{tikzcd}[column sep =  1.4cm, row sep = 1.4cm]
+                & D 
+                \arrow[dl, swap, "\mu_i"]
+                \arrow[dr, "\mu_j"]
+                & \\
+                F_i \arrow[rr, swap, "F(u)"] & & F_k
+            \end{tikzcd}
+        \end{center}
+        commutes, so that $D$ equipped with the morphisms $\mu_i: D \to F_i$ forms a cone.
+        We now show that this is universal, so that $D$ is our limit. We do this 
+        by taking advantage of the universal property which equalizers
+        posses. 
+        
+        Suppose $C$ is another object which forms a cone with 
+        morphisms $\tau_i: C \to F_i$. Then there exists a map
+        $\displaystyle e': C \to \prod_{i \in J}F_i$ such that 
+        $\pi \circ e' = \tau_i$. Moreover, this implies that 
+        $f \circ e = g \circ e$. But the universal property of 
+        the equalizer $e$
+        states that for any subject object, there exists a morphism 
+        $h: D \to C$ such that the diagram below commutes. 
+        \begin{center}
+            \begin{tikzcd}[column sep =  1.4cm, row sep = 1.4cm]
+                D \arrow[r, "e"] 
+                \arrow[d, dashed, swap, "h"]
+                &
+                \displaystyle \prod_{i \in J}F_i 
+                \arrow[r,shift right =0.6ex, Red, swap, "f"]
+                \arrow[r,shift right =-0.6ex, Blue, "g"]
+                \arrow[d, "\pi_i"]
+                &
+                \displaystyle \prod_{u:i \to k}F_k\\
+                C 
+                \arrow[ur, "e'"] 
+                \arrow[r, "\tau_i"]
+                &
+                F_i 
+                &
+            \end{tikzcd}
+        \end{center}
+        Since $h: D \to C$ is unique, this shows that $D$ 
+        equipped with the morphisms 
+        $\displaystyle \mu_i: D \to F_i$ forms a limit of the diagram,
+        so that $D = \Lim F$.
+    \end{prf}
+    We actually proved much more than what was stated in the theorem, 
+    since we literally found the explicit form the limit. 
+
+    As a corollary, we have the following result which is due to the
+    above theorem. The only difference is we strengthen our
+    hypothesis, which makes it less general. 
+
+    \begin{corollary}
+        Let $\cc$ be a category. If $\cc$ has all equalizers (coequalizers)
+        and finite products (coproducts), then 
+        $\cc$ has all finite limits (colimits). 
+    \end{corollary}
+
+    By Proposition \ref{prop_category_finite_products}, one can obtain finite products 
+    by simply demanding the existence of binary products and a terminal object. Hence 
+    we can restate the above corollary:
+
+    \begin{corollary}
+        Let $\cc$ be a category. If $\cc$ has all equalizers (coequalizers),
+        binary products (coproducts) and a terminal object, then $\cc$ has 
+        all finite limits.
+    \end{corollary}
+
+    Not what is even more interesting is that we can construct equalizers and 
+    finite products from pullbacks. 
+
+    Specifically, suppose our category $\cc$ has pullbacks and a terminal object $T$. 
+    For any pair of objects $A, B$ in $\cc$, suppose we take the pull back on 
+    the morphisms $t_A: A \to T$ and $t_B: B \to T$. This then give 
+    rise to an object $P$ equipped with two morphisms $p_1: P \to A$ 
+    and $p_2: P \to B$, universal in the sense demonstrated below. 
+    \begin{center}
+        \begin{tikzcd}[column sep =  1.4cm, row sep = 1.4cm]
+            C \arrow[drr, bend left, "f"]
+            \arrow[ddr, bend right, swap, "g"]
+            \arrow[dr, dashed, "h"]
+            &[-0.7cm]
+            &
+            \\[-1.2cm]
+            &[-1cm]
+            P
+            \arrow[r, "p_1"]
+            \arrow[d, swap, "p_2"]
+            &
+            A
+            \arrow[d, "t_A"]\\
+            &[-1cm]
+            B 
+            \arrow[r, swap, "t_B"] 
+            &
+            T 
+        \end{tikzcd}
+        $\implies$
+        \begin{tikzcd}[column sep =  1.4cm, row sep = 1.4cm]
+            &
+            C
+            \arrow[dr, "f"]
+            \arrow[dl, swap, "g"]
+            \arrow[d, dashed, "h"]
+            &
+            \\
+            B
+            &
+            P
+            \arrow[l, "p_2"]
+            \arrow[r, swap, "p_1"]
+            &
+            A
+        \end{tikzcd}
+    \end{center}
+    Now on the top left we have our pull back. However, on the top right, we've 
+    unraveled the pullback and ignored the terminal object to observe that $P$ 
+    has the universal property of what a product would demand. Hence we may denote 
+    $P = A \times B$ as the product. Thus by Proposition \ref{prop_category_finite_products} 
+    $\cc$ has all finite products. \textcolor{NavyBlue}{Note that we wouldn't have been able 
+    to construct this if we didn't have a terminal object; For example, if $\cc$ 
+    was a discrete category, we wouldn't even have any morphisms to take a pullback on!}
+
+    Now to derive equalizers, consider a pair of parallel morphisms 
+    $f, g: A \to B$. Then we may simply take their pullback to obtain the diagram below. 
+    \begin{center}
+        \begin{tikzcd}[column sep =  1.4cm, row sep = 1.4cm]
+            C \arrow[drr, bend left, "f"]
+            \arrow[ddr, bend right, "g"]
+            \arrow[dr, dashed, "h"]
+            &[-0.7cm]
+            &
+            \\[-1.2cm]
+            &[-1cm]
+            P
+            \arrow[r, "p_1"]
+            \arrow[d, swap, "p_2"]
+            &
+            A
+            \arrow[d, "f"]\\
+            &[-1cm]
+            A
+            \arrow[r, swap, "g"] 
+            &
+            B 
+        \end{tikzcd}
+    \end{center}
+    If $p: A \times A \to A$ is the natural projection map, then 
+    because we have a trivial mapping $1_A: A \to A$, there exists a canonical 
+    canonical map $i: A \to A \times A$ such that $p \circ i = 1_A$. 
+    Similarly, because we have mappings $p_1, p_2: P \to B$, we must have a 
+    mapping $h: P \to A \times A$. 
+    \begin{center}
+        \begin{tikzcd}[column sep =  1.4cm, row sep = 1.4cm]
+            &
+            A
+            \arrow[dr, "1_A"]
+            \arrow[dl, swap, "1_A"]
+            \arrow[d, dashed, "i"]
+            &
+            \\
+            A
+            &
+            A\times A
+            \arrow[l, "p"]
+            \arrow[r, swap, "p"]
+            &
+            A
+        \end{tikzcd}
+        \hspace{1cm}
+        \begin{tikzcd}[column sep =  1.4cm, row sep = 1.4cm]
+            &
+            P
+            \arrow[dr, "p_1"]
+            \arrow[dl, swap, "p_2"]
+            \arrow[d, dashed, "h"]
+            &
+            \\
+            A
+            &
+            A\times A
+            \arrow[l, "p"]
+            \arrow[r, swap, "p"]
+            &
+            A
+        \end{tikzcd}
+    \end{center}
+    Now we can take the pullback on the morphism $h: P \to A \times A$ 
+    and $i: A \to A \times A$ to obtain the equalizer.  
+    \begin{center}
+        \begin{tikzcd}[column sep =  1.4cm, row sep = 1.4cm]
+            C \arrow[drr, bend left, "f"]
+            \arrow[ddr, bend right, "g"]
+            \arrow[dr, dashed, "h"]
+            &[-0.7cm]
+            &
+            \\[-1.2cm]
+            &[-1cm]
+            E
+            \arrow[r, "p_1"]
+            \arrow[d, swap, "p_2"]
+            &
+            P
+            \arrow[d, "h"]\\
+            &[-1cm]
+            A
+            \arrow[r, swap, "i"] 
+            &
+            A \times A 
+        \end{tikzcd}
+    \end{center}
+
+    Hence we see that for finite limits, we can reduce our assumptions to pullbacks and 
+    a terminal object, giving rise to the final corollary. 
+    \begin{thm}
+        If a category has pullbacks and a terminal object, then it has all finite limits. 
+    \end{thm}
+
+    \newpage
+    \section{Preservation of Limits}
+   
+    \begin{definition}
+        Let $F: J \to C$ be a diagram and suppose 
+        $G: \cc \to \dd$ is a functor. If for every limit
+        $\Lim F$ exists in $\cc$ with morphisms $u_i: C \to F_i$,
+        we say $G$ \textbf{preserves limits} if 
+        $G(\Lim F)$ is 
+        a limit with morphisms $G(u_i): G(C) \to G(F_i)$. Moreover, 
+        we call such a functor a \textbf{continuous functor}.
+    \end{definition}
+
+    As an immediate consequence of the definition, it should be noted 
+    that a composition of continuous functors is continuous. 
+
+    Below we see a visual definition of a continuous functor. 
+    \begin{center}
+        \begin{tikzcd}[column sep = 1.4cm, row sep = 1.4cm]
+            & C 
+            \arrow[d, dashed, "h"] 
+            \arrow[ddl,swap, bend right = 20,"f_i"] 
+            \arrow[ddr, bend left = 20, "f_j"] &\\
+            & 
+            \arrow[dl, swap, "u_i"] \Lim F 
+            \arrow[dr, "u_j"] & \\
+            F(i)
+            \arrow[rr, "F(g)"] 
+            & 
+            &
+            F(j) 
+        \end{tikzcd}
+        \hspace{0.5cm}
+        \begin{tikzcd}[column sep = 1.4cm, row sep = 1.4cm]
+            & D \arrow[d, dashed, "h'"] 
+            \arrow[ddl,swap, bend right = 20, "g_i"] 
+            \arrow[ddr, bend left = 20, "g_j"] &\\
+            & \arrow[dl, swap, "G(u_i)"] 
+            G(\Lim F)
+            \arrow[dr, "G(u_j)"] & \\
+            G(F(i))
+            \arrow[rr, "G(F(g))"] 
+            & 
+            &
+            G(F(j)) 
+        \end{tikzcd}
+    \end{center}
+    There's one particular and important functor which is always continuous 
+    in any category. 
+
+    \begin{thm}
+        Let $\cc$ be a small category. Then for each $C \in \cc$, 
+        the functor 
+        \[
+            \hom_{\cc}(C, -): \cc \to \textbf{Set}
+        \]
+        preserves limits. (Dually, the functor 
+        $\hom_{\cc}(-, C) = \hom_{\cc}(C, -):
+        \cc\op \to \textbf{Set}$ takes colimits to limits.)
+    \end{thm}
+
+    \begin{prf}
+        Let $F: J \to \mathcal{C}$ be a diagram with a limiting object  
+        $\text{Lim } F$ equipped with the morphisms $\sigma_i: \text{Lim } F \to F_i$.
+        Then applying the $\text{Hom}_{\mathcal{C}}(C, -)$ functor to $\text{Lim } F$ and to 
+        each $u_i$, we realize it forms a cone in $\textbf{Set}$. 
+        \begin{center}
+            \begin{tikzcd}[column sep = 1.4cm, row sep = 1.4cm]
+                & \text{Lim } F 
+                \arrow[dr, RoyalBlue, "\sigma_j"] 
+                \arrow[dl, swap,RoyalBlue, "\sigma_i"]
+                &\\
+                F_i \arrow[rr, swap, "u"]&& F_j
+            \end{tikzcd}
+            \begin{tikzcd}[column sep = 0.5cm, row sep = 1.4cm]
+                & \text{Hom}_{\mathcal{C}}(C, \text{Lim } F)
+                \arrow[dr, RoyalBlue, "{\sigma_j}_*"] 
+                \arrow[dl, swap, RoyalBlue, "{\sigma_i}_*"]
+                &\\
+                \text{Hom}_{\mathcal{C}}(C, F_i) \arrow[rr,swap, "u_*"]&& \text{Hom}_{\mathcal{C}}(C, F_j)
+            \end{tikzcd}
+        \end{center}
+        Now we show that $\text{Hom}_{\mathcal{C}}(C, \text{Lim } F)$, equipped with the morphisms 
+        $\sigma_{i*}$, is a universal cone; that is, it is a limit. 
+        Suppose that $X$ is a set which forms a cone with the
+        morphisms $\tau_i: X \to \text{Hom}_{\mathcal{C}}(C, F_i)$. 
+        \begin{center}
+            \begin{tikzcd}[column sep = 1.4cm, row sep = 1.4cm]
+                & X 
+                \arrow[dr, Red, "\tau_j"] 
+                \arrow[dl, swap,Red, "\tau_i"]
+                &\\
+                \text{Hom}_{\mathcal{C}}(C,F_i) \arrow[rr, swap, "u_*"] && \text{Hom}_{\mathcal{C}}(C,F_j)
+            \end{tikzcd}
+        \end{center}
+        
+        Then for each $x \in X$, 
+        we see that $\tau_i(x) : C \to F_i$.
+        The diagram above tells us that $u \circ \tau_i(x) = \tau_j(x)$ for each $x$.
+        Hence each $x \in X$ induces a 
+        cone with apex $C$ with morphisms $\tau_i(x): C \to F_i$. 
+        \begin{center}
+            \begin{tikzcd}[column sep = 1.4cm, row sep = 1.4cm]
+                & C 
+                \arrow[dl, swap,Red, "\tau_i(x)"]
+                \arrow[dr, Red, "\tau_j(x)"] 
+                &\\
+                F_i \arrow[rr, swap, "u"] && F_j
+            \end{tikzcd}
+        \end{center}
+        However, $\text{Lim } F$ is the limit of $F: J \to \mathcal{C}$. Therefore, there 
+        exists a unique arrow $h_x: C \to \text{Lim } F$ such that 
+        $h_x \circ \sigma_i = \tau_i(x)$. Now we can uniquely
+        define a function $: X \to \text{Hom}_{\mathcal{C}}(C, \text{Lim } F)$ where 
+        $h(x) = h_x: C \to \text{Lim } F$, in such a way that the diagram below commutes.  
+        \begin{center}
+            \begin{tikzcd}[column sep = 1.4cm, row sep = 1.4cm]
+                & X 
+                \arrow[d, dashed, "h"] 
+                \arrow[ddl,swap, bend right = 20,Red, "\tau_i"] 
+                \arrow[ddr, bend left = 20, Red, "\tau_j"] &\\
+                & 
+                \text{Hom}_{\mathcal{C}}(C, \text{Lim } F)
+                \arrow[dl, swap, RoyalBlue, "{\sigma_i}_*"] 
+                \arrow[dr, RoyalBlue, "\sigma_{j_*}"] & \\
+                \text{Hom}_{\mathcal{C}}(C, F_i)
+                \arrow[rr,swap, "u_*"] 
+                & 
+                &
+                \text{Hom}_{\mathcal{C}}(C, F_j)
+            \end{tikzcd}
+        \end{center}
+        Therefore, $\text{Hom}_{\mathcal{C}}(C, \text{Lim } F)$ is a limit in \textbf{Set}.
+    \end{prf}
+    At this point, you may be wondering: What is the difference between 
+    a functor which "creates limits" and one which preserves them? 
+    We'll see that their definitions are different, but creating limits 
+    is the same as preserving them 
+
+    \begin{thm}
+        Suppose $G: \cc \to \dd$ creates limits for $F: J \to \cc$. 
+        If $G \circ F: J \to \dd$ has a limit in $\dd$, then 
+        $G$ is continuous. 
+    \end{thm}
+
+    \begin{prf}
+        Suppose $F: J \to \cc$ has limit $\Lim F$ in $\cc$ with morphisms 
+        $v_i: \Lim F \to F_i$ for each $i \in J$. 
+        Further, suppose $G \circ F: J \to \dd$ has a limit 
+        $\Lim G \circ F$ with morphisms $u_i: \Lim G \circ F
+        \to G\circ F_i$. 
+
+        Since $G: \cc \to \dd$ creates limits, this implies 
+        the existence of a limiting object $X$ with morphisms 
+        $\sigma_i: X \to F_i$ for $F: J \to C$ 
+        where $G(X) = \Lim G\circ F$ and $G(\sigma_i) = u_i$. 
+        However, limiting objects are unique (by their universal properties).  
+        As they must be isomorphic, there exists an isomorphism 
+        $\phi: X \to \Lim F$ for which $v_i \circ \phi= \sigma_i$. 
+        Thus we see that 
+        \[
+            G(\Lim F) \cong G(X) = \Lim G \circ F \qquad 
+            G(v_i \circ \phi) = G(\sigma_i) = u_i.
+        \]
+        Therefore, $G$ preserves limits and so is continuous. 
+    \end{prf}
+
+    We have the following as a corollary. 
+
+    \begin{corollary}
+        Suppose $G: \cc \to \dd$ creates limits and $\cc$ is complete. 
+        Then $\dd$ is complete and $G$ preserves limits. 
+    \end{corollary}
+
+    
+
+    \newpage
+    \section{Adjoints on Limits}
+
+    Consider the free monoid functor $F$ and the 
+    forgetful functor $U$, as below. Recall that they form an adjunction.
+    \begin{center}
+        \begin{tikzcd}
+            \textbf{Set}
+            \arrow[r, shift left = 0.5ex, "F"]
+            &
+            \textbf{Mon}
+            \arrow[l, shift left = 0.5ex, "U"]
+        \end{tikzcd}
+    \end{center}
+    The way that we philosophically 
+    interpret this adjunction is as follows: For a set $X$, a monoid homomorphism
+    $\phi: F(X) \to M$ gives rise to a unique set function 
+    $f: X \to U(M)$. Conversely, a set function $g: X \to U(M)$ 
+    gives rise to a unique monoid homomorphism $\psi: F(X) \to M$. 
+
+    We will now observe that these functors exhibit nice behavior. 
+    \begin{itemize}
+        \item 
+        Recall that products in $\textbf{Mon}$ are simply products of monoids, while 
+        products in \textbf{Set} are cartesian products. One can show that, for two monoids 
+        $M$, $N$, we have the isomorphism 
+        \[
+            U(M \times N) \cong U(M) \times U(N).
+        \]
+        Regarding this functor's behavior, 
+        we say that the forgetful functor $U$ \textbf{preserves} products. 
+
+        \item We may ask if the converse holds: Does the free functor preserve products? 
+        The answer is no: Given two sets $X, Y$, it is generally not true that 
+        $F(X \times Y) \cong F(X) \times F(Y)$ (as monoids). 
+
+        An easy way to see this is to let $X = Y = \{\bullet\}$, the one point set. Then 
+        $F(\{\bullet\} \times \{\bullet\}) \cong F(\{\bullet\}) \cong \zz$, while 
+        $F(\{\bullet\}) \times F(\{\bullet\}) \cong \zz \times \zz$. 
+
+        \item What is interesting, however, is that the free functor \emph{does} preserve 
+        coproducts. Recall that the coproduct in \textbf{Set} is the disjoint union, while the 
+        coproduct in \textbf{Mon} is the free product of monoids. Then it is true that, for two 
+        sets $X, Y$, 
+        \[
+            F(X \amalg Y) \cong F(X) * F(Y).
+        \]
+    \end{itemize}
+    Thus we see that we have two functors that separately preserve 
+    products and coproducts. This is actually very interesting; after all, a 
+    very useful question to ask about a functor is if it preserves products, coproducts, equalizers, 
+    etc. For example, the fundamental group functor preserves products, and this is an interesting result 
+    one usually proves a topology course. 
+    
+    We now explain why we have this nice behavior.
+    \begin{thm}\label{theorem:RAPL}
+        Suppose $G: \dd \to \cc$ is a right adjoint and $F: \cc \to \dd$ is its left adjoint.
+        Then $G$ preserves limits and $F$ preserves colimits.
+    \end{thm}
+
+    Before a proof, we make some comments. 
+    \begin{itemize}
+        \item An easy way to remember this is \textbf{RAPL}: ``\textbf{R}ight \textbf{A}djoints \textbf{P}reserve \textbf{L}imits.'' 
+        (Speaking from experience, say it in your head a bunch of times or you'll forget.) 
+        If you can remember \textbf{RAPL}, then you can 
+        remember that, dually, left adjoints preserve colimits. 
+
+        \item The converse of this theorem does not hold.
+        
+        \item Typically, this proof is shown in one of two forms: It is ``blackboxed'' with 
+        a slick application of the Yoneda Lemma, which is not illuminating or useful for a new 
+        reader. Or, it is more usefully spelled out by showing that right adjoints preserve limits, and 
+        the second statement is obtained by ``dualizing''. For variety, we will
+        show that left adjoints preserve 
+        colimits. Then, the reader can 
+        try proving themselves that right adjoints preserve 
+        limits.
+    \end{itemize}
+
+    \begin{prf}
+        Let $(\Colim H, \sigma_i: H(i) \to \Colim H)$ be the colimit
+        of the functor $H: J \to \cc$. This means that we have the universal diagram below. 
+        \begin{center}
+            \begin{tikzcd}[column sep = 1cm, row sep = 1.4cm]
+                & A
+                \arrow[<-, ddl,swap, bend right = 20,"\gamma_i"] 
+                \arrow[<-, ddr, bend left = 20, "\gamma_j"] 
+                &
+                \\
+                & 
+                \Colim H
+                \arrow[u, dashed]
+                \arrow[<-, dl, swap, "\sigma_i"] 
+                \arrow[<-, dr, "\sigma_j"] 
+                & 
+                \\
+                H(i)
+                \arrow[rr, swap, "H(f)"] 
+                & 
+                &
+                H(j)
+            \end{tikzcd}
+        \end{center}        
+        Mapping this to $\dd$ under $F: \cc \to \dd$, we obtain the diagram 
+        \begin{center}
+            \begin{tikzcd}[column sep = 1cm, row sep = 1.4cm]
+                & 
+                F(\Colim H)
+                \arrow[<-, dl, swap, "F(\sigma_i)"] 
+                \arrow[<-, dr, "F(\sigma_j)"] 
+                & 
+                \\
+                F(H(i))
+                \arrow[rr, swap, "F(H(f))"] 
+                & 
+                &
+                F(H(j))
+            \end{tikzcd}
+        \end{center}    
+        We see that $(F(\Colim H), F(\sigma_i): F(H(i)) \to F(\Colim H))$ 
+        is a cone over the functor $F \circ H: J \to \dd$.
+        We must show it is universal. Towards that goal, 
+        let $(C, \tau_i: F(H(i)) \to C)$ 
+        be a cone over $F \circ H: J \to \dd$. 
+        We must show that 
+        \begin{itemize}
+            \item[1.] There exists a $\alpha: F(\Colim H) \to C$ such that 
+            $\alpha \circ F(\sigma_i) = \tau_i$ for all $i \in J$
+            \item[2.] $\alpha$ is the unique morphism from $F(\Colim H)$ to $C$ with 
+            this property.  
+        \end{itemize}
+        We show existence. Observe that each 
+        $\tau_i: F(H(i)) \to C$ induces a unique morphism 
+        $\delta_i: H(i) \to G(C)$ such that the diagram below commutes. 
+        \begin{center}
+            \begin{tikzcd}[column sep = 1.4cm, row sep = 1.4cm]
+                F(G(C))
+                \arrow[r, "\epsilon_C"]
+                &
+                C
+                \\
+                F(H(i))
+                \arrow[u, dashed, "\delta_i"]
+                \arrow[ur, swap, "\tau_i"]                
+            \end{tikzcd}
+        \end{center}
+        Hence, we have a family of $\delta_i: H(i) \to G(C)$. However, since $\Colim H$ is the colimit of $H$, 
+        we obtain a unique morphism $k: \Colim H \to G(C)$ such that the diagram commutes.     
+        \begin{center}
+            \begin{tikzcd}[column sep = 1cm, row sep = 1.4cm]
+                & G(C)
+                \arrow[<-, ddl,swap, bend right = 20,"\delta_i"] 
+                \arrow[<-, ddr, bend left = 20, "\delta_j"] 
+                &
+                \\
+                & 
+                \Colim H
+                \arrow[u, dashed, "k"]
+                \arrow[<-, dl, swap, "\sigma_i"] 
+                \arrow[<-, dr, "\sigma_j"] 
+                & 
+                \\
+                H(i)
+                \arrow[rr, swap, "H(f)"] 
+                & 
+                &
+                H(j)
+            \end{tikzcd}
+        \end{center}   
+        We then map this diagram in $\cc$ to the diagram below in $\dd$ 
+        via $F$:
+        \begin{center}
+            \begin{tikzcd}[column sep = 1cm, row sep = 1.4cm]
+                &
+                C
+                &
+                \\
+                &
+                F(G(C))
+                \arrow[u, "\epsilon_C"]
+                &
+                \\
+                & 
+                F(\Colim H)
+                \arrow[u, "F(k)"]
+                \arrow[<-, dl, swap, "F(\sigma_i)"] 
+                \arrow[<-, dr, "F(\sigma_j)"] 
+                & 
+                \\
+                H(i)
+                \arrow[rr, swap, "F(H(f))"] 
+                \arrow[uur, bend left = 20,"F(\delta_i)"]
+                \arrow[uuur, bend left = 40,"\tau_i"]
+                & 
+                &
+                H(j)
+                \arrow[uul, bend right = 20, swap, "F(\delta_j)"]
+                \arrow[uuul, bend right = 40, swap, "\tau_j"]
+            \end{tikzcd}
+        \end{center}  
+        Thus we see that $\epsilon_C \circ F(k): F(\Colim H) \to C$ is a morphism 
+        pointing from $F(\Colim)$ to $C$ such that the above diagram commutes. 
+        We have proved existence of such a morphism. It is not difficult to show 
+        uniqueness, which is left as an exercise. 
+        Once we have uniqueness, we can then conclude that $(F(\Colim H), F(\sigma_i): F(H(i)) \to F(\Colim H)$ 
+        forms a universal cone 
+        over $F \circ H: J \to \dd$, so that $F(\Colim H)$ is the colimit, as desired. 
+    \end{prf}
+
+    \begin{example}
+        Using the above theorem, we now know that the free monoid functor 
+        $F: \textbf{Set} \to \textbf{Mon}$ preserves coproducts. Therefore, we can say 
+        that for any sets $X, Y$, we have that 
+        \[
+            F(X \amalg Y) \cong F(X) * F(Y).   
+        \]
+        Moreover, the free monoid functor is part of a larger family of free functors: 
+        \begin{itemize}
+            \item Free group functor, $F: \textbf{Set} \to \textbf{Grp}$
+            \item Free abelian group functor, $F: \textbf{Set} \to \textbf{Ab}$
+            \item Free ring functor, $F: \textbf{Set} \to \textbf{Ring}$
+            \item Free $R$-module functor, $F: \textbf{Set} \to R\textbf{-Mod}$
+        \end{itemize}
+        who are the left adjoints to their respective forgetful functors. 
+        However, the coproduct in some of these 
+        categories is not always the free product. For example, the coproduct of $\textbf{Grp}$ 
+        is the free product, but the coproduct in $\textbf{Ab}$ is the direct sum.
+        Hence, the above theorem tells us that coproducts are preserved, but to obtain 
+        the correct isomorphism, we need to remember what the coproduct in the codomain category 
+        of our left adjoint is.
+    \end{example}
+
+
+    \begin{example}
+        Let \textbf{Meas} be the category of measure spaces with measure-preserving 
+        morphisms. 
+        More precisely, 
+        \begin{description}
+            \item[Objects.] The objects are triples $(X, \mathcal{A}, \mu_X)$ 
+            where $X$ is a topological space, $\mathcal{A}$ is a sigma algebra 
+            on $X$, and $\mu_X$ is a measure on $X$. 
+            
+            \item[Morphisms.] A morphism between two objects $(X, \mathcal{A}, \mu_X)$ 
+            and $(Y, \mathcal{B}, \mu_Y)$ is a function $f: X \to Y$ such that 
+            $f$ is measurable and preserves measure. That is, is $f$ is measurable 
+            and 
+            \[
+                \mu_X(f^{-1}(B)) = \mu_Y(B)
+            \] 
+            for every $B \in \mathcal{B}$. 
+        \end{description}
+
+        Let $U: \textbf{Meas} \to \textbf{Set}$ be the forgetful functor, forgetting 
+        measure space properties and measurability of the morphisms. 
+        This functor can't have a left-adjoint, since it does not preserve 
+        products. In fact, \textbf{Meas} cannot even have products. 
+        The main issue with this is that we cannot guarantee the projection 
+        morphisms to preserve measure. For example, if we consider the 
+        simple measure space $(\mathbb{R}, \mathcal{B}, \mu)$ where $\mathcal{B}$ consists 
+        of the Borel algebra and $\mu$ is the Lebesgue measure, then 
+        one reasonable way to try to form a product with itself is to construct the triple
+        \[
+            (\rr \times \rr, \mathcal{B} \times \mathcal{B}, \mu\times\mu). 
+        \]
+        However, observe that the projection $\pi: (\rr \times \rr, \mathcal{B} \times \mathcal{B}, \mu\times\mu) \to (\rr, \mathcal{B}, \mu)$ is 
+        not measure preserving:
+        \[
+            \mu \times \mu(\pi^{-1}([0, 1])) = \mu \times \mu([0, 1] \times \rr) = \infty
+        \]
+        while 
+        \[
+            \mu([0, 1]) = 0.            
+        \]
+        Therefore, we cannot form products. Hence our forgetful functor 
+        has no left adjoint. 
+        
+        One could guess that the left adjoint \textit{would} be the 
+        measure-constructing functor $F: \textbf{Set} \to \textbf{Meas}$ where 
+        \[
+            X \mapsto (X, \mathcal{P}, \mu_0)
+        \]
+        where $\mathcal{P}$ is the sigma algebra on the power set, and $\mu_0$ assigns
+        the measure of each set to zero (i.e. the trivial measure) but this is not
+        the case. In fact, this functor itself also cannot have a left-adjoint 
+        because it doesn't preserve products 
+        (since \textbf{Meas} can't have products).
+
+
+    \end{example}
+
+    {\large \textbf{Exercises}
+    \vspace{0.2cm}}
+    \begin{itemize}
+        \item[\textbf{1.}] Denote the free monoid functor as $F$.
+        Prove directly that for two sets $X$, $Y$, we have 
+        the isomorphism of monoids $F(X \amalg Y) \cong F(X) * F(Y)$. (Doing this is actually very important; 
+        The proof of Theorem \ref{theorem:RAPL} will become more intuitive.)
+        \item[\textbf{2.}] Finish the proof of Theorem \ref{theorem:RAPL}
+        \item[\textbf{3.}] 
+        Let $\cc, \dd$ be categories with finite products. 
+        \begin{itemize}
+            \item[\emph{i.}] Let $F: \cc \to \dd$ be a functor that preserves products, so that
+            for two objects $A$, $B$ of $\cc$, there exists an isomorphism 
+            \[
+                F(A \times B) \cong F(A) \times F(B).
+            \]
+            Does this isomorphism have to be natural in $A, B$?
+
+            \item[\emph{ii.}] Suppose $F: \cc \to \dd$ is a right adjoint. Is the isomorphism 
+            $F(A \times B) \cong F(A) \times F(B)$ natural now? 
+        \end{itemize}
+    \end{itemize}
+
+
+    
+
+    \newpage 
+    \section{Existence of Universal Morphisms and Adjoint Functors}
+    When we introduced functors, we introduced several if and only 
+    if propositions which gave us criterion on the existence of an adjoint 
+    functor. Notably, we showed that if there exists an adjunction 
+    \begin{center}
+        \begin{tikzcd}[column sep = 1.4cm, row sep = 1.4cm]
+            C \arrow[r, shift right = 0.5ex, swap, "G"]
+            &
+            D \arrow[l, shift left = -0.5ex, swap, "F"] 
+        \end{tikzcd}
+    \end{center}
+    (that is, the classic bijection of homsets which is natural)
+    then there exist universal morphisms 
+    \[
+        \eta_C: C \to G \circ F(C) \qquad \epsilon_D: F\circ G(D) \to D 
+    \]
+    for all objects $C, D$. Furthermore, we only need one of the universal morphisms 
+    to derive an adjunction. Since universal morphisms are simply initial objects 
+    in some comma category, we have the following proposition. 
+
+    \begin{proposition}
+        Let $G: \dd \to \cc$ be a functor. Then $G$ has a left adjoint 
+        if and only if for each $C \in \cc$, the comma category $C \downarrow G$ 
+        has an initial object.
+    \end{proposition}
+
+    \begin{prf}
+        \begin{itemize}
+            \item[$\bm{\implies}$]
+            Suppose $G$ has a left adjoint $F: \cc \to \dd$. Then 
+            for each $C \in \cc$, there exists a universal morphism 
+            $\eta_C: C \to G(F(C))$. 
+            Now in the comma category, objects will be of 
+            the form 
+            \[
+                (D, f: C \to G(D))
+            \]
+            where morphisms between $(D, f: C \to G(D))$ and $(D', f': C \to G(D'))$ 
+            will be induced by morphisms $h: D \to D'$ such that 
+            \begin{center}
+                \begin{tikzcd}[column sep = 1.4cm, row sep = 1.4cm]
+                    & C \arrow[dl, swap, "f"] \arrow[dr, "f'"] & \\
+                    G(D) \arrow[rr, swap, "G(h)"] & & G(D')
+                \end{tikzcd}
+            \end{center}
+            commutes. First, observe that $(F(C), \eta_C: C \to G(F(C)))$ 
+            is an object of the comma category. Second, observe that the 
+            bijection of homsets 
+            \[
+                \hom_{\dd}(F(C), D) \cong \hom_{\cc}(C, G(D))   
+            \]
+            (natural in $C, D$) 
+            guarantees that every object
+            $(D, f: C \to G(D))$ in the comma category corresponds uniquely to
+            a morphism $h: F(C) \to D$. Moreover, uniqueness guarantees that the diagram 
+            \begin{center}
+                \begin{tikzcd}[column sep = 1.4cm, row sep = 1.4cm]
+                    & C \arrow[dl, swap, "\eta_C"] \arrow[dr, "f"] & \\
+                    G(F(C)) \arrow[rr, swap, "G(h)"] & & G(D)
+                \end{tikzcd}
+            \end{center}
+            must commute. Hence, $(F(C), \eta_C: C \to G(F(C)) )$ is an 
+            initial object $C \downarrow G$. 
+
+            \item[$\impliedby$] Now suppose that $C \downarrow G$ has an 
+            initial object $(D, \eta_C: C \to G(D))$. Actually, denote 
+            the object $D$ as $F(C)$. When we write $F(C)$, we're not denoting 
+            a functor, because we'll show this is a functor. Anyways, our initial 
+            object can be written as 
+            \[
+                (F(C), \eta_C: C \to G(F(C))).
+            \]
+            This defines a mapping on objects $C \mapsto F(C)$. To show that this 
+            is a functor, suppose we have a morphism $f: C \to C'$ in $\cc$. Then 
+            we have square 
+            \begin{center}
+                \begin{tikzcd}[column sep = 1.4cm, row sep = 1.4cm]
+                    C \arrow[r, "\eta_C"] \arrow[d, swap, "f"] & G(F(C))\\
+                    C' \arrow[r, "\eta_{C'}"] & G(F(C')). 
+                \end{tikzcd}
+            \end{center}
+            Adding the final leg to this diagram would show that $F$ is a functor. But 
+            since $(F(C), \eta_C: C \to G(F(C)))$ is an initial object in $(C \downarrow G)$, 
+            and $(F(C'), \eta_{C'}: C' \to G(F(C)))$ is an object in this category, 
+            there must be a \textit{unique} morphism $F(f):F(C) \to F(C')$. Uniqueness of 
+            this morphism forces commutativity of the square 
+            \begin{center}
+                \begin{tikzcd}[column sep = 1.4cm, row sep = 1.4cm]
+                    C \arrow[r, "\eta_C"] \arrow[d, swap, "f"] & G(F(C)) \arrow[d, "G(F(f))"]\\
+                    C' \arrow[r, "\eta_{C'}"] & G(F(C')). 
+                \end{tikzcd}
+            \end{center}
+            and therefore $F$ is a functor. Simultaneously, this shows $F$ is left adjoint 
+            to $G$, as desired. 
+        \end{itemize}
+    \end{prf}  
+    We can repeat the proof to achieve the following result as well.
+    \begin{corollary}
+        Let $F: \cc \to \dd$ be a functor. Then $F$ has a right adjoint if and only 
+        if for each $D \in D$, the comma category $D \downarrow F$ has a terminal 
+        object. 
+    \end{corollary}
+    Thus we see that initial and terminal objects are key to figuring out 
+    when a functor has a left or right adjoint, and hence when they preserve limits.
+    We can investigate a little deeper into this. 
+
+    \begin{lemma}(Initial Object Existence.)
+        If $\cc$ is a complete category with small homsets, then $\cc$ 
+        has an initial object if and only if it satisfies the \textbf{Solution 
+        Set Condition}: 
+        \begin{center}
+            \begin{minipage}{0.9\textwidth}
+                There exists
+                objects $(C_i)_{i \in I} \in \cc$ such that for every $C \in \cc$, there is a 
+                a morphism $f_i: C_i \to C$ for at least one $i \in I$. 
+            \end{minipage}
+        \end{center}
+
+    \end{lemma}
+
+    \begin{prf}
+        \begin{itemize}
+            \item[$\implies$] 
+             Suppose $\cc$ has an initial object $C'$. Then $I$ is the one-point 
+             set since for each $C \in C$ there exists one unique morphism 
+             $f: C' \to C$. 
+
+            \item[$\impliedby$] 
+            On the other hand, assume the solution set condition. 
+            Since $\cc$ is complete, it must have products, so we may 
+            take the product
+            \[
+                W = \prod_{i \in J}C_i.
+            \]
+            This product has associated projection morphisms 
+            $\displaystyle \pi_k: \prod_{i \in J}C_i \to C_k$. Therefore, 
+            for each object $C \in \cc$, there exists at least one 
+            morphism between $W$ and $C$ by composition:
+            \[
+                f_k \circ \pi_k: W \to C.
+            \]
+            By hypothesis, the collection of endomorphisms $\hom_{\cc}(W, W)$ 
+            is a set. Therefore, we may form an equalizer $e: V \to W$ 
+            of this set. Observe that for each $C \in \cc$, there exists 
+            at least one morphism between $V$ and $C$ by composition:
+            \[
+                f_k \circ \pi_k\circ e: V \to C.
+            \]
+            We'll now show that all morphisms are equal. Suppose the contrary; 
+            that there are two distinct morphisms $f, g: V \to C$. Denote the equalizer 
+            of this pair as $e_1: u \to v$. Then we have that 
+            \begin{center}
+                \begin{tikzcd}[column sep = 1.4cm, row sep = 1.4cm]
+                    U \arrow[r, "e_1"] 
+                    & 
+                    V 
+                    \arrow[r, shift right = 0.5ex, "f"] 
+                    \arrow[d, "e"] 
+                    & C\\
+                    W\arrow[u, dashed, "s"] 
+                    \arrow[r, swap, "e\circ e_1 \circ s"] 
+                    & 
+                    W = \prod_{i \in J}C_i 
+                    \arrow[r, swap, "\pi_k"]
+                    &
+                    C_k
+                    \arrow[u, swap, "f_i"]
+                \end{tikzcd}
+            \end{center}
+            commutes. The morphism $s$ is induced via the universality of 
+            both $U$ and $V$. Since $e \circ e_1 \circ s : W \to W$, and 
+            $e$ is the equalizer of endomorphisms of $W$, we have that 
+            \[
+                (e \circ e_1 \circ s)\circ e = e.  
+            \]
+            Since equalizers are monic, we can cancel on the left side to conclude 
+            that 
+            \[
+                e_1 \circ s \circ e = 1_V. 
+            \]
+            However, this implies that the right inverse of $e_1$ is $s \circ e$. 
+            Since $e_1$ is already monic, it must be an isomorphism. Hence $f = g$, so that 
+            $V$ is an initial object as desired. 
+        \end{itemize}
+    \end{prf}
+
+    We can now combine all of our propositions and theorems into the following 
+    one, which is the main adjoint functor theorem of interest. 
+
+    \begin{thm}[ (General Adjoint Functor Theorem.)]
+        Let $\dd$ be complete with small homsets. A functor 
+        $G: \dd \to \cc$ has a left adjoint if and only if it preserves all small 
+        limits and satisfies the \textbf{solution set condition}: 
+        \begin{center}
+            \begin{minipage}{0.9\textwidth}
+                For each $C \in \cc$, 
+                there exists a set of objects $(D_i)_{i \in I}$ $\dd$ and a family 
+                of arrows
+                \[
+                    f_i: C \to G(D_i)
+                \]
+                such that for every morphism $h: C \to G(D)$, there 
+                exists a $j \in I$ and a morphism $t: D_j \to D$ such that
+                \[
+                    h = G(t) \circ f_i.
+                \]
+            \end{minipage}  
+        \end{center}
+    \end{thm}
+
+    \textcolor{Plum}{The above theorem helps us find out when we can get a 
+    left adjoint. Prior to this theorem, we already know what happened if 
+    we were given a functor who has a left adjoint. Namely, it must preserve 
+    limits. This natural question one would then ask is if
+    the converse holds. The above theorem tells us no, the converse doesn't hold 
+    and in fact we need to make sure the functor satisfies the \textbf{solution 
+    set condition}. In the next section, we'll give an example of a functor 
+    which preserves limits from a complete category, but still has no left adjoint.}
+
+    As a converse to the above theorem, we have the following. 
+
+    \begin{thm}[ (Representability Theorem.)]
+        Let $\cc$ be a small, complete category. A functor $K: \cc \to 
+        \textbf{Set}$ is representable if and only if $K$ preserves limits 
+        and satisfies the following \textbf{solution set condition}: 
+        \begin{center}
+            \begin{minipage}{0.9\textwidth}
+                There exists a set $S \subset \ob(\cc)$ such that for any 
+                $C \in \cc$ and any $x \in K(C)$, there exists an $s \in S$, 
+                an element $y \in K(s)$ and an arrow 
+                \[
+                    f: s \to C \text{ such that } K(f)(y) = x.
+                \]
+            \end{minipage}
+        \end{center}
+    \end{thm}
+
+\newpage
+\section{Subobjects and Quotient Objects}
+The entire point of category theory, contrary to its name, is to unify 
+mathematics. Mathematicians saw the same stories over and over again in algebra 
+and topology, and one day they got sick of it and decided to start naming the patterns 
+they were seeing.
+Mathematicians achieved a level of abstraction where we no longer really care about the objects, 
+but we want to study the morphisms between them. 
+However, in many categories, the objects are often things like groups, 
+rings, or topological spaces; hence there are subgroups, subrings, 
+and spaces with subset topologies which also exist inside categories we study. 
+This presents a challenge for category theory: how do we generalize the notion of 
+subgroups or subspaces if we always avoid explicit reference to the elements?
+
+It turns out that the correct way to go about this is to consider the philosophy of 
+sub-"things": whenever $S$ is a sub-"thing" of $X$, there usually exists a monomorphism
+\[
+    m: S \to X.
+\] 
+For example, in \textbf{Set}, $S \subset X$ implies that there's an injection $i: S \to X$; a monomorphism 
+is injective in \textbf{Set}, so this makes sense. In \textbf{Top}, if $S \subset X$ where $S$ is given the subspace 
+topology, then the inclusion function $i: S \to X$ is continuous, so there does exist 
+a monomorphism $m: S \to X$ in \textbf{Top}. 
+
+Thus we see that these monomorphisms give us sub-"things," and so we might naively say 
+the set of all "subobjects" of an object $X$ in a category $\cc$ is the set
+\[
+    \text{Sub}_{\cc}(X) = \{S \in \text{Ob}(\cc) \mid \exists f: S \to X \text{ with } f \text{ monic }\}.
+\]
+However, the space of all of 
+these monomorphisms is huge, and also repetitive. For example, in \textbf{Set}, if we have 
+$X = \{1, 2, 3, 4, 5\}$, then there are all kinds of monomorphisms into $X$:
+\begin{center}
+    \begin{tikzcd}[column sep = 0.7cm, row sep = 1.4cm]
+        \{\text{! },  \text{ \% }, \text{  \$ }, \text{\& }\}
+        \arrow[dr, hookrightarrow]
+        &
+        \\
+        \{Q, G, X, I\}
+        \arrow[r, hookrightarrow]
+        &
+        \{1, 2, 3, 4, 5\}
+        \\
+        \{\text{All }, \text{ Politicians }, \text{ Are }, 
+        \text{ Corrupt }\}
+        \arrow[ur, hookrightarrow]
+    \end{tikzcd}
+\end{center}
+Each arrow is basically saying the same thing. How do we deal with this?
+Well, we can impose an equivalence relation on this space to obtain something smaller
+and more manageable.
+
+Let $A$ an object of our category $\cc$. Consider monomorphisms $f: C \to A$ and 
+$g: D \to A$. Define the relation $\le$ on monomorphisms of this form where 
+\begin{statement}{ProcessBlue!10}
+\begin{minipage}{0.6\textwidth}
+    \[
+        f \le g \text{ if there exists an } h \text{ where } f = g \circ h.
+    \]
+\end{minipage} 
+\begin{minipage}{0.4\textwidth}
+    \begin{tikzcd}[column sep = 1.6cm, row sep = 0.3cm]
+        C \arrow[dr, hookrightarrow, "f"]
+        &
+        \\
+        &
+        A 
+        \\
+        D \arrow[ur,hookrightarrow, swap, "g"]
+        \arrow[uu, dashed, "h"]
+    \end{tikzcd}
+\end{minipage}
+\end{statement}
+for some monomorphism $h: D' \to D$. Note that if $f \le g$ and $f \ge g$, 
+then $C$ and $D$ are isomorphic (this is not true in general; this only true here 
+because $f, g$ are monomorphisms).
+So we now have our equivalence relation: we say $f \sim g$ if 
+there exists an isomorphism $\phi: D \to C$ which makes the above diagram commute. 
+
+\begin{definition}
+    Let $\cc$ be a category and let $A$ be an object. We say a \textbf{subobject} 
+    of $A$
+    is an equivalence class of monomorphisms $f: S \to A$ under the equivalence relation 
+    $\sim$. We denote this space of equivalence classes as 
+    \[
+        \text{Sub}_{\cc}(A) = \Big\{[f] \mid f:C \to A \text{ is a monomorphism} \Big\}.
+    \]
+\end{definition}
+
+\begin{example}\label{subfunctor_example}
+    Let $\cc$ be a category. An interesting application of subobjects occurs in functor categories. To illustrate this 
+    we consider the functor category $\textbf{Set}^{\cc}$; that is, the category with functors 
+    $F: \cc \to \textbf{Set}$ whose morphisms are natural transformation $\eta: F \to G$ between 
+    such functors. 
+    
+    If we play around with these functors long enough, we may ask the question:
+    What happens when, for a functor $F: \cc \to \textbf{Set}$, there is another 
+    functor $G: \cc \to \textbf{Set}$ such that 
+    \[
+        G(A) \subset F(A)?
+    \]
+    Could we logically call $G$ a "\textbf{subfunctor}" of $F$? We could with a little more work. 
+    Because $G(A) \subset F(A)$,  we know that there exists a monomorphism (just an injection here)
+    $i_A: G(A) \to F(A)$. Now a natural question to ask here is if this translates to a
+    natural transformation. That is, does the diagram below commute?
+    \begin{center}
+        \begin{tikzcd}[column sep = 1.4cm, row sep = 1.4cm]
+            A 
+            \arrow[d, "f"]\\
+            B
+        \end{tikzcd}
+        \hspace{1cm}
+        \begin{tikzcd}[column sep = 1.4cm, row sep = 1.4cm]
+            G(A)
+            \arrow[d, swap, "G(f)"]
+            \arrow[r, swap, hookrightarrow, swap, "i_A"]
+            &
+            F(A)
+            \arrow[d, "F(f)"]
+            \\
+            G(B)
+            \arrow[r, hookrightarrow, swap, "i_B"]
+            & 
+            F(B)
+        \end{tikzcd}
+    \end{center} 
+    The answer is no. This is because $G(f)$ and $F(f)$ could be two entirely different functions which do 
+    two entirely different things to the same elements in different domains; however, 
+    one way for this diagram to commute is if $G(f)$ is $F(f)$ \emph{restricted} to 
+    the set $G(A)$. That is, if 
+    \[
+        G(f) = F(f)\big|_{G(A)}.
+    \]
+    The diagram then commutes. But is this the only way to make it commute? Suppose with no assumption of $G(f)$
+    that the diagram did commute. Then we can still make a morphism $F(f)\big|_{G(A)}: G(A) \to G(B)$ to 
+    get the commutative diagram 
+    \begin{center}
+        \begin{tikzcd}[column sep = 1.4cm, row sep = 1.4cm]
+            A 
+            \arrow[d, "f"]\\
+            B
+        \end{tikzcd}
+        \hspace{1cm}
+        \begin{tikzcd}[column sep = 1.4cm, row sep = 1.4cm]
+            G(A)
+            \arrow[d, shift right = -0.5ex, "G(f)"]
+            \arrow[d, shift right = 0.5ex, swap, "F(f)\big|_{G(A)}"]
+            \arrow[r, swap, hookrightarrow, swap, "i_A"]
+            &
+            F(A)
+            \arrow[d, "F(f)"]
+            \\
+            G(B)
+            \arrow[r, hookrightarrow, swap, "i_B"]
+            & 
+            F(B)
+        \end{tikzcd}
+    \end{center}    
+    Then we see that $i_B \circ G(f) = i_B \circ F(f)\big|_{G(A)}$. However, 
+    $i_B$ is a monomorphism,  so $G(f) = F(f)\big|_{G(A)}$. Hence the \emph{only} way to 
+    make the diagram commute is if $G(f)$ is a restriction of $F(f)$. 
+
+    Thus we could define $G: \cc \to \textbf{Set}$ to be a subfunctor of $F: \cc \to \textbf{Set}$ 
+    if $G(A) \subset F(A)$ and $G(f: A \to B) = F(f)\big|_{G(A)}$. Or, equivalently, 
+    if $G(A) \subset F(A)$ and that this relation is natural. 
+
+    However, we can recover the same concept by applying subobjects to this functor category. 
+    In this case, we can (with laziness) say a $G: \cc \to \textbf{Set}$ is a subobject 
+    of the functor $F: \cc \to \textbf{Set}$ 
+    in $\textbf{Set}^{\cc}$ if there exists a monic natural transformation 
+    $\eta: G \to F$. 
+
+    Unwrapping this definition, we see that a monic natural transformation in this 
+    case is just one where each morphism $\eta_A: G(A) \to F(A)$ is a monomorphism, which, in our case, 
+    just means an inclusion function, such that the necessary square commutes. However, we 
+    already showed that we get the commutativity of the necessary square if and only if 
+    $G(f: A \to B) = F(f)\big|_{G(A)}$. 
+    
+    Hence we have recovered the same concept of a \textbf{subfunctor} in two different ones; 
+    one in which we followed our intuition, and one in which we blinded applied the concept of a 
+    subobject in the functor category $\textbf{Set}^{\cc}$.
+\end{example}
+
+The previous example allows us to make the definition:
+\begin{definition}
+    Let $\cc, \dd$ be categories. Then a functor $G: \cc \to \dd$  
+    is a \textbf{subfunctor} of $F: \dd \to \cc$ if $G$ is a subobject of $F$ 
+    in the functor category $\dd^{\cc}$.
+\end{definition}
+
+Now, perhaps unsurprisingly, the entire process above can be dualized. When we dualize, 
+however, we obtain a generalization of the concept of quotient objects. Instead of just dualizing and 
+being boring, we'll motivate why we'd even care for such a dual concept. 
+\\
+
+In interesting categories such as \textbf{Ab} or \textbf{Top}, we not only have 
+subgroups and subspaces, but we also have quotient groups and quotient spaces. 
+For the case of abelian groups, we can, for any such group $G$, consider any 
+subgroup $H \le G$ and construct the quotient group $G/H$. This comes with a 
+a nice epimorphism $\pi: G \to G/H$ where $g \mapsto g + H$. 
+
+For topological spaces $(X, \tau)$ in \textbf{Top}, we can define an equivalence 
+relation $\sim$ on $X$ and consider the topological space $(X/\sim, \tau')$ 
+such that $\tau'$ is the topology where a set $U$ is open if $\{x \mid [x] \in U\}$
+is open in $\tau$. We can then equip ourselves with a continuous projection map 
+$\pi: X \to X/\sim$, which is also an epimorphism. 
+
+With these few examples, we see that it is worthwhile to generalize the concept 
+of quotient objects; to do this however requires no explicit mention of the elements of 
+the objects of the category. However, we can maintain the philosophy seen in the previous 
+two examples to generalize the concept.
+
+For an object $A$ in a category $\cc$, we consider all \emph{epimorphisms}
+\[
+    e: A \to Q
+\]
+and call objects such objects $Q$ as quotient objects. Again, the space of these 
+objects is too large, so we instead consider ordering relation 
+
+\begin{statement}{ProcessBlue!10}
+\begin{minipage}{0.6\textwidth}
+    \[
+        f \le g \text{ if there exists an } h \text{ where } f = h \circ g.
+    \]
+\end{minipage} 
+\begin{minipage}{0.4\textwidth}
+    \begin{tikzcd}[column sep = 1.6cm, row sep = 0.3cm]
+        & C 
+        \\
+        A 
+        \arrow[ur, ->>, "f"]
+        \arrow[dr, ->>, swap, "g"]
+        &
+        \\
+        &
+        D \arrow[uu, dashed, swap, "h"]
+    \end{tikzcd}
+\end{minipage}
+\end{statement}
+Observing that $f \le g$ and $g \le f$ together imply that $C \cong D$, we see that 
+we may construct an equivalence relation $\sim$ where $f \sim g $ if there exists an isomorphism 
+$\phi: D \to C$ such that $f = \phi \circ g$. We can now outline a clear definition.
+
+\begin{definition}
+    Let $\cc$ be a category and let $A$ be an object. We say a \textbf{quotient object} of 
+    $A$ is an equivalence class of morphisms $f: A \to Q$. We then denote 
+    \[
+        \text{Quot}_\cc(A) = \Big\{ [f] \mid f: A \to Q \text{ is an epimorphism }\Big\}.
+    \]
+\end{definition}
+
+
+\begin{example}
+    A quotient object in \textbf{Cat} is a quotient category (from chapter 2)
+\end{example}
+
+
+

@@ -1,0 +1,1197 @@
+\chapter{Abelian Categories}
+
+Abelian categories are generalizations of the structure which can be 
+found in the category of abelian groups \textbf{Ab}. This may be obvious from the name;
+what is nontrivial, however, is how to preserve the nice structure of the category
+without specific reference to the elements themselves. It turns out this is possible, 
+but is generally not the way we think about \textbf{Ab}. This is the aim of this chapter. 
+
+\section{Preadditive Categories}      
+
+Consider two abelian groups $(G, +)$ and $(H, \cdot)$ of \textbf{Ab}. 
+Recall from group theory that we can turn the
+set $\hom(G, H)$ into an abelian group $(\hom(G, H), *)$ as follows.
+Given $\phi, \psi: G \to H$, we can create another 
+group homomorphism $\phi * \psi: G \to H$ where 
+\begin{align*}
+    (\phi * \psi)(g) = \phi(g) \cdot \psi(g).
+\end{align*}
+Observe that this is in fact a group homomorphism: if $g, g' \in G$, then 
+\begin{align*}
+    (\phi * \psi)(g + g') &= \phi(g + g') \cdot \psi(g + g')\\
+    &=\phi(g) \cdot \phi(g') \cdot \psi(g) \cdot \psi(g')\\
+    &\textcolor{Red}{=} \phi(g) \cdot \psi(g) \cdot \phi(g') \cdot \psi(g')\\
+    &= (\phi * \psi)(g) \cdot (\phi *\psi)(g').
+\end{align*}
+In the third step we utilized the fact that $(H, \cdot)$ is abelian. 
+Thus $(\hom(G, H), *)$ is not necessarily a group unless $H$ is an 
+abelian group.
+Therefore, this construction doesn't extend to \textbf{Grp}.
+
+At this point, your category-theory-voice in your head is probably asking:
+\begin{center}
+    \begin{minipage}{0.8\textwidth}
+        \textcolor{NavyBlue}{If $H$ is an abelian group, can we create a functor $F_H: \textbf{Ab} \to \textbf{Ab}$ 
+        where $G \mapsto \hom(G, H)$?}
+    \end{minipage}
+\end{center}
+The answer is yes; the functor is actually contravariant, for suppose we have a group homomorphism
+\[
+    \phi: G \to G'.
+\]
+Then define the function
+\[
+    F_H(\phi): \hom(G', H) \to \hom(G, H) 
+\]    
+where
+\begin{statement}{NavyBlue!10}
+\[
+    F_H(\phi)(\psi: G' \to H) = \psi \circ \phi: G \to H.
+\]    
+\end{statement}
+To verify functoriality, we have to check that this function is actually a group 
+homomorphism. Towards that goal, consider $\psi, \sigma: G \to H$. Then 
+observe that for any $g \in G$,
+\begin{align*}
+    F_H(\phi)(\psi + \sigma)(g) &= \phi(\psi(g) + \sigma(g))\\
+     &= \phi(\psi(g)) + \phi(\sigma(g))\\
+     &= F_H(\phi)(\psi)(g) + F_H(\phi)(\psi)(g)
+\end{align*}
+which verifies that $F_H(\phi)$ is a group homomorphism. Therefore, we see that 
+$F_H: \textbf{Ab} \to \textbf{Ab}$ is in fact a functor.
+
+Now your category-theory-voice should be asking: 
+\begin{center}
+    \begin{minipage}{0.8\textwidth}
+        \textcolor{NavyBlue}{If $G$ is an abelian group, can we \emph{also} create 
+        a functor $F^G: \textbf{Ab} \to \textbf{Ab}$ where $H \mapsto \hom(G, H)$?}
+    \end{minipage}
+\end{center}
+One can easily show that the answer is yes. In this direction, the functor is covariant. That 
+is, for $\psi: H \to H'$, we have that 
+\[
+    F^G(\psi): \hom(G, H) \to \hom(G, H')
+\]
+where 
+\begin{statement}{NavyBlue!10}
+\[
+    F^G(\psi)(\phi: G \to H) = \psi \circ \phi: G \to H'.
+\]
+\end{statement}
+Note that for our functors, we have that
+\[
+    F_H(G) = F^G(H).
+\]
+This is \emph{bifunctor-ish}. Therefore, our category theory voice is now 
+asking: 
+\begin{center}
+    \begin{minipage}{0.8\textwidth}
+        \textcolor{NavyBlue}{Do we have a bifunctor 
+        $F: \textbf{Ab}\times \textbf{Ab} \to \textbf{Ab}$ on our hands, where 
+        $F(G, H) = \hom(G, H)$? }
+    \end{minipage}
+\end{center}
+To see if this answer is true, we ought to be able to show that, given 
+$\phi: G' \to G$ and $\psi: H \to H'$, the diagram 
+\begin{center}
+    \begin{tikzcd}[column sep = 1.5cm, row sep = 1.5cm]
+        F_{H}(G) \arrow[r, "F_H(\phi)"]
+        \arrow[d, swap, "F^{G}(\phi)"]
+        &
+        F_H(G)
+        \arrow[d, "F^{G'}(\psi)"]
+        \\
+        F^{G'}(H) \arrow[r, swap, "F_H(\psi)"]
+        &
+        F^{G'}(H)
+    \end{tikzcd}
+    $=$
+    \begin{tikzcd}[column sep = 1.5cm, row sep = 1.5cm]
+        \hom(G,H) 
+        \arrow[r, "(-) \circ \phi"]
+        \arrow[d, swap, "\psi \circ (-)"]
+        &
+        \hom(G', H)
+        \arrow[d, "\psi \circ (-)"]
+        \\
+        \hom(G, H') 
+        \arrow[r, swap, "(-) \circ \phi"]
+        &
+        \hom(G', H')
+    \end{tikzcd}
+\end{center} 
+is commutative. The above diagram is in fact commutative since function composition 
+is associative! That is, given $\sigma: G \to H$, observe that going right and then down 
+gives
+\begin{align*}
+    \psi \circ (\sigma \circ \phi) 
+\end{align*}
+while going down and then right gives 
+\begin{align*}
+    (\psi \circ \sigma) \circ \phi.
+\end{align*}
+Hence we have commutativity of the above diagram, and we therefore have a 
+true bifunctor $F: \textbf{Ab}\times\textbf{Ab} \to \textbf{Ab}$ where 
+\[
+    F(G,H) = \hom(G, H).
+\]
+\textcolor{NavyBlue}{What this really shows is that $\hom(-, -)$ is a functor; specifically, a bifunctor. 
+So while we typically think of $\hom(G, H)$ as a set, it had hidden functorial properties. 
+Thus what makes \textbf{Ab} special is that plugging in abelian groups outputs an 
+abelian group, and this is not the case with other constructions (e.g. \textbf{Grp}).}
+
+Let us now consider a new observation of $\textbf{Ab}$. For any triple of abelian groups
+\[
+    (G, \star), (H, +), (K, \cdot)
+\]
+we can create abelian groups 
+\begin{align*}
+    &\big(\hom(G, H), +'\big) &&(\phi_1 +' \phi_2)(g) = \phi_1(g) + \phi_2(g) \\
+    &\big(\hom(H, K), \cdot'\big) &&(\psi_1 \cdot' \psi_2)(h) = \psi_1(h)\cdot \psi_2(h)  \\
+    &\big(\hom(G, K), *\big) &&(\sigma_1 * \sigma_2)(g)= \sigma_1(g) \cdot \sigma_2(g) \\
+\end{align*}
+where $\phi_i \in \hom(G, H), \psi_i \in \hom(H, K)$ and $\sigma_i \in \hom(G, K)$ 
+for $i = 1, 2$. Now since these are abelian groups in \textbf{Ab}, there is a composition operator 
+\[
+    \circ: \hom(G, H)\times \hom(H,K) \to \hom(G, K)
+\]
+where $\circ(\phi: G \to H, \psi: H \to K ) \mapsto \psi \circ \phi: G \to K$. 
+However, we now run into a problem where our operators might not play nicely with each other. Specifically, is 
+it true that 
+\[
+    \psi \circ (\phi_1 +' \phi_2) = (\psi \circ \phi_1) * (\psi \circ \phi_2)
+\]
+or 
+\[
+    (\psi_1 \cdot' \psi_2) \circ \phi = (\psi_1 \circ \phi) * (\psi_2 \circ \phi)?
+\]
+For the first case, the answer is yes. Observe that
+\begin{align*}
+    \psi \circ (\phi_1 +' \phi_2)(g) &= \psi(\phi_1(g) + \phi_2(g))\\
+    &= \psi(\phi_1(g) + \phi_2(g))\\
+    &= \psi(\phi_1)(g) \cdot \psi(\phi_2)(g)\\
+    &= \big((\psi \circ \phi_1) * (\psi \circ \phi_2)\big)(g).
+\end{align*}
+
+\textcolor{NavyBlue}{The reason we have linearity here is because of the way we defined 
+the \textbf{group operations} on the homsets. The definition of these operations 
+is intuitively correct, but we get accidentally get an extra bonus of obtaining linearity 
+so that we don't have to worry about the above equations not holding.}
+
+In order to mimic this behavior, we abstract this into a category to define 
+a \textbf{Ab}-category. 
+
+\begin{definition}
+    An \textbf{Ab}-category or \textbf{Preadditive Category} is a 
+    category $\mathcal{C}$ such that, for each pair of objects $A, B$, 
+    there exists an abelian group operation $+$ on the set $\hom(A, B)$ such 
+    that 
+    \begin{align*}
+        &\circ: \hom(A, B)\times \hom(B, C) \to \hom(A, C)\\
+        &(f, g) \mapsto g \circ f
+    \end{align*}
+    is bilinear. What we mean by bilinear is that, given morphisms $f, g: A \to B$ and $h, k: B \to C$, 
+    we have that 
+    \begin{statement}{Red!10}
+        \begin{align_topbot}
+            (h + k) \circ f = h \circ f + k \circ f\\
+            h \circ (g + f) = h \circ g + h \circ f.
+        \end{align_topbot}
+    \end{statement}
+\end{definition}
+
+\textcolor{NavyBlue}{Note that since we demand that $\hom_{\cc}(A, B)$ always 
+be a group, we see that any category such that $\hom_{\cc}(A, B) = \varnothing$ 
+can never be an abelian group. A group always requires the existence of an identity; 
+a demand that an empty set can never meet}. Therefore, as an example, any discrete 
+category cannot be a preadditive category because all of the nontrivial homsets 
+are empty. 
+
+As we demonstrated building up to this definition, \textbf{Ab} is a trivial example 
+of a preadditive category. A less trivial example is $\textbf{Vect}_K$
+where $K$ is a field, but this is nearly automatic since this takes advantage 
+of the fact that vector spaces have their own hidden abelian group structure. 
+
+\begin{example}
+    Suppose $\cc$ is a one object category $R$ which is also preadditive. Then 
+    this means that we have two binary operations $+$ and $\circ$ on the 
+    abelian group $\hom_{\cc}(R, R)$ 
+    such that 
+    \begin{align*}
+        (h + k) \circ f = h \circ f + k \circ f\\
+        h \circ (g + f) = h \circ g + h \circ f.
+    \end{align*}
+    However, this is simply a ring! The addition is the ring addition, while the 
+    ring multiplication is given by composition.
+    Conversely, a ring regarded as the homset of a 
+    one object category can be defined to be an abelian category. This is because 
+    when regarding a group as a one object category, the group operation becomes the 
+    composition operation. Thus adding the extra axiom of an addition bilinear operation 
+    grants us that the category is preadditive.
+\end{example}
+
+
+\begin{example}
+    Let $\cc$ be a preadditive category. Then 
+    $\cc\op$ is also a preadditive category. To demonstrate this, we know that 
+    every pair of objects $A, B \in \cc$ gives rise to a group $(\hom_{\cc}(A, B), +)$
+    for some operation $+$. This allows us to place a group structure $+'$ on 
+    $\hom_{\cc\op}(B, A)$ where for two $f\op, g\op: B \to A$ in $\cc\op$,
+    \[
+        f\op +' g\op = (f + g)\op.
+    \]
+    That is, we rely on the preexisting group operation $+$ from  $\hom_{\cc}(A, B)$. 
+    Given that the composition operator of $\cc\op$ is $\circ\op$, we can check that 
+    this satisfies the bilinearity conditions of $\circ\op$.
+    Suppose $h\op, k\op : B \to A$ are two morphisms in $\hom(B, A)$ which 
+    are composable with some $f\op$. Then 
+    \begin{align*}
+        (h\op +' k\op)\circ\op f\op 
+        = 
+        (h + k)\op \circ \op f\op
+        &= 
+        f \circ (h + k)\\
+        &= f \circ h + f \circ k \\
+        &= h\op \circ\op f\op +' k\op \circ\op f\op. 
+    \end{align*}
+    The other direction can be verified dually, so that the the group operation 
+    $+'$ distributes bilinearly over $\circ\op$. Therefore, $\cc\op$ is a preadditive 
+    category.
+\end{example}
+
+\begin{example}
+    If $\cc$ is preadditive, then the functor category $\cc^J$ is preadditive.
+    To demonstrate this, consider the hom-set $\hom_{\cc^J}(F, G)$ between two 
+    functors $F, G: J \to \cc$. Now consider
+    two natural transformations $\eta, \epsilon \in \hom_{\cc^J}(F, G)$. Then 
+    for each $f \in \hom_{\cc}(A, B)$, the familiar diagram commutes. 
+    \begin{center}
+        \begin{tikzcd}[column sep = 1.5cm, row sep = 1.5cm]
+            A \arrow[d, "f"]\\
+            B
+        \end{tikzcd}
+        \hspace{1cm}
+        \begin{tikzcd}[column sep = 1.5cm, row sep = 1.5cm]
+            F(A)
+            \arrow[r, shift right = -0.5ex, "\eta_A"]
+            \arrow[r, swap, shift right = 0.5ex, "\epsilon_A"]
+            \arrow[d, swap, "F(f)"]
+            &
+            G(A)
+            \arrow[d, "G(A)"]
+            \\
+            F(B)
+            \arrow[r, shift right = -0.5ex, "\eta_B"]
+            \arrow[r, swap, shift right = 0.5ex, "\epsilon_B"]
+            &
+            G(B)
+        \end{tikzcd}
+    \end{center}
+    This diagram tells us that $G(f) \circ \eta_A  = \eta_B \circ F(f)$ 
+    and that $G(f) \circ \epsilon_A  = \epsilon_B \circ F(f)$. However, since 
+    $\cc$ is abelian, we can combine these morphisms and add both equations 
+    to get 
+    \[
+        G(f) \circ \eta_A + G(f) \circ \epsilon_A = \eta_B \circ F(f) + \epsilon_B \circ 
+        F(f) 
+        \implies G(f) \circ (\eta_A + \epsilon_A) = (\eta_B + \epsilon_B) \circ F(f).
+    \]  
+    Hence the diagram below 
+    \begin{center}
+        \begin{tikzcd}[column sep = 1.5cm, row sep = 1.5cm]
+            A \arrow[d, "f"]\\
+            B
+        \end{tikzcd}
+        \hspace{1cm}
+        \begin{tikzcd}[column sep = 1.5cm, row sep = 1.5cm]
+            F(A)
+            \arrow[r, "\eta_A + \epsilon_A"]
+            \arrow[d, swap, "F(f)"]
+            &
+            G(A)
+            \arrow[d, "G(A)"]
+            \\
+            F(B)
+            \arrow[r, swap, "\eta_B + \epsilon_B"]
+            &
+            G(B)
+        \end{tikzcd}
+    \end{center}
+    commutes. Therefore, using the group product of $(\hom_{\cc}(F(A), F(B)), +)$,
+    we've derived a new natural transformation from $F$ to $G$ using $\eta$ and $\epsilon$ 
+    in $\hom_{\cc^J}(F, G)$. This allows us to endow the homset $\hom_{\cc^J}(F, G)$ 
+    with the operation $+'$  defined so that for two $\eta, \epsilon \in \hom_{\cc^J}(F, G)$,
+    $\eta + ' \epsilon$ is the natural transformation where 
+    for each object $A$
+    \[
+        (\eta +' \epsilon)_A = \eta_A + \epsilon_A
+    \]
+    where $+$ is the group operation on $(\hom_{\cc}(F(A), G(A)), +)$. The fact that 
+    this distributes bilinearly over the composition operator is inherited from 
+    $\cc$, and can easily be verified, so that $\cc^J$ is preadditive.
+\end{example}
+
+\begin{example}
+    Let $\cc$ be a category such that for every pair of objects 
+    $A, B$, the hom set $\hom_{\cc}(A, B)$ is nonempty. Then we can create the category 
+    $\text{PreAdd}(\cc)$ where the objects are the same as $\cc$, except
+    each $\hom_{\text{PreAdd}(\cc)}(A, B)$ is now regarded as the free 
+    abelian group generated by the elements of $\hom_{\cc}(A, B)$. This results 
+    in a preadditive category if we force the composition operator $\circ'$
+    in $\text{PreAdd}(\cc)$ to be bilinear. This forcing makes sense in our case since, 
+    if $\sum_{f \in \hom_{\cc}(A,B)}n_f f, \sum_{f \in \hom_{\cc}(A,B)}n'_f f$ 
+    are two arbitrary elements in $\hom_{\text{PreAdd}(\cc)}(A, B)$, 
+    then if $\sum_{k \in \hom_{\cc}(B,C)}m_k k \in \hom_{\text{PreAdd}(\cc)}(B, C)$ for some object $C$, 
+    where  $n_f, n'_f, m_k$ are all nonzero for finitely many integers,
+    then 
+    \begin{align*}
+        &\sum_{k \in \hom_{\cc}(B,C)}m_k k \circ'
+        \left( \sum_{f \in \hom_{\cc}(A,B)}n_f f +
+        \sum_{f \in \hom_{\cc}(A,B)}n'_f f
+        \right)\\
+        &= 
+        \sum_{f \in \hom_{\cc}(A,B)}\sum_{k \in \hom_{\cc}(B, C)}n_f \cdot m_k(k \circ f) 
+        +
+        \sum_{f \in \hom_{\cc}(A,B)}\sum_{k \in \hom_{\cc}(B, C)}n'_f \cdot m_k(k\circ f)
+    \end{align*}
+    and the above last expression is in fact an element of $\hom_{\text{PreAdd}(\cc)}(A, C)$. 
+\end{example}
+
+
+
+\newpage
+\section{Additive Categories}
+
+Let $G$ and $H$ be abelian groups in \textbf{Ab}. A natural question to ask in any 
+given category is if a binary product such at $G \times H$ exists in the category. In our case, 
+the answer is yes; it is the \textbf{direct sum} $G \oplus H$. The direct sum satisfies the 
+universal property 
+\begin{center}
+    \begin{tikzcd}[column sep = 1.5cm, row sep = 1.5cm]
+        &\arrow[dr, "\phi"] K \arrow[dl, swap, "\psi"]
+        \arrow[d, dashed, "u"]
+        &\\
+        G & 
+        \arrow[l, "\pi_G"]
+        G \oplus H
+        \arrow[r, swap, "\pi_H"]
+        &
+        H
+    \end{tikzcd} 
+\end{center}
+Here, $K$ is a third group, $\phi$ and $\psi$ are arbitrary group homomorphisms, and $\pi_G, \pi_H$ are the natural projection morphisms. 
+Interestingly, this object also satisfies the universal property 
+\begin{center}
+    \begin{tikzcd}[column sep = 1.5cm, row sep = 1.5cm]
+        &\arrow[<-, dr, "\phi"] K \arrow[<-, dl, swap, "\psi"]
+        \arrow[<-, d, dashed, "u"]
+        &\\
+        G & 
+        \arrow[<-, l, "i_G"]
+        G \oplus H
+        \arrow[<-, r, swap, "i_H"]
+        &
+        H
+    \end{tikzcd}
+\end{center}
+Here $i_G$ and $i_H$ are the natural injections, e.g. $i_G(g) = g \otimes e_H$. 
+However, this implies that $G \oplus H$ is a coproduct!
+What this implies is 
+that \textcolor{NavyBlue}{product and coproducts coincide in \textbf{Ab}}.
+This is actually a pretty remarkable property because this isn't the case even 
+in nice categories. For example, in \textbf{Set}, products and coproducts are 
+definitely distinct.
+
+\begin{center}
+    Why is this the case? 
+\end{center}
+
+\begin{proposition}
+    Let $\cc$ be a preadditive category with a zero object $z$. 
+    Then for any objects $A, B \in \cc$, the following are equivalent
+    \begin{itemize}
+        \item[$(i)$] $A \times B$ exists 
+        \item[$(ii)$] $A \amalg B$ exists 
+    \end{itemize}
+    Moreover, there exists an isomorphism 
+        \[
+            \prod_{i \in \lambda} A_i \isomarrow \coprod_{i \in \lambda}A_i
+        \] 
+        for any objects $A_i \in \cc$. 
+\end{proposition}
+
+\begin{prf}
+        We only demonstrate one direction because the proof is self-dual. 
+
+        Suppose $A \times B$ exists. Then then if $C$ is an object equipped 
+        with morphisms $f: C \to A$ and $g: C \to B$, the following diagram 
+        must hold. 
+        \begin{center}
+            \begin{tikzcd}[column sep = 1.5cm, row sep = 1.5cm]
+                & C 
+                \arrow[dr, "g"]
+                \arrow[dl, swap, "f"]
+                \arrow[d, dashed, "h"]
+                & 
+                \\
+                A &
+                A \times B 
+                \arrow[l, "\pi_A"]
+                \arrow[r, swap, "\pi_B"]
+                &
+                B
+            \end{tikzcd}
+        \end{center}
+        Equip $A$ with the morphisms $1_A: A \to A$ and the unique  
+        zero morphism $\emptyset_A^B: A \to B$. Then there exists a unique 
+        $i_A: A \to A \times B$ such that the diagram commutes. 
+        \begin{center}
+            \begin{tikzcd}[column sep = 1.5cm, row sep = 1.5cm]
+                & A
+                \arrow[dr, "\emptyset_A^B"]
+                \arrow[dl, swap, "1_A"]
+                \arrow[d, dashed, "i_A"]
+                & 
+                \\
+                A &
+                A \times B 
+                \arrow[l, "\pi_A"]
+                \arrow[r, swap, "\pi_B"]
+                &
+                B
+            \end{tikzcd}
+        \end{center} 
+        Symmetrically, equip $B$ with the unique zero morphism $\emptyset_B^A: B \to A$
+        and $1_B: B \to B$. Then there exists a unique $i_B: B \to A\times B$ such that the 
+        diagram commutes.
+        \begin{center}
+            \begin{tikzcd}[column sep = 1.5cm, row sep = 1.5cm]
+                & B
+                \arrow[dr, "1_B"]
+                \arrow[dl, swap, "\emptyset_B^A"]
+                \arrow[d, dashed, "i_B"]
+                & 
+                \\
+                A &
+                A \times B 
+                \arrow[l, "\pi_A"]
+                \arrow[r, swap, "\pi_B"]
+                &
+                B
+            \end{tikzcd}
+        \end{center} 
+        Now we'll demonstrate that we have a coproduct structure on our hands. 
+        To do this, suppose we have an object $C$ equipped with morphisms 
+        $f: A \to C$ and $g: B \to C$. Then we can construct a morphism $h$ such that the following 
+        diagram commutes. 
+        \begin{center}
+            \begin{tikzcd}[column sep = 1.5cm, row sep = 1.5cm]
+                A \arrow[dr, swap, "f"] \arrow[r, "i_A"] 
+                & A \times B  
+                \arrow[d, dashed, "h"]
+                & B \arrow[l, swap, "i_B"]
+                \arrow[dl, "g"]\\
+                & C & 
+            \end{tikzcd}
+        \end{center}
+        Observe that $h = f\circ \pi_A + g \circ \pi_B$ suffices, where 
+        $+$ is the group operation on the abelian group $\hom(A \times B, C)$.
+        Observe that 
+        \begin{align*}
+            h \circ i_A &= (f\circ \pi_A + g \circ \pi_B) \circ i_A\\
+            &= f \circ (\pi_A \circ i_A) + g \circ (\pi_B \circ i_A)\\
+            &= f.
+        \end{align*}
+        Similarly, 
+        \begin{align*}
+            h \circ i_B &= (f\circ \pi_A + g \circ \pi_B) \circ 1_B\\
+            &= f \circ (\pi_A \circ 1_B) + g \circ (\pi_B \circ 1_B)\\
+            &= g.
+        \end{align*}
+        Hence the commutativity of the above diagram holds; therefore, we see 
+        that $A \times B$ is also a coproduct. Finally, recall that if two 
+        distinct objects satisfy the same universal property, they are necessarily isomorphic; 
+        therefore the existence of an isomorphism between the product and coproduct is immediate. 
+\end{prf}
+\textcolor{NavyBlue}{The above proof is not hard, but it's also not trivial. 
+Moreover, there are three extremely important ingredients we utilized that demonstrate that 
+the assumptions we've made so far are actually necessary and useful.}
+\begin{itemize}
+    \item This proof does not hold for a category without a zero object because 
+    there is not, in general, an obviously conceivable morphism to go from any two objects 
+    $A$ and $B$. 
+    \item Notice that calculating $h$ was only possible because we had an abelian 
+    group operation. 
+    \item  Finally, notice that we utilized bilinearity of the composition operator in order to 
+    calculate $h \circ i_A$ and $h \circ i_B$ and thereby verify the universal property.
+\end{itemize}
+
+Therefore, all of our assumptions so far have been necessary and useful. And all of 
+this now motivates the following definition. 
+
+\begin{definition}
+    Let $\cc$ be an abelian category.
+    A \textbf{biproduct} of two objects $A, B$ of $\cc$ is an object 
+    $A \otimes B$ which is both a product and coproduct.
+    \\
+    \textcolor{Purple}{Equivalently}, A biproduct is an object $A \oplus B$ 
+    equipped with morphisms 
+    \begin{align*}
+        &\pi_A: A \oplus B \to A && i_A: A \to A \oplus B\\
+        &\pi_B: A \oplus B \to B && i_B: B \to A \oplus B
+    \end{align*}
+    such that 
+    \begin{itemize}
+        \item[1.] $\pi_A \circ i_A = 1_A$
+        \item[2.] $\pi_B \circ i_B = 1_B$
+        \item[3.] $i_A \circ \pi_A + i_B \circ \pi_B = 1_{A\oplus B}$  
+    \end{itemize}
+\end{definition}
+
+\begin{definition}
+    An \textbf{Additive Category} is a preadditive category $\cc$ 
+    such that finite biproducts exist. 
+\end{definition}
+
+\begin{definition}
+    Consider the category $\textbf{Grp}$. 
+\end{definition}
+
+
+
+\newpage 
+\section{Preabelian Categories}
+In \textbf{Ab}, kernels and cokernels exists for every group homomorphism.
+\\
+
+First, recall their definitions. 
+\begin{definition}
+    Let $\phi: G \to H$ be a group homomorphism. Then a \textbf{kernel} is 
+    an equalizer of $\phi: G \to H$ and $0: G \to H$, where $0$ maps everything to $e_H$, 
+    while a \textbf{cokernel} is a coequalizer of $\phi: G \to H$ and $0: G \to H$. 
+    \begin{center}
+        \begin{tikzcd}[column sep = 1.5cm, row sep = 1.5cm]
+            \ker(\phi) \arrow[r, "e"]
+            &
+            G 
+            \arrow[r, shift right = 0.5ex, swap, "0"]
+            \arrow[r, shift left = 0.5ex, "\phi"]
+            &
+            H \arrow[r, "c"]
+            &
+            \coker(\phi)
+        \end{tikzcd}
+    \end{center}
+\end{definition}
+
+In \textbf{Ab}, we set $\coker(\phi) \cong H/\im(\phi)$ while $\ker(\phi)$ is the natural 
+normal subgroup of $G$. 
+
+Note that the necessary conditions for creating kernels and cokernels is 
+(1) the existence of a zero object and (2) the existence of equalizers.
+If we have these ingredients, can we extend the concept of kernels and cokernels to 
+additive categories? We can.
+
+\begin{definition}
+    Let $\cc$ be a category with a zero object as well as equalizers 
+    and coequalizers.
+    Let $f: A \to B$ be a morphism between two objects in $\cc$. We define
+    \begin{itemize}
+        \item \textbf{kernel} 
+        to be the equalizer of $f$ and $\emptyset_A^B: A \to B$, the zero morphism,
+        \item  \textbf{cokernel} of $f$
+        to be the coequalizer of $f$ and $\emptyset_A^B: A \to B$. 
+    \end{itemize}
+    In diagrams, we have that 
+    \begin{center}
+        \begin{tikzcd}[column sep = 1.5cm, row sep = 1.5cm]
+            \ker(f) \arrow[r, "e"]
+            &
+            A
+            \arrow[r, shift right = 0.5ex, swap, "\emptyset"]
+            \arrow[r, shift left = 0.5ex, "f"]
+            &
+            B \arrow[r, "c"]
+            \arrow[dr, swap, "\psi"]
+            &
+            \coker(f)
+            \arrow[d, dashed, "k"]
+            \\
+            C \arrow[ur, swap, "\phi"]
+            \arrow[u, dashed, "h"]
+            &
+            &
+            &
+            D 
+        \end{tikzcd}
+    \end{center}
+\end{definition}
+
+\begin{example}
+    In the category \textbf{Grp}, we certainly have a zero object $z = \{e\}$.
+    Observe that for a given morphism $\phi: G \to H$, 
+    we can also form the equalizer of $\phi$ by considering the pair 
+    $(\ker(\phi), e: \ker(\phi) \to G)$ where $\ker(\phi) \subset G$ and $e$ being inclusion.
+    For the same morphism, we can form the coequalizer be considering the pair 
+    $(\overline{N}, c: H \to H/\overline{N})$ where 
+    \[
+        \overline{N} = \bigcap_{N \in \lambda} N
+    \]
+    where $\lambda = \{H' \subset H \mid \im(\phi) \subset H' \text{ and } H' \normal H\}$. 
+    It's a simple exercise to show that these satisfy the necessary universal properties. 
+
+    \textcolor{NavyBlue}{However, it's important to observe the subtle difference between the behaviors 
+    of \textbf{Grp} and \textbf{Ab}}. Because every subgroup of an abelian group 
+    is normal, we know that in the case of \textbf{Ab}, $\overline{N} = \im(\phi)$
+    So the coequalizer becomes 
+    \[
+        (\im(\phi), c: H \to H/\im(\phi)).
+    \]
+\end{example}
+
+It turns out that kernels and cokernels are extremely flexible in additive categories.
+
+
+\begin{proposition}
+    Suppose $\cc$ is an additive category. Then the following are equivalent. 
+    \begin{itemize}
+        \item[$(i)$] $\cc$ has equalizers and coequalizers. 
+        \item[$(ii)$] $\cc$ has kernels and cokernels.
+    \end{itemize}
+\end{proposition}
+
+\begin{prf}
+    We only prove the statement for equalizers as the proof will be self-dual. 
+
+    First note that $(i) \implies (ii)$ is immediate because a kernel is 
+    an equalizer with a morphism $\phi$ and a zero morphism. To show $(ii) \implies (i)$, 
+    suppose that we have kernels for every morphism in $\cc$. Then consider two 
+    morphisms $\phi, \psi: G \to H$. We can combine these two morphisms by our 
+    group operation on $\hom(G, H)$ and consider $\phi - \psi$. Since we can take kernels, we 
+    take the kernel of this morphism.
+    \begin{center}
+        \begin{tikzcd}[column sep = 1.5cm, row sep = 1.5cm]
+            \ker(\phi) \arrow[r, "e"]
+            &
+            G \arrow[r, "\phi - \psi"]
+            &
+            H 
+        \end{tikzcd}
+    \end{center}
+    We now argue that this is the equalizer of $\phi, \psi$. First observe that 
+    \[
+        (\phi - \psi)\circ e = 0 \implies \phi \circ e - \psi \circ e = 0 \implies \phi \circ e = \psi \circ e
+    \]
+    using bilinearity of $\circ$. Hence we see that $e$ equalizes $\phi$ and $\psi$, although 
+    we now need to demonstrate its universal property. 
+
+    Now suppose that there exists an object $K$ equipped with a morphism $\sigma: K \to G$ such 
+    that $\psi \circ \sigma = \psi \circ \phi$. 
+    \begin{center}
+        \begin{tikzcd}[column sep = 1.5cm, row sep = 1.5cm]
+            \ker(\phi - \psi) 
+            \arrow[r, "e"]
+            &
+            G
+            \arrow[r, shift right = 0.5ex, swap, "0"]
+            \arrow[r, shift left = 0.5ex, "\phi"]
+            &
+            H\\
+            K \arrow[ur, swap, "\sigma"]
+        \end{tikzcd}
+    \end{center}
+    However, note that 
+    \[
+        \phi \circ \sigma = \psi \circ \sigma 
+        \implies 
+        (\phi - \psi)\circ \sigma = 0.
+    \]
+    Since $e: \ker(\phi) \to G$ is kernel, we note that its 
+    universal property implies that because $(\phi - \psi)\circ \sigma = 0$ 
+    that there must exists a unique morphism $u: K \to \ker(\phi)$ such that 
+    $e \circ u = \sigma$. Thus we have shown the diagram below 
+    \begin{center}
+        \begin{tikzcd}[column sep = 1.5cm, row sep = 1.5cm]
+            \ker(\phi - \psi) 
+            \arrow[r, "e"]
+            &
+            G
+            \arrow[r, shift right = 0.5ex, swap, "\phi"]
+            \arrow[r, shift left = 0.5ex, "\psi"]
+            &
+            H\\
+            \arrow[u, dashed, "u"]
+            K \arrow[ur, swap, "\sigma"]
+        \end{tikzcd}
+    \end{center}
+    must hold so that $(\ker(\phi), e: \ker(\phi) \to G)$, is actually an equalizer!
+\end{prf}
+
+Note that we've once more utilized the bilinearity of $\circ$ to construct the above proof, 
+which again reminds us that the assumptions we've made so far are necessary and useful. The above proof now motivates 
+the following definition.
+
+\begin{definition}
+    Let $\cc$ be an additive category. Then we say $\cc$ is \textbf{preabelian}
+    if it has kernels and cokernels; or, equivalently, if it has all equalizers and coequalizers. 
+\end{definition}
+
+What we have on our hands now is a very nice category where (1) finite biproducts 
+exist and (2) all equalizers and coequalizers exist. If we recall from our experience 
+with limits, this automatically grants us the following proposition. 
+
+\begin{proposition}
+    A preabelian category has all finite limits and finite colimits.
+\end{proposition}
+
+\begin{prf}
+    If a category has finite products and equalizers, it has finite limits. If 
+    it has finite coproducts and coequalizers, it has finite colimits. This is 
+    Theorem \ref{products_equalizers_all_limits}.
+\end{prf}
+
+The fact that there exist finite limits and colimits is extremely convenient 
+in preabelian categories. 
+
+
+\begin{proposition}
+    Let $\cc$ be a preabelian category.
+    Let $J$ be a connected category and suppose $F: J \to \cc$ is a functor. 
+    Then 
+    \[
+        \Lim F \cong \Colim F.   
+    \]
+\end{proposition}
+
+\begin{prf}
+    Recall the limit satisfies universal property 
+    \begin{center}
+        \begin{tikzcd}[column sep = 1.5cm, row sep = 1.5cm]
+            \Delta(\Lim F) \arrow[r, "u"]
+            &
+            F\\
+            \Delta(C)
+            \arrow[u, dashed, "\Delta(h)"]
+            \arrow[ur, swap, "f"]
+            &
+        \end{tikzcd}
+        $\implies$
+        \begin{tikzcd}[column sep = 1.5cm, row sep = 1.5cm]
+            \Lim F \arrow[r, "u^i"]
+            &
+            F(i)\\
+            C
+            \arrow[u, dashed, "h"]
+            \arrow[ur, swap, "f^i"]
+            &
+        \end{tikzcd}
+    \end{center}
+    for every object $C$ equipped with a family of morphisms $f^i: C \to F(i)$. 
+    Construct the family of morphisms 
+    \[
+        f_i^j = 
+        \begin{cases}
+            \emptyset_i^j: F(i) \to F(j) & \text{if } i \ne j\\
+            1_{F(i)} & \text{if } i = j
+        \end{cases}
+    \]
+    where $\emptyset_i^j: F(i) \to F(j)$ is the unique zero morphism
+    from $F(i)$ to $F(j)$.
+    Then by the universal property of the limit, for each $i \in J$, there 
+    exists a unique morphism $h_i: F(i) \to \Lim F$ such that the diagram below commutes. 
+    \begin{center}
+        \begin{tikzcd}[column sep = 1.5cm, row sep = 1.5cm]
+            \Lim F \arrow[r, "u^j"]
+            &
+            F(j)\\
+            F(i)
+            \arrow[u, dashed, "h_i"]
+            \arrow[ur, swap, "f_i^j"]
+            &
+        \end{tikzcd}
+    \end{center}
+    That is, we have $u^j \circ h_i = f_i^j$. 
+    We now argue that we have a colimit on our hands. Specifically, suppose $D$ is an 
+    object of $\cc$ equipped with a family of morphisms $g_j: F(j) \to D$. 
+    Then observe that we can supply a morphism 
+    \[
+        \sum_{k \in J}g_ku^k: \Lim F \to D
+    \]
+    where the addition operation is from the group structure of $\hom(\Lim F, D)$, 
+    such that the diagram below commutes. 
+    \begin{center}
+        \begin{tikzcd}[column sep = 1.5cm, row sep = 1.5cm]
+            \Lim F 
+            \arrow[d, dashed, swap, "\sum_{k \in J}g_ku^k"]
+            &
+            \arrow[l, swap, "h_j"]
+            F(j) \arrow[dl, "g_j"]\\
+            D
+            &
+        \end{tikzcd}
+    \end{center}
+    This diagram commutes since 
+    \begin{align*}
+        \left( \sum_{k \in J}g_ku^k \right) \circ h_j
+        =
+        \sum_{k \in J}g_k(u^k \circ h_j)
+        =
+        g_j(u^j \circ h_j)
+        = g_j 
+    \end{align*}
+    where we utilized the bilinearity of the composition operator.
+    Thus we see that $\Lim F$ is behaving just like a colimit! 
+    
+    The only thing we 
+    must verify at this point is that this morphism is unique. Towards that goal, 
+    suppose that $\ell: \Lim F \to D$ is another morphism such that 
+    $\ell \circ h_j = g_j$. Recall that $u^i\circ h_i= 1_{F(i)}$, 
+    so that $h_i$ is a monomorphism. Then observe that we can take 
+    the image of the map 
+    \[
+       h_i: F(i) \to \Lim F  
+    \]
+    under the contravariant hom functor to get an epic group homomorphism 
+    \begin{center}
+        \begin{tikzcd}[column sep = 1.5cm, row sep = 1.5cm]
+            \hom(\Lim F,  D) \arrow[r, "\circ h_i"]
+            &
+            \hom(F(i), D)
+        \end{tikzcd}
+    \end{center}
+    between abelian groups, as $\circ$ obeys bilinearity 
+    properties. By the first isomorphism theorem we then have that 
+    \[
+        \hom(F(i), D) \cong \hom(\Lim F, C)/\ker(\circ h_i).
+    \]
+    Now we want to show that this map is also injective, because then 
+    we could observe that since
+    \[
+        \left(\ell - \sum_{k \in J}g_k \circ u^k\right)\circ h_i = 0
+    \]
+    that 
+    \[
+        \ell - \sum_{k \in J}g_k \circ u^k = 0.
+    \]
+    But it seems like we don't have enough to show that at the moment...
+
+\end{prf}
+
+\newpage
+\section{Kernels and Cokernels}
+At this point we've discussed preadditive, additive, and preabelian categories, where 
+preabelian categories are just additive categories with the additional hypothesis 
+that kernels and cokernels exist. This additional hypothesis is extremely useful, 
+so we will demonstrate what this implies for us. 
+
+Let $\cc$ be a preabelian category.
+Consider an arbitrary morphism $f: A \to B$. 
+One way to think about kernels and Cokernels is that they give rise to objects 
+in the comma categories $(\cc \downarrow A)$ and $(B \downarrow \cc)$. 
+\begin{center}
+    \begin{tikzcd}[column sep = 1.5cm, row sep = 1.5cm]
+        \ker(f) \arrow[r, "e"]
+        &
+        A
+        \arrow[r, shift right = 0.5ex, swap, "0"]
+        \arrow[r, shift left = 0.5ex, "f"]
+        &
+        B \arrow[r, "c"]
+        &
+        \coker(f)
+    \end{tikzcd}
+\end{center}
+Now in the comma category $(\cc \downarrow A)$, a morphism between two objects 
+$(C, f: C \to A)$ and $(D, g: D \to A)$ is a morphism $h: D \to C$ in $\cc$ such that 
+$f = g \circ h$. Similarly, a morphism in the comma category $(A \downarrow \cc)$ 
+between two objects $(P, m: A \to P)$ and $(Q, n: A \to Q)$ is a morphism $k: P \to Q$ such that 
+$n = h \circ m$. These relations give rise to the bow-tie diagram:
+\begin{center}
+    \begin{tikzcd}[column sep = 1.5cm, row sep = 0.4cm]
+        C \arrow[dr, "f"]
+        &
+        &
+        P
+        \arrow[dd, "k"]
+        \\
+        &
+        A
+        \arrow[ur, "m"]
+        \arrow[dr, swap, "n"]
+        &\\
+        D
+        \arrow[uu, "h"]
+        \arrow[ur, swap, "g"]
+        &
+        &
+        Q
+    \end{tikzcd}
+\end{center}
+With that said, we can actually turn these categories into partial orders. 
+In $(\cc \downarrow A)$, we say $g \le f$ if there exists an $h$ such that $f \circ h = g$, 
+and in $(A \downarrow \cc)$, we say $m \le n$ if there exists a $k$ such that 
+$n = k \circ m$. 
+
+
+It turns out that this perspective is actually quite useful. 
+
+\begin{proposition}
+    Let $\cc$ be a category with a zero object, equalizers and coequalizers. 
+    Then for each object $A$ of $\cc$, we have the functors 
+    \begin{align*}
+        \ker&: (A \downarrow \cc) \to (\cc \downarrow A)\\
+        \coker&:(\cc \downarrow A) \to (A \downarrow \cc).
+    \end{align*}
+    that assign kernels and cokernels.
+    Moreover, these functors establish a antitone Galois correspondence; hence we have that 
+    \begin{align*}
+        \ker(\coker(\ker(f))) = \ker(f) 
+        \quad 
+        \coker(\ker(\coker(f))) = \coker(f).
+    \end{align*}
+    Therefore, any $\phi$ is a kernel if and only if $\phi = \ker(\coker(\phi))$, while 
+    any $\psi$ is a cokernels if and only if $\psi = \coker(\psi(\psi))$. 
+\end{proposition}
+
+\begin{prf}
+    We demonstrate functoriality. First we want our functor 
+    to act on objects as 
+    \[
+       (C, f: A \to C) \mapsto (\ker(f), e_1: \ker(f) \to A). 
+    \]
+    Now we explain how the functor works on morphisms. 
+    Suppose we have two objects of our 
+    comma category $(C, f: A \to C)$ and $(D, g: A \to D)$, and that $h: D \to C$
+    is a morphism in $(A \downarrow \cc)$ 
+    from $(D, g: A \to D)$ to $(C, f: A \to C)$. Then we have the diagram below.
+    \begin{center}
+        \begin{tikzcd}[column sep = 1.5cm, row sep = 0.4cm]
+            \ker(f) \arrow[dr, "e_1"]
+            &
+            &
+            C\\
+            &
+            \arrow[ur, "f"]
+            A
+            \arrow[dr, swap, "g"]
+            &\\
+            \ker(g) 
+            \arrow[ur, swap, "e_2"]
+            &
+            &
+            D \arrow[uu, swap, "h"]
+        \end{tikzcd}
+    \end{center}
+    Now note that 
+    \[
+        f \circ e_2 = (h \circ g) \circ e_2 = h \circ (g \circ e_2) = 0.
+    \]
+    Thus, by the universal property of $e_1: \ker(f) \to A$, we know there 
+    exists a \emph{unique} morphism $h': \ker(g) \to \ker(f)$ such that the diagram 
+    below commutes.
+    \begin{center}
+        \begin{tikzcd}[column sep = 1.5cm, row sep = 0.4cm]
+            \ker(f) \arrow[dr, "e_1"]
+            &
+            &
+            C\\
+            &
+            \arrow[ur, "f"]
+            A
+            \arrow[dr, swap, "g"]
+            &\\
+            \ker(g) 
+            \arrow[uu, "h'"]
+            \arrow[ur, swap, "e_2"]
+            &
+            &
+            D \arrow[uu, swap, "h"]
+        \end{tikzcd}
+    \end{center}
+    
+    However, this is exactly what it means to have a morphism between the objects 
+    $(\ker(g), e_2: \ker(g) \to A)$ and $(\ker(f), e_1: \ker(f) \to A)$. 
+    Thus we see that our functor maps on morphisms in $(A \downarrow \cc)$ in a nice 
+    way:  
+    \[
+        h  \mapsto 
+        h':
+        (\ker(g), e_2: \ker(g) \to A) 
+        \to 
+        (\ker(f), e_1: \ker(f) \to A).
+    \]
+    where $h'$ is the unique map obtained from $h$ as explained above. 
+    With the remaining properties easily verified, this defines a functor between the categories. 
+    In addition, we can dualize our work above to also get the functor 
+    $\coker: (\cc \downarrow A) \to (A \downarrow \cc)$. 
+
+    Now this creates a Galois correspondence by regarding the comma categories as 
+    partially ordered sets. Suppose that $g \le \ker(f)$. That is, there exists a $h$ such that 
+    $\ker(f) \circ h = g$. Then we can compare $\coker(g)$ and $f$ by considering the diagram below. 
+    \begin{center}
+        \begin{tikzcd}[column sep = 1.5cm, row sep = 0.4cm]
+            \ker(f) \arrow[dr, "e"]
+            &
+            &
+            \coker(g)\\
+            &
+            \arrow[dr, swap, "f"]
+            A
+            \arrow[ur, "c"]
+            &\\
+            B
+            \arrow[uu, "h"]
+            \arrow[ur, swap, "g"]
+            &
+            &
+            C
+        \end{tikzcd}
+    \end{center}
+    Now observe that 
+    \[
+        f \circ g = f \circ (e \circ h) = 0 \circ h = 0.
+    \]
+    Therefore, by the universal property of the cokernel, we know there 
+    exists a unique morphism $h': \coker(g) \to f$ such that the diagram 
+    below commutes. This then implies that $f \le \coker(g)$. 
+    \begin{center}
+        \begin{tikzcd}[column sep = 1.5cm, row sep = 0.4cm]
+            \ker(f) \arrow[dr, "e"]
+            &
+            &
+            \coker(g)
+            \arrow[dd, dashed, "h'"]
+            \\
+            &
+            \arrow[dr, swap, "f"]
+            A
+            \arrow[ur, "c"]
+            &\\
+            B
+            \arrow[uu, "h"]
+            \arrow[ur, swap, "g"]
+            &
+            &
+            C
+        \end{tikzcd}
+    \end{center}
+    By a similar argument, we have that if $f \le \coker(g)$, 
+    then $g \le \ker(f)$. Hence we have that 
+    \[
+        g \le \ker(f) \iff f \le \coker(g)
+    \]
+    so that, as preorder, the kernel and cokernels functors are adjoint pairs 
+    that form an antitone Galois correspondence. Moreover, this implies that
+    for each $f: B \to A$ and $g: A \to C$,
+    \[
+        f \le \coker(\ker(f)) \qquad g \le \ker(\coker(g)).
+    \]
+    In particular, if $f$ is the cokernel of some morphism $\phi$, and if $g$ is
+    the kernel of some morphism $\psi$, then we have that 
+    \[
+        \coker(\phi) \le \coker(\ker(\coker(\phi)))
+        \quad
+        \ker(\psi) \le \ker(\coker(\ker(\psi))).
+    \]
+    However, applying the order reversing functors $\coker$ and $\ker$ on the relations 
+    $\phi \le \ker(\coker(\phi))$ and $\psi \le \coker(\ker(\psi))$ yields 
+    \[
+        \coker(\ker(\coker(\phi))) \le \coker(\phi)
+        \quad 
+        \ker(\coker(\ker(\psi))) \le \ker(\psi).
+    \]
+    Hence we have that $\coker(\ker(\coker(\phi))) \cong \coker(\phi)$
+    and
+    $\ker(\coker(\ker(\psi))) \cong \ker(\psi)$ as desired. 
+\end{prf}
+
+
+
+
+
+
+\newpage
+\section{Abelian Categories}
+
+Let $\cc$ be a preabelian category, and consider an arbitrary morphism 
+$\phi: A \to B$. Then, since we are in an abelian category, we can calculate 
+the kernel and cokernel of this morphism, which both have their familiar 
+universal properties. 
+\begin{center}
+    \begin{tikzcd}[column sep = 1.5cm, row sep = 1.5cm]
+        \ker(\phi) \arrow[r, "e"]
+        &
+        A
+        \arrow[r, shift right = 0.5ex, swap, "\emptyset"]
+        \arrow[r, shift left = 0.5ex, "\phi"]
+        &
+        B \arrow[r, "c"]
+        \arrow[dr, swap, "\psi"]
+        &
+        \coker(\phi)
+        \arrow[d, dashed, "k"]
+        \\
+        C \arrow[ur, swap, "\phi"]
+        \arrow[u, dashed, "h"]
+        &
+        &
+        &
+        D 
+    \end{tikzcd}
+\end{center}
+One thing we can do is examine both the kernel and the cokernel \emph{of} these two morphisms.
+Specifically, we can calculate the kernel $\ker(c)$ of $c$ and the cokernel 
+$\coker(e)$ of $e$. However, since we have a map $\phi: A \to B$ such that 
+$c \circ \phi = 0$, we see that there exists a unique map $u: A \to \ker(\coker(f))$
+such that $\phi = e' \circ u$. 
+Dually, since $\phi \circ e = 0$, there exists a unique map $v: \coker(\ker(f)) \to B$. 
+such that $\phi = v \circ c'$. 
+\begin{center}
+    \begin{tikzcd}[column sep = 1.5cm, row sep = 1.5cm]
+        & &[-32.5pt] 
+        \ker(\coker(f)) 
+        \arrow[dr, "e'"]
+        &[-32.5pt] & 
+        \\[-15pt]
+        \ker(f) \arrow[r, "e"]
+        &
+        A
+        \arrow[rr, "\phi"]
+        \arrow[ur, dashed, "u"]
+        \arrow[dr, swap, "c'"]
+        &[-32.5pt]
+        &[-32.5pt]
+        B \arrow[r, "c"]
+        \arrow[ddr, swap, "\psi"]
+        &
+        \coker(f)
+        \arrow[dd, dashed, "k"]
+        \\[-15pt]
+        &
+        &[-32.5pt]
+        \coker(\ker(f))
+        \arrow[ur, swap, dashed, "v"]
+        &[-32.5pt]
+        &
+        \\[-40pt]
+        C \arrow[uur, swap, "\phi"]
+        \arrow[uu, dashed, "h"]
+        &
+        &[-32.5pt]
+        &[-32.5pt]
+        &
+        D 
+    \end{tikzcd}
+\end{center}
+
+
+
+
+
+
+
+
+
+
+
+

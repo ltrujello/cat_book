@@ -1,0 +1,2631 @@
+\chapter{Duality and Categorical Constructions} 
+    \section{$\mathcal{C}\op$ and Contravariance}
+    
+    \begin{definition}
+        Consider a category $\mathcal{C}$. Then we define the
+        \textbf{opposite category of $\cc$}, denoted $\mathcal{C}\op$, 
+        to be the category where 
+        \begin{description}
+            \item[Objects.] The same objects of $\cc$.
+            \item[Morphisms.] If $f: A \to B$ is a
+            morphism of $\cc$, then we let 
+            $f\op : B \to A$ be a morphism of $\cc\op$.
+        \end{description}
+        In this case, composition isn't exactly obvious, so we will explain how that 
+        works. 
+
+        Let $f: A \to B$ and $g: B \to C$ be morphisms of $\cc$. Then we obtain 
+        morphisms $f\op: B \to A$ and $g\op: C \to B$. In this case $f\op, g\op$ are composable, 
+        and we define composition of $\cc\op$, 
+        denoted as $\circ\op$, 
+        to be the morphism 
+        \[
+            f\op \circ g\op: C \to A.
+        \]
+        Moreover, we have the relation $(g \circ f)\op = f\op \circ g\op$.
+    \end{definition}
+
+    Taking the opposite category might seem very strange, 
+    but we are doing nothing more than just taking the same category 
+    and swapping the domain and codomain of every
+    morphism. 
+    
+    Consequently, many properties of morphisms are similarly reversed.
+    For example, if $f: A \to B$ is
+    monomorphism in $\cc$, then $f\op: B \to A$ is an epimorphism in 
+    $\cc\op$. 
+    More generally, every logically valid statement that can be made in
+    $\cc$ using its objects and morphisms can be dualized to achieve an
+    equivalent, logically valid statement in $\cc\op$ using its
+    objects and morphisms. 
+
+    \begin{example}
+        Consider a category $\cc$ containing $3$ objects
+        whose morphisms are arranged as follows:
+        \begin{center}
+            \begin{tikzcd}[scale = 2]
+                & A\arrow[dr, "f"]
+                \arrow[out=120,in=60,looseness=3,loop, "1_A"] &\\
+                C \arrow[ur, "h"]
+                \arrow[out=120,in=60,looseness=3,loop, "1_C"] & & B
+                \arrow[ll, "g"] \arrow[out=115,in=65,looseness=4,loop,
+                "1_B"]
+            \end{tikzcd}
+        \end{center}
+        What does the dual category $\cc\op$ look like? Well, $\cc\op$
+        contains the same objects $A, B$ and $C$. As for the morphisms, $\cc$
+        has the three morphisms $f, g, h$, in addition to their composites.
+        Therefore, $\cc\op$ also has three morphisms 
+        $f\op:B \to A$, $g\op: C \to
+        B$ and $h\op: A \to C$ and their composites. Hence, $\cc\op$ looks like this:
+        \begin{center}
+            \begin{tikzcd}[scale = 2]
+                & A\arrow[dl, swap, "h"]
+                \arrow[out=120,in=60,looseness=3,loop, "1_A"] &\\
+                C \arrow[rr, swap, "g"]
+                \arrow[out=120,in=60,looseness=3,loop, "1_C"] & &
+                \arrow[ul, swap, "f"]
+                B \arrow[out=115,in=65,looseness=4,loop,
+                "1_B"]
+            \end{tikzcd}
+        \end{center}
+    \end{example}
+
+    \begin{example}
+        Let $P$ be a preorder, specifically a partial order. 
+        Recall that this means that $P$ has 
+        a binary relation  $\le$ and if $p \le p'$
+        and $p' \le p$, then $p = p'$. 
+        
+        We claim that that $P\op$ is still a partial order. But first, 
+        what does $P\op$ even look like? If we have some elements $p_1, p_2, p_3$ in
+        $P$ such that 
+        \[
+            p_1 \le p_2 \le p_3
+        \]
+        Then, as a category, $P$ has the unique morphisms $f: p_1 \to p_2$ and 
+        $g: p_2 \to p_3$. Hence, in $P\op$, we have the unique morphisms 
+        $g\op : p_3 \to p_2$ and $f\op:p_2 \to p_1$, 
+        so that we obtain a reversed binary relation $\le\op$ in $P$, which 
+        reorder $p_1, p_2, p_3$ as below.
+        \[
+            p_3 \le\op p_2 \le\op p_1
+        \]
+        This is kinda weird to write, and in fact, it makes 
+        more sense if we 
+        write $\le\op = \ge$ as the binary relation in $P\op$. We then have that 
+        \[
+            p_1 \le p_2 \le p_3 \text{ in } P 
+            \implies p_3 \ge p_2 \ge p_1 \text{ in } P\op
+        \]
+        which is nice!
+        Things are even nicer in a linear order, for if $P = \{p_1,
+        p_2, p_3, \dots \}$ is a linear order, then we can write that 
+        \[
+            \cdots p_i \le p_j \le p_k \cdots   
+        \]
+        and hence in $P\op$ this becomes 
+        \[
+            \cdots p_i \ge p_j \ge p_k \cdots.
+        \]
+    \end{example}
+
+    \begin{example}
+        Let $(G, \cdot)$ be a group. 
+        In group theory one can formulate the \textbf{opposite group} $(G\op, \cdot\op)$ 
+        as follows. Define
+        $(G\op, \cdot\op)$ to be group with the same set of elements as $G$, 
+        whose product $\cdot\op$ works as 
+        \[
+            g_1 \cdot\op g_2 = g_2 \cdot g_1.   
+        \]
+        Since both $(G, \cdot)$ and $(G, \cdot\op)$ are groups, we can regard them both 
+        as one object categories. What is interesting to realize is that under the 
+        categorical interpretation, they are opposite categories of each other.
+        
+        % However, the categories $\cc$ and $\cc'$ are opposites of each other; that 
+        % is, $\cc\op \cong \cc'$. 
+    \end{example}
+
+    We thus see that dualizing a category simply involves changing the 
+    directions of the morphisms  on the objects. But can we dualize a 
+    functor?
+    
+    % Let $F: \cc \to \dd$ be a functor between two categories. Then $F$
+    % induces a functor between $F\op : \cc\op \to \dd\op$, where 
+    % \[ 
+    %     C \mapsto F(C) \text{ and } f\op \mapsto (Ff)\op
+    % \]
+    % for $C$ is an object of $\cc\op$ (and hence an object of $\cc$)
+    % and $f\op$ is a morphism of $\cc\op$. Thus the induced functor
+    % $F\op$ doesn't change how the objects are mapped, but it does
+    % change how the morphisms are mapped in the way one would expect it
+    % to.
+
+    \begin{definition}
+        Let $F: \cc \to \dd$ be a functor and suppose $f: A \to B$ is
+        morphism in $\cc$. We say $F$ is a \textbf{contravariant functor}
+        if $F(f): F(B) \to F(A)$.
+    \end{definition}
+    This is in sharp contrast to a \emph{covariant} functor, in which $f: A \to B$
+    is sent to $F(f): F(A) \to F(B)$. 
+
+    We next introduce a few examples to demonstrate a contravariant functor. 
+    
+    \begin{example}
+        Let $k$ be an algebraically closed field. Recall that $A^n(k)$ is the set of tuples 
+        $(a_1, a_2, \dots, a_n)$ with $a_i \in k$. In algebraic geometry, it 
+        is of interest to associate each subset $S \subset A^n(k)$
+        with the ideal
+        \[
+            I(S) = \bigg\{f \in k[x_1, \dots, k_n] \;\bigg|\; f(s) = 0 \text{ for all } s \in S \bigg\}.  
+        \]
+        of $k[x_1, \dots, x_n]$.
+        Observe that this is always non-empty since $0 \in I(S)$ for any $S$. 
+        In additional, it is clearly an ideal of $k[x_1, \dots, x_n]$, 
+        since for any $p \in k[x_1, \dots, x_n]$,$q \in I(S)$, we have that 
+        \[
+            (p \cdot q)(s) = p(s)\cdot q(s) = p(s) \cdot 0 = 0 \text{ for all } s \in S.
+        \]
+        so that $p\cdot q \in I(S)$. Now it's usually an exercise to show that 
+        if $S_1 \subset S_2$ are two subsets of $A^n(k)$, then one has that 
+        $I(S_2)\subset I(S_1)$. Hence this defines a contravariant functor
+        \[
+            I: \textbf{Subsets}(A^n(k)) \to \textbf{Ideals}(k[x_1,\dots, x_n]).
+        \]
+        where $\textbf{Subsets}(A^n(k))$ is the category of subsets with inclusion morphisms, 
+        and $\textbf{Ideals}(k[x_1,\dots, x_n])$ is the category of ideals with inclusion 
+        ring homomorphisms.
+    \end{example}
+
+    \begin{example}
+        Consider again $k$ as an algebraically closed field. In algebraic geometry, 
+        one often wishes to associated each ideal of $k[x_1, \dots, x_n]$
+        with its ``zero set'' 
+        \[
+            Z(I) = \bigg\{s = (a_1, \dots, a_n) \in A^n(k) \;\bigg|\; f(s) = 0 \text{ for all } s \in I\bigg\}.
+        \]
+        It is usually an exercise to show that if $I_1 \subset I_2$ are two ideals, 
+        then $Z(I_2) \subset Z(I_1)$. Hence we see that this defines a contravariant functor 
+        \[
+            Z: \textbf{Ideals}(k[x_1, \dots, x_n]) \to \textbf{Subsets}(A^n(k)).
+        \]
+    \end{example}
+
+    It is usually at the beginning of an algebraic geometry course that one 
+    will understand the relationship between these two constructions, which themselves 
+    are secretly functors.
+
+    What follows is a very interesting example. In fact, this example is an example of a 
+    beautiful concept of a \emph{sheaf}, and it is usually used as a motivating 
+    example. But that is for later. 
+
+    \begin{example}
+        Let $X$ be a topological space, and 
+        consider the thin category $\textbf{Open}(X)$, which contains
+        all open sets $U \subset X$, equipped with the inclusion
+        function $i_{U, X}: U \to X$. 
+
+        For each $U \in \textbf{Open}(X)$, define the set
+        \[
+            C(U) = \{f: U \to \rr \mid f \text{ is continuous.}\}
+        \]
+        Note that if $U \subset V$ are in $\textbf{Open}(X)$, then 
+        we define the function 
+        $\rho_{U,V}: C(V) \to C(U)$ where 
+        \[
+            \rho_{U,V}(f: V \to \rr) = f\big|_{U}: U \to \rr.
+        \]
+        That is, $\rho_{U,V}$ sends continuous, real-valued functions 
+        on $V$ to such functions on $U$ by restriction. 
+        It is not difficult to show that this respects identity and composition 
+        requirements, so that we have a contravariant functor
+        \[
+            C(-) : \textbf{Open}(X) \to \textbf{Set}
+        \]
+        for each topological space $X$. 
+    \end{example}
+
+    What follows is another very important example. 
+
+    \begin{example}
+        Let $\cc$ be a locally small category. In this case, we know that 
+        each $A \in \cc$ induces the covariant functor
+        \[
+            \hom_{\cc}(A, -) : \cc \to \textbf{Set}
+        \]
+        which sends objects $C$ to the set $\hom_{\cc}(A, C)$. 
+        It is natural to ask if we may similarly define a functor  
+        \[
+            \hom_{\cc}(-, A): \cc \to \textbf{Set}.
+        \]
+        The answer is yes. We did not make this observation in the past 
+        for pedagogical reasons, since it's actually a contravariant functor 
+        (and we didn't know what that was until now). We can now safely say 
+        that $\hom_{\cc}(-, A)$ is a contravariant functor. 
+    \end{example}
+
+    We now comment on the relationship between contravariant and covariant functors. 
+
+    \begin{proposition}
+        Let $\cc$, $\dd$ be categories. 
+        \begin{itemize}
+            \item Let $F: \cc \to \dd$ be a contravariant functor. Then $F$ corresponds to a 
+            contravariant functor $\overline{F}: \cc\op \to \dd$ where for a $f\op : B \to A \in \cc\op$, 
+            \[
+                \overline{F}(f\op : B \to A) = F(f: A \to B) = F(f): F(B) \to F(A).
+            \] 
+            \item Conversely, let $F: \cc \to \dd$ be a covariant functor. Then $F$ 
+            corresponds to a contravariant functor $\overline{F}: \cc\op \to \dd$ 
+            where 
+            \[
+                \overline{F}(f\op : B \to A) = F(f: A \to B) = F(f): F(A) \to F(B)
+            \]
+        \end{itemize}
+    \end{proposition}
+
+    The above proposition allows us to treat any functor as covariant or 
+    contravariant. Thus, if we don't like the behavior of our functor on morphisms, we can 
+    find an equivalent functor that behaves on morphisms in our preferred way. 
+
+    Generally, covariant functors are easier to think about, so we often like 
+    to turn contravariant functors into covariant functors. 
+
+    \begin{example}
+        Recall that the functor 
+        \[
+            C(-): \textbf{Open}(X) \to \textbf{Set}
+        \]
+        is contravariant. What if we want to treat this as a covariant functor? 
+        Well, we can define the functor 
+        \[
+            \overline{C}(-): \textbf{Open}(X)\op \to \textbf{Set}            
+        \]
+        as follows. If $U \subset V$ are open subsets of the topological space $X$, 
+        then let $i: U \to V$ be the inclusion. This is a morphism in $\textbf{Open}(X)$.
+        Hence, $i\op: V \to U$ is a morphism in $\textbf{Open}(X)\op$. 
+        Therefore, we define
+        \[
+            \overline{C}(i\op: V \to U) = C(i: U \to V) = \rho_{U,V}: C(V) \to C(U).
+        \]
+        Thus we see that this functor $\overline{C}$ acts the same way as $C$, except 
+        it behaves covariantly on the morphisms now instead of contravariantly. 
+    \end{example}
+
+    \newpage
+    \section{Products of Categories, Functors}
+    As one may expect, the product of categories can be easily
+    defined.
+    
+    \begin{definition}
+        Let $\cc$ and $\dd$ be categories. Then the \textbf{product
+        category} $\cc \times \dd$ is the category where 
+        \begin{description}
+            \item[Objects.] All pairs  $(C, D)$ with $C \in \ob(\cc)$ and $D \in \ob(\dd)$
+            \item[Morphisms.] All pairs $(f, g)$ where $f \in \hom(\cc)$ and $g \in \hom(\dd)$.   
+        \end{description}
+        To define composition in this category, suppose we have composable morphisms in $\cc$ 
+        and $\dd$ as below. 
+        \begin{center}
+            \begin{tikzpicture}
+                \filldraw[rounded corners, yellow!30]
+                (-3.75,0.25) rectangle (3.75,2.5);
+                \node at (-2.75, 2){$\cc$};
+                \node at (0,1.25){
+                    \begin{tikzcd}[column sep = 1.4cm, row sep =  1.4cm]
+                        \cdots
+                        &[-1.5cm] 
+                        C_1
+                        \arrow[r, "f"]
+                        \arrow[rr, bend left, "f' \circ f"]
+                        &
+                        C_2
+                        \arrow[r, "f'"]
+                        &
+                        C_3
+                        &[-1.5cm]
+                        \cdots
+                    \end{tikzcd}
+                };
+                \begin{scope}[xshift = 8cm]
+                    \filldraw[rounded corners, yellow!30]
+                    (-3.75,0.25) rectangle (3.75,2.5);
+                    \node at (-3, 2){$\dd$};
+                    \node at (0,1.25){
+                        \begin{tikzcd}[column sep = 1.4cm, row sep =  1.4cm]
+                            \cdots
+                            &[-1.5cm]
+                            D_1
+                            \arrow[r, "g"]
+                            \arrow[rr, bend left, "g' \circ g"]
+                            &
+                            D_2
+                            \arrow[r, "g'"]
+                            &
+                            D_3   
+                            &[-1.5cm]
+                            \cdots           
+                        \end{tikzcd}  
+                    };
+                \end{scope}
+            \end{tikzpicture}                
+        \end{center}
+        Then the morphisms $(f, g)$ and $(f', g')$ in $\cc \times \dd$ 
+        are composable too, and their composition is defined as $(f', g') \circ (f , g) = ( f' \circ f, g' \circ g)$.
+        \begin{center}
+            \begin{tikzpicture}
+                \filldraw[rounded corners, yellow!30]
+                (-5,-2.25) rectangle (5,0.25);
+                \node at (-3.5, -0.25){$\cc \times \dd$};
+                \node at (0,-1){
+                    \begin{tikzcd}[column sep = 1.4cm, row sep =  1.4cm]
+                        \cdots
+                        &[-1.5cm]
+                        (C_1,D_1) 
+                        \arrow[r, "{(f,g)}"]
+                        \arrow[rr, bend left, "{(f', g') \circ (f, g) = (f' \circ f, g' \circ g)}"]
+                        &
+                        (C_2, D_2)
+                        \arrow[r, "{(f',g')}"]
+                        &
+                        (C_3, D_3)
+                        &[-1.5cm]
+                        \cdots
+                    \end{tikzcd}  
+                };
+            \end{tikzpicture}
+        \end{center}           
+        We also define the \textbf{projection functors}
+        $\pi_\cc:
+        \cc\times\dd \to \cc$ and $\pi_\dd: \cc\times\dd \to \dd$
+        where on objects $(C, D)$ and morphism $(f, g)$, we have that 
+        \begin{align*}
+            &\pi_\cc(C, D) = C \quad &&\pi_\dd(C, D) = D\\
+            &\pi_\cc(f, g) = f \quad &&\pi_\dd(f, g ) = g
+        \end{align*}
+    \end{definition}
+
+    These projection functors have the following property.
+    Consider a pair of functors $F: \bb \to \cc$ and $G:\bb \to \dd$.
+    Then $F$ and $G$ determine a unique functor $H: \bb \to \cc
+    \times \dd$ where 
+    \[
+        \pi_\cc \circ H = F \qquad \pi_\dd \circ H = G.
+    \]
+    That is, we see that for any morphism $f$ in $\bb$ we have that $H(f)
+    = ( F(f), G(f) )$. Hence the following diagram commutes
+    \begin{center}
+        \begin{tikzcd}[row sep = 1.5cm, column sep = 1.5cm]
+            & \bb \arrow[dl, swap, "F"] \arrow[dr, "G"] \arrow[d, dashed, "H"]&\\
+            \cc & \arrow[l, "\pi_\cc"] \cc \times \dd \arrow[r, swap,"\pi_\dd"] & \dd 
+        \end{tikzcd}
+    \end{center}
+    and we dash the middle arrow to represent that $H$ is induced, or
+    defined, by this process.
+
+    We can also take the product of two different functors. 
+
+    \begin{definition}
+        Let $F: \cc \to \cc'$ and $G: \dd \to \dd'$ be two functors.
+        Then we define the \textbf{product functor} to be the functor 
+        $F \times G: \cc \times \dd \to \cc' \times \dd'$ for which 
+        \begin{itemize}
+            \item[1.] If $(C, D)$ is an object of $\cc\times\dd$ then
+            $(F\times G)(C, D) = (F(C), G(D))$ 
+            \item[2.] If $(f, g)$ is a morphism of $\cc\times\dd$
+            then $(F \times G)(f,g) = (F(f), G(g))$ 
+
+            Additionally, we can compose the product of functors (of
+            course, so
+            long as they have the same number of factors). Thus suppose $G,F$ and $G', F'$
+            are composable functors. Then observe that 
+            \[
+                (G \times G') \circ (F \times F') = (G \circ F) \times (G' \circ F').
+            \] 
+        \end{itemize}
+    \end{definition}
+
+    Note that in this formulation we have that 
+    \[
+        \pi_{\cc'}\circ (F\times G)  = F \circ \pi_\cc \quad \pi_{\cc'} \circ (F \times G) = G \circ \pi_{\dd}
+    \]  
+    Hence, we have the following commutative diagram.
+    
+    \begin{center}
+        \begin{tikzcd}[row sep = 1.4cm, column sep = 1.4cm]
+            \cc \arrow[d, swap, "F"] & \arrow[l,swap, "\pi_\cc"] \cc \times \dd \arrow[r,
+            "\pi_\dd"] \arrow[d, dashed, "F\times G"] & \dd \arrow[d, "G"]\\
+            \cc' & \arrow[l, swap, "\pi_{\cc'}"] \cc'\times\dd' \arrow[r,
+            "\pi_{\dd'}"] & \dd'
+        \end{tikzcd}
+    \end{center}
+    Again, the dashed arrow is written to express that $F \times G$ is
+    the functor defined by this process and makes this diagram
+    commutative.
+    
+    \begin{definition}
+        If $F$ is a functor such that $F: \bb \times \cc \to \dd$,
+        that is, its domain is a product category, then $F$ is said
+        to be a \textbf{bifunctor}.
+    \end{definition}
+
+    An example of a bifunctor is the cartesian product $\times$, which
+    we can apply to sets, groups, and topological spaces. In these
+    instances we know that value of a cartesian product is always
+    determined uniquely by the values of the individual factors, which
+    holds more generally for bifunctors. 
+
+    \begin{proposition}
+        Let $\bb, \cc$ and $\dd$ be categories. For $B \in \bb$ and $C
+        \in \cc$, define the functors
+        \[
+            H_C: \bb \to \dd \quad K_B: \cc \to \dd   
+        \]
+        such that $H_C(B) = K_B(C)$ for all $B, C$. Then there exists
+        a functor $F:\bb \times \cc \to \dd$ where $F(B, -) = K_B$
+        and $F(-, C) = H_C$ for all $B, C$ if and only if 
+        for every pair of morphisms $f:B \to B'$ and
+        $g:C\to C'$ we have that 
+        \[
+            K_{B'}(g) \circ H_C(f) = H_{C'}(f) \circ K_B(g).
+        \]
+        Diagrammatically, this condition is
+        \begin{center}
+            \begin{tikzcd}[column sep = 1.4cm, row sep = 1.4cm]
+                H_C(B)=
+                K_{B}(C) 
+                \arrow[r, "K_{B}(g)"]
+                \arrow[d, swap, "H_C(f)"]
+                &
+                H_{C'}(B)
+                =
+                K_{B}(C')
+                \arrow[d, "H_{C'}(f)"]
+                \\
+                H_C(B')
+                =
+                K_{B'}(g)
+                \arrow[r, swap, "K_{B'}(g)"]
+                &
+                H_{C'}(B')
+                =
+                K_{B'}(C')
+            \end{tikzcd}
+        \end{center}
+    \end{proposition}
+
+    The proof is left as an exercise for the reader.
+   
+
+    \begin{example}
+    We now introduce what is probably one of the most important examples of 
+    a bifunctor. Note that for any (locally small) category $\cc$, 
+    we have for each object $A$ a functor.
+    \[
+        \hom(A, -): \cc \to \textbf{Set}
+    \]
+    We also have a functor from $\cc\op$ (we at the $\op$ simply for convenience)
+    for each $B \in \cc\op$.
+    \[
+        \hom(-, B): \cc\op \to \textbf{Set}    
+    \]
+    As an application of the proposition,
+    one can  see that that these two functors act as the $K_B$
+    and $H_C$ functors in the above proposition, and give rise to
+    bifunctor 
+    \[ 
+        \hom: \cc\op \times \cc \to \textbf{Set}.
+    \] 
+    This is
+    because for any $h: A \to A'$ and $k: B \to B'$, the diagram,
+    \begin{center}
+        \begin{tikzcd}[row sep = 1.2cm, column sep = 1.4cm]
+            \hom(A', B) \arrow[r, "h^*"] \arrow[d, swap, "k_*"] & \hom(A, B)
+            \arrow[d, "k_*"]\\
+            \hom(A', B') \arrow[r,"h^*"] & \hom(A, B')
+        \end{tikzcd}    
+    \end{center}
+    commutes.
+    Hence the proposition guarantees that $\hom:\cc\op\times\cc \to
+    \textbf{Set}$ exists and is unique.
+    \end{example}
+
+    \begin{example}
+        Recall that for an integer $n$ and for a ring $R$ with identity $1 \ne 0$,  
+        we can formulate the group $\text{GL}(n, R)$, consisting of $n\times n$ matrices 
+        with entry values in $R$. As this takes in arguments, we might guess that we have 
+        a bifunctor 
+        \[
+            GL(-, -): \bm{\mathbb{N}} \times \textbf{Ring} \to \textbf{Grp}
+        \]
+        where $\bm{\mathbb{N}}$ is a the discrete category with elements as natural numbers. This intuition 
+        is correct: for a fixed ring $R$, we have a functor
+        \[
+            GL(-, R): \bm{\mathbb{N}} \to \textbf{Grp}
+        \]
+        while for a fixed natural number $n$ we have a functor 
+        \[
+            GL(n, -): \textbf{Ring} \to \textbf{Grp}.     
+        \]
+        Below we can visualize the activity of this functor:
+        \begin{center}
+            \begin{tikzpicture}
+                \begin{scope}
+                    \begin{tikzcd}[column sep = 0.1cm, row sep = 0.1cm]
+                        \vdots
+                        &
+                        \vdots
+                        &
+                        \cdots 
+                        &
+                        \vdots
+                        &
+                        \cdots
+                        \\
+                        GL(1, S)
+                        &
+                        GL(2, S)
+                        &
+                        \cdots 
+                        &
+                        GL(k, S)
+                        &
+                        \cdots
+                        \\
+                        \vdots
+                        &
+                        \vdots
+                        &
+                        \cdots 
+                        &
+                        \vdots
+                        &
+                        \cdots
+                        \\
+                        GL(1, \zz)
+                        &
+                        GL(2, \zz)
+                        &
+                        \cdots 
+                        &
+                        GL(k, \zz)
+                        &
+                        \cdots
+                    \end{tikzcd}
+                \end{scope}
+                \draw (0, -1.7) -- (8, -1.7);
+                \draw (0, -1.7) -- (0, 1.7);
+                \node at (1,-2) {$n = 1$};
+                \node at (3,-2) {$n = 2$};
+                \node at (4.7,-2) {$\cdots $};
+                \node at (6.1,-2) {$n=k $};
+                \node at (7.75,-2) {$\cdots $};
+        
+                \node at (-1, -1.4) {$R = \zz$};
+                \node at (-1, -0.5) {$\vdots$};
+                \node at (-1, 0.4) {$R = S$};
+                \node at (-1, 1.3) {$\vdots$};
+            \end{tikzpicture}
+        \end{center}
+        Above, we start with $\zz$ since the this is the initial object of the category 
+        \textbf{Ring}. 
+    \end{example}
+    
+
+    Now that we understand products of categories a functors, and we
+    have a necessary and sufficient condition for the existence of a
+    bifunctor, we describe necessary and sufficient conditions for the
+    existence of a natural transformation.
+
+    \begin{definition}
+        Suppose $F, G: \bb \times \cc \to \dd$ are bifunctors. Suppose
+        that there exists a morphism $\eta$ which assigns objects of $\bb
+        \times \cc$ to morphisms of $\dd$. Specifically, $\eta$ assigns
+        objects
+        $B \in \bb$ and $C \in \cc$ to the morphism 
+        \[
+            \eta_{(B, C)} : F(B, C) \to G(B, C).
+        \]
+        Then $\eta$ is said to be \textbf{natural} in $B$ if, for all
+        $C \in \cc$, 
+        \[
+            \eta_{(-, C)} : F(-, C) \to G(-, C)
+        \]
+        is a natural transformation of functors from $\bb \to \dd$. 
+    \end{definition} 
+
+    With the previous definition, we can now introduce the necessary
+    condition for a natural transformation to exist between bifunctors.
+    
+    \begin{proposition}\label{prop_bifunctors}
+        Let $F, G: \bb \times \cc \to \dd$ be bifunctors. Then there
+        exists a natural transformation $\eta: F \to G$ if and only if
+        $\eta(B, C)$ is natural in $B$ for each $C \in C$, and natural
+        in $C$ for each $B \in \bb$.
+    \end{proposition}
+
+    \begin{prf}
+        \begin{description}
+            \item[($\bm{\implies}$)] Suppose that $\eta: F \to G$ is a
+            natural transformation. Then every object $(B, C)$ is
+            associated with a morphism $\eta_{(B, C)}: F(B, C) \to
+            G(B, C)$ in $\dd$, and this gives rise to the following diagram:
+            \begin{center}
+                \begin{tikzcd}[row sep = 1.2cm]
+                    (B, C) \arrow[d, "{(f, g)} "]\\
+                    (B', C') 
+                \end{tikzcd}
+                \hspace{2cm}
+                \begin{tikzcd}[row sep = 1.2cm, column sep = 1.4cm]
+                    F(B, C) \arrow[r, "{\eta_{(B,C)}}"] \arrow[d,swap,
+                    "{F(f,g)}"] 
+                    &
+                    G(B,C) \arrow[d, "{G(f,g)}"]\\
+                    F(B',C') \arrow[r, "{\eta_{(B',C')}}"] 
+                    &
+                    G(B',C')
+                \end{tikzcd}
+            \end{center}
+            Now let $C \in \cc$ and observe that 
+            \[
+                \eta_{(-, C)}: F(-, C) \to G(-,c)
+            \]
+            is a natural transformation for all $B$. On the other
+            hand, for any $B \in \bb$, 
+            \[
+                \eta_{(B, -)}: F(B, -) \to G(B, -)
+            \]
+            is a natural transformation for all $C$. Therefore, $\eta$
+            is both natural in $B$ and $C$ for all objects $(B, C)$
+
+            \item[($\bm{\impliedby}$)] Suppose on the other hand that
+            $\eta$ is a function which assigns objects $(B, C)$ to a
+            morphism $F(B, C) \to G(B, C)$ in $\dd$. Furthermore,
+            suppose that $\eta(B, C)$ is natural in $B$ for all $C \in
+            \cc$ and natural in $C$ for all $B \in \bb$. 
+
+            Consider a morphism $(f, g) : (B, C) \to (B', C')$ in
+            $\bb \times \cc$. Then since $\eta$ is natural for all $B
+            \in \bb$, we
+            know that for all $C \in \cc$, 
+            \[
+                \textcolor{red}{\eta}_{(-, C)} : F(-, C) \to G(-,C)  
+            \]
+            is a natural transformation. In addition, $\eta$ is
+            natural for all $C \in \cc$ since for all $B \in \bb$ 
+            \[
+                \textcolor{blue}{\eta}_{(B, -)} : F(B, -) \to G(B, -)
+            \]  
+            is a natural transformation. Hence consider the natural
+            transformation $\textcolor{red}{\eta}_{(-, C)}$ acting on
+            $(B, C)$ and
+            $\textcolor{blue}{\eta}_{(B', -)}$ acting on $(B', C)$.
+            Then we get the following commutative diagrams.
+
+            \begin{center}
+                \begin{tikzcd}[row sep = 1.2cm, column sep = 1.4cm]
+                    F(B, C) \arrow[r, "{\textcolor{red}{\eta}_{(B,C)}}"] \arrow[d,swap,
+                    "{F(f, 1_C)}"] 
+                    &
+                    G(B,C) \arrow[d, "{G(f,1_C)}"]\\
+                    F(B',C) \arrow[r, "{\textcolor{red}{\eta}_{(B',C)}}"] 
+                    &
+                    G(B',C)
+                \end{tikzcd}
+                \hspace{1cm}
+                \begin{tikzcd}[row sep = 1.2cm, column sep = 1.4cm]
+                    F(B', C) \arrow[r, "{\textcolor{blue}{\eta}_{(B',C)}}"] \arrow[d,swap,
+                    "{F(1_{B'}, g)}"] 
+                    &
+                    G(B',C) \arrow[d, "{G(1_{B'},g)}"]\\
+                    F(B',C') \arrow[r, "{\textcolor{blue}{\eta}_{(B',C')}}"] 
+                    &
+                    G(B',C')
+                \end{tikzcd}
+            \end{center}
+            Observe that
+            the bottom row of the first diagram matches the top row of
+            the second. 
+            Also note that $f: B \to B'$ and $g: C \to C'$, and that the
+            diagrams imply the equations 
+            \begin{align}
+                G(f, 1_C) \circ \textcolor{red}{\eta}_{(B,C)} &= \textcolor{red}{\eta}_{(B', C)} \circ F(f, 1_C) \label{eq1_prop_2_2}\\
+                G(1_{B'}, g) \circ \textcolor{blue}{\eta}_{(B', C)} &= \textcolor{blue}{\eta}_{(B', C')} \circ F(1_{B'}, g). \label{eq2_prop_2_2}
+            \end{align}
+            Now suppose we compose equation (\ref{eq1_prop_2_2}) with
+            $G(1_{B'}, g)$ on the left. Then we get that 
+            \begin{align*}
+                G(1_{B'}, g)\circ G(f, 1_C) \circ \textcolor{red}{\eta}_{(B, C)} &= \overbrace{G(1_{B'}, g) \circ \textcolor{red}{\eta}_{(B', C)}}^{\text{replace via equation (2)}} \circ F(f, 1_C)\\
+                &= \textcolor{blue}{\eta}_{(B', C')} \circ F(1_{B'}, g) \circ F(f, 1_C)\\
+                &= \textcolor{blue}{\eta}_{(B',C')} \circ F(1_{B'}\circ f, g \circ 1_C)\\
+                &=\textcolor{blue}{\eta}_{(B',C')} \circ F(f, g).
+            \end{align*}
+            where in the second step we applied equation 
+            (\ref{eq2_prop_2_2}), and in the third step we composed
+            the morphisms. Also note that we can simplify the left-hand
+            side since 
+            \[ 
+                G(1_{B'}, g)\circ G(f, 1_C) =
+            G(1_{B'}\circ f, g \circ 1_C) = G(f, g).
+            \] Therefore, we have that 
+            \[
+                G(f, g) \circ \textcolor{red}{\eta}_{(B, C)} = \textcolor{blue}{\eta}_{(B', C')} \circ F(f, g) 
+            \]
+            which implies that $eta$ itself is a natural
+            transformation. Specifically, it implies the following
+            diagram. 
+            \begin{center}
+                \begin{tikzcd}[row sep = 1.2cm]
+                    (B, C) \arrow[d, "{(f, g)} "]\\
+                    (B', C') 
+                \end{tikzcd}
+                \hspace{2cm}
+                \begin{tikzcd}[row sep = 1.2cm, column sep = 1.4cm]
+                    F(B, C) \arrow[r, "{\eta_{(B,C)}}"] \arrow[d,swap,
+                    "{F(f,g)}"] 
+                    &
+                    G(B,C) \arrow[d, "{G(f,g)}"]\\
+                    F(B',C') \arrow[r, "{\eta_{(B',C')}}"] 
+                    &
+                    G(B',C')
+                \end{tikzcd}
+            \end{center}
+        \end{description}
+    \end{prf}
+    Note: A way to succinctly prove the
+    reverse implication of the previous proof is as follows. Since we
+    know the diagrams on the left are commutative, just "\textcolor{Green}{stack}" them
+    on top of each other to achieve the diagram in the upper right
+    corner, and then "\textcolor{Orange}{squish}" this diagram down to obtain the third
+    diagram in the bottom right. 
+    
+    \begin{minipage}{0.3\textwidth}
+        \begin{center}
+            \begin{tikzcd}[row sep = 1.2cm, column sep = 1.4cm]
+                F(B, C) \arrow[r, "{\textcolor{red}{\eta}_{(B,C)}}"] \arrow[d,swap,
+                "{F(f, 1_C)}"] 
+                &
+                G(B,C) \arrow[d, "{G(f,1_C)}"]\\
+                F(B',C) \arrow[r, "{\textcolor{red}{\eta}_{(B',C)}}"] 
+                &
+                G(B',C)
+            \end{tikzcd}
+            \vspace{0.5cm}
+
+            \begin{tikzcd}[row sep = 1.2cm, column sep = 1.4cm]
+                F(B', C) \arrow[r, "{\textcolor{blue}{\eta}_{(B',C)}}"] \arrow[d,swap,
+                "{F(1_{B'}, g)}"] 
+                &
+                G(B',C) \arrow[d, "{G(1_{B'},g)}"]\\
+                F(B',C') \arrow[r, "{\textcolor{blue}{\eta}_{(B',C')}}"] 
+                &
+                G(B',C')
+            \end{tikzcd}
+        \end{center}
+    \end{minipage}  
+    \hspace{1cm}
+    \begin{minipage}{0.1\textwidth}
+        \begin{tikzpicture}
+            \draw[white] (0,0) -- (1,0);
+            \draw[thick, Green, ->] (0,-2) -- (2,0);
+            \draw[thick, Orange, ->] (2.6,-2) to [bend right = 80] (2.6,-4);
+        \end{tikzpicture}
+
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.5\textwidth}
+        \begin{center}
+        \begin{tikzcd}[row sep = 1.2cm, column sep = 1.4cm]
+            F(B, C) \arrow[r, "{\textcolor{red}{\eta}_{(B,C)}}"] \arrow[d,swap,
+            "{F(f, 1_C)}"] 
+            &
+            G(B,C) \arrow[d, "{G(f,1_C)}"]\\
+            F(B', C) \arrow[r, "{\textcolor{blue}{\eta}_{(B',C)}}"] \arrow[d,swap,
+            "{F(1_{B'}, g)}"] 
+            &
+            G(B',C) \arrow[d, "{G(1_{B'},g)}"]\\
+            F(B',C') \arrow[r, "{\textcolor{blue}{\eta}_{(B',C')}}"] 
+            &
+            G(B',C')
+        \end{tikzcd}
+        \vspace{1cm}
+
+        \begin{tikzcd}[row sep = 1.2cm, column sep = 1.4cm]
+            F(B, C) \arrow[r, "{\textcolor{red}{\eta}_{(B,C)}}"] \arrow[d,swap,
+            "{F(f,g)}"] 
+            &
+            G(B,C) \arrow[d, "{G(f,g)}"]\\
+            F(B',C') \arrow[r, "{\textcolor{blue}{\eta}_{(B',C')}}"] 
+            &
+            G(B',C')
+        \end{tikzcd}
+        \end{center}
+    \end{minipage}
+    \vspace{1cm}
+
+    This is essentially what we did in the proof, although this is more crude
+    visualization of what happened, and we were more formal throughout
+    the process. 
+
+    {\large \textbf{Exercises}
+    \vspace{0.5cm}}
+    \begin{itemize}
+        \item[\textbf{1.}]
+        Let $\cc$ and $\dd$ be categories. Prove that 
+        $(\cc \times \dd)\op \cong \cc\op\times\dd\op$. 
+
+    
+    \end{itemize}
+
+    
+
+\newpage 
+\section{Functor Categories}
+    In the proof for the last proposition, we used a trick of forming
+    a desired natural transformation by composing two composable
+    natural transformations. Hence, we see that natural
+    transformations can be ``composed.'' We refine this notion as follows.
+
+    Let $\cc$ and $\dd$ be categories and consider three functors
+    $F, G, H: \cc \to \dd$.
+    Suppose further that we have two natural transformations $\sigma, \tau$ as below:
+    \begin{center}
+        \begin{tikzcd}
+            F \arrow[r, "\sigma"]
+            &
+            G \arrow[r, "\tau"]
+            &
+            H
+        \end{tikzcd}
+    \end{center}
+    (This might seem like a weird way to write this, but we are trying to hint at something.)
+    Using these two natural transformations,
+    we can define a natural transformation 
+    \[
+        \tau \cdot \sigma: F \to H
+    \]
+    where, for each $C \in \cc$, we define 
+    \[
+        (\tau \cdot \sigma)_C = \tau_C \circ \sigma_C: F(C) \to H(C).
+    \]
+    Visually, we can picture what we are doing as follows.
+    For a given morphism $f: A \to B$ in $\cc$,
+    we define the morphism $(\tau \cdot \sigma)_C$ as
+    \begin{center}
+        \begin{tikzcd}[row sep = 1.4cm, column sep = 1.4cm]
+            F(A)
+            \arrow[lddr, to path= {%
+             -|  ([xshift=-3ex]\tikztotarget.west)node[near end,left]{$(\tau\cdot\sigma)_A$}
+              |- (\tikztotarget)}]
+            \arrow[d, swap, "\sigma_A"]
+            \arrow[r, "F(f)"] 
+          & F(B)
+            \arrow[d, "\sigma_{B}"]
+            \arrow[rddl, to path= {%
+             -| ([xshift=3ex]\tikztotarget.east)node[near end,right]{$(\tau\cdot\sigma)_{B}$}
+             -- (\tikztotarget)}]
+          \\
+            G(A)
+            \arrow[d, swap, "\tau_A"] 
+            \arrow[r, "G(f)"] 
+          & G(B)
+            \arrow[d, "\tau_{B}"]
+          \\
+            H(A) 
+            \arrow[r, "H(f)"]
+          & H(B)
+        \end{tikzcd} 
+    \end{center}
+    Thus, we see that natural transformations can be ``composed,''
+    and we can thus ask: If we view functors as objects, and view natural transformations 
+    as morphisms, do we get a category? The answer is yes. 
+
+    \begin{definition}
+        Let $\cc$ and $\dd$ be small categories and consider set of
+        all functors $F: \cc \to \dd$. Then the \textbf{functor
+        category}, denoted as $\dd^\cc$ or $\fun(\cc, \dd)$, is the
+        category where 
+        \begin{description}
+            \item[Objects.] Functors $F: \cc \to \dd$
+            \item[Morphisms.] Natural transformations $\eta: F \to G$   
+        \end{description}
+    \end{definition}
+    Functor categories are extremely useful, as we shall see that 
+    they're the categorical version of representations. 
+    
+    When we think of 
+    representations, we usually think of a group homomorphism $\rho: G \to \text{GL}_n(V)$ 
+    for some vector space $V$ over a field $k$. However, suppose we wanted to be 
+    a real smart-ass and say ``Well, can't we regard $\rho$ as actually a functor 
+    between two one-object categories whose morphisms are all isomorphism?''
+    The answer is yes! 
+
+    What this then means is that the category of representations of a group $G$
+    is actually a functor category. Specifically, 
+    \[
+        \fun(G, \text{GL}_n(V)) \cong R\textbf{-Mod}.
+    \]
+    Hence in some cases it helps to think of $\fun(\cc, \dd)$ as a 
+    category of representations of $\cc$. This makes sense, since that is really 
+    what a functor is. A functor preserves composition; and if we stop thinking 
+    like the set theorists, we can realize that composition controls a great deal 
+    of structure 
+    in a category $\cc$. Hence a functor $F: \cc \to \dd$ ``represents"" that structure in a 
+    category $\dd$. 
+
+    \begin{example}
+        Let $\bm{1}$ be the one element category with a
+        single identity arrow. Then for any category $\cc$, the
+        functor category $\cc^{\bm{1}}$ is isomorphic to $\cc$. This
+        is because each functor $F: \bm{1} \to \cc$ simply associates
+        the element $1 \in \bm{1}$ to an element $C \in \cc$, and the
+        identity $1_1: 1 \to 1$ to the identity morphism $1_C$ in
+        $\cc$. 
+    \end{example}
+
+    \begin{example}
+        Let $\bm{2}$ be the category consisting of two
+        elements, containing the two identities and one nontrivial
+        morphism between the objects. 
+        \begin{center}
+            \begin{tikzcd}
+                1 \arrow[out=120,in=60,looseness=2, loop, "\id_1"] \arrow[r,
+                "f"] & 2 \arrow[out=120,in=60,looseness=2,, loop, "\id_2"]
+            \end{tikzcd}
+
+            \textit{The category $\bm{2}$.}
+        \end{center}
+        Now consider the functor category $\cc^{\bm{2}}$ where $\cc$ is
+        any category. Each functor $F:\bm{2} \to \cc$ maps the pair of
+        objects to objects $F(1)$ and $F(2)$ in $\cc$. However, since
+        functors preserve morphisms, we see that 
+        \[ 
+            f: 1 \to 2 \implies F(f): F(1) \to F(2).
+        \]
+        This is what each $F \in \cc^{\bm{2}}$ does. Hence, every
+        morphism $g \in \hom(\cc)$ corresponds to an element in
+        $\cc^{\bm{2}}$. Hence, we call $\cc^{\bm{2}}$ the category of
+        arrows of $\cc$. 
+        \begin{prf}
+            Let $g: C \to C'$ be any morphism between objects $C, C'$
+            in $\cc$. Construct the element $G \in
+            \cc^{\bm{2}}$ as follows:
+            $G(1) = C$, $G(2) = C'$ and $G(f) : G(1) \to G(2) = g$.
+            Hence, $\hom(\cc)$ and $\cc^{\bm{2}}$ are isomorphic.
+            Moreover, $\hom(\cc)$ determines the members of
+            $\cc^{\bm{2}}$. 
+            
+            A crude way to visualize this proof is
+            imaging $1 \to 2$ is a "stick" with 1 and 2 on either end,
+            and so the action of any functor is simply taking the
+            stick and applying it  to anywhere on the direct graph
+            generated by the category $\cc$. Hence, this is why we say
+            $\hom(\cc)$ determines the functor category $\cc^{\bm{2}}$.
+        \end{prf}
+    \end{example}
+
+    \begin{example}
+        Let $X$ be a set. Hence, it is a discrete category,
+        which if recall, it's objects are elements of $X$ and the
+        morphisms are just identity morphisms. 
+
+        Now consider $\{0, 1\}^X$, the category of functors $F: X \to
+        \{0, 1\}$. Then every functor assigns each element of $x \in
+        X$ to either $0$ or $1$, and assigns the morphism $1_x: x \to
+        x$ to either $1_0: 0\to 0$ or $1_1: 1 \to 1$. 
+
+        One way to view this is to consider $\mathcal{P}(X)$, and for
+        each $S \in \mathcal{P}$, assign $x$ to $1$ if $x \in  S$ or
+        $x$ to $0$ if $x \not\in S$. All of these mappings may be
+        described by elements of $\mathcal{P}$, but we can also
+        realize that each 
+        of these mappings correspond to the functors in $\{0, 1\}^X$.
+        Hence, we see that $\{0, 1\}^X$ is isomorphic to
+        $\mathcal{P}(X)$. 
+    \end{example}
+
+    \begin{example}
+        Recall from Example \ref{group_ring_functors} that, given 
+        a group $G$ and a ring $R$ (with identity), we can create a 
+        \emph{group ring} $R[G]$ with identity, in a functorial way, establishing 
+        a functor 
+        \[
+            R[-]: \textbf{Grp} \to \textbf{Ring}.
+        \]  
+        However, we then noticed that the above functor establishes a process 
+        where we send rings $R$ to functors $R[-]: \textbf{Grp} \to \textbf{Ring}$. 
+        It turns out that this process is itself a functor, and we now 
+        have the appropriate language to describe it:
+        \[
+            F: \textbf{Ring} \to \textbf{Ring}^{\textbf{Grp}}
+        \]
+        Specifically, let $\psi: R \to S$ be a ring homomorphism. 
+        Now observe that $\psi$ induces another ring homomorphism 
+        \[
+            \psi_G^*: R[G] \to S[G] \qquad \sum_{g \in G}a_g g \mapsto \sum_{g \in G}\phi(a_g) g.
+        \]
+        As a result, we see that such a ring homomorphism induces a natural transformation.
+        To show this, let $\phi: G \to H$ be a group homomorphism. Then observe that
+        we get the diagram in the middle. 
+        \begin{center}
+            \begin{tikzcd}[row sep = 1.4cm, column sep = 1.4cm]
+                G 
+                \arrow[d, "\phi"]
+                \\
+                H                
+            \end{tikzcd}
+            \hspace{1cm}
+            \begin{tikzcd}[row sep = 1.4cm, column sep = 1.4cm]
+                R[G]
+                \arrow[d, swap, "R(\phi)"]
+                \arrow[r, "\psi_G^*"]
+                &
+                S[G]
+                \arrow[d, "S(\phi)"]\\
+                R[H]
+                \arrow[r, swap, "\psi_H^*"]
+                &
+                S[H]
+            \end{tikzcd}
+            \hspace{1cm}
+            \begin{tikzcd}[row sep = 1.4cm, column sep = 1.4cm]
+                \sum_{g \in G} a_g g 
+                \arrow[r, maps to]
+                \arrow[d, maps to]
+                &
+                \sum_{g \in G}\psi(a_g)g
+                \arrow[d, maps to]\\
+                \sum_{g \in G}a_g\phi(g)
+                \arrow[r, maps to]
+                &
+                \sum_{g \in G}\psi(a_g)\phi(g)
+            \end{tikzcd}
+        \end{center}
+        However, we can follow the elements as in the diagram on the right, which shows 
+        us that the diagram commutes. Hence we see that $\psi^*$ is a natural transformation 
+        between functors $R[-] \to S[-]$. Overall, this establishes that we do in fact have 
+        a functor 
+        \[
+            F: \textbf{Ring} \to \textbf{Ring}^{\textbf{Grp}}   
+        \]
+        which we wouldn't be able to describe without otherwise introducing 
+        the notion of a functor category.
+    \end{example}
+
+    \begin{example}
+        Let $M$ be a monoid category (one object) and
+        consider the functor category $\textbf{Set}^M$. The objects of
+        \textbf{Set}$^M$ are functors $F: M \to \textbf{Set}$, each
+        of which have the following data: 
+        \[
+            F(f) : F(M) \to F(M)
+        \]
+        where $f: M \to M$ is an morphism in $M$. Now if we interpret
+        $\circ$ as the binary relation equipped on $M$, we see that
+        for any $g : M \to M$,
+        \[
+            F(g \circ f) = F(g) \circ F(f)
+        \]
+        by functorial properties. Hence, each functor $F$ maps $M$ to
+        a set $X$ which induces the operation of $M$ on $X$. Therefore
+        the objects of \textbf{Set}$^M$ are other monoids $X$ in
+        \textbf{Set} equipped with the same operation as $M$ and as
+        well as the morphisms between such monoids. 
+    \end{example}
+
+    % \begin{example}
+    %     Consider \textbf{Grp}$^{M}$, where $M$ is a monoid.
+    %     This is similar to the previous example, so we may say the the
+    %     objects of \textbf{Grp}$^{M}$ are the mappings from monoids to
+    %     groups, equipped with the operation of $M$, such that the
+    %     mappings preserve morphism mappings in the preimage $M$.
+    % \end{example}
+    
+    
+
+    \newpage
+    \section{Vertical, Horizontal Composition; Interchange Laws}
+    In the previous section, we considered the idea of forming a
+    composition of natural transformations, and we verified that this
+    formed a valid natural transformation. 
+    That is, if we have three functors $F, G, H : \cc \to \dd$ between
+    two categories $\cc$ and $\dd$, and if $\sigma: F \to G$ and
+    $\tau:G \to H$ are natural transformations, then we can form the
+    natural transformation 
+    \[
+        (\tau \circ \sigma) : F \to H.
+    \]
+    We call such a type of composition as
+    vertical compositions of natural transformations, 
+    since the idea can be captured in the following diagram. 
+
+    \begin{minipage}{0.8\textwidth}
+    \vspace{0.5cm}
+    
+    \begin{center}
+        \begin{tikzpicture}
+            \draw[->] (1.1,0.65) -- (1.1, 0.15) node at (1.4, 0.4) {$\sigma$};
+            \draw[->] (1.1,0) -- (1.1, -0.45) node at (1.4, -0.2) {$\tau$};
+            node at (0,0) {
+                \begin{tikzcd}
+                \cc  \arrow[r]
+                \arrow[r, shift left=6] 
+                \arrow[r, shift right=6]
+                & 
+                \dd
+            \end{tikzcd} };
+        \end{tikzpicture}
+    \end{center}
+    \end{minipage}
+    \vspace{0.3cm}
+
+    We can also perform a different, but
+    similar type of composition between natural transformations.
+    Suppose $F, G: \bb \to \cc$ and $F', G': \cc \to \dd$ are functors
+    between categories $\bb, \cc$, and $\dd$. Furthermore, suppose we
+    have natural transformations $\eta: F \to G$ and $\eta': F' \to
+    G'$. Then we have diagram such as the following. 
+
+    \begin{minipage}{0.7\textwidth}
+    \vspace{0.5cm}
+
+    \begin{center}
+    \begin{tikzpicture}
+        \draw[->] (1.1,0.35) -- (1.1, -0.25) node at (1.4, 0.1) {$\eta$};
+        \draw[->] (2.8,0.35) -- (2.8, -0.25) node at (3.1, 0.1) {$\eta'$};
+        node at (0,0) {
+            \begin{tikzcd}
+            \bb 
+            \arrow[r, shift left = 4, "F"]
+            \arrow[r, shift right= 4, swap, "G"]
+            & 
+            \cc
+            \arrow[r, shift left=4, "F'"]
+            \arrow[r, shift right=4, swap,"G'"]
+            &
+            \dd
+            \end{tikzcd}};
+    \end{tikzpicture}
+    \end{center}
+    \hspace{5cm}   
+    \end{minipage}
+    \vspace{-0.5cm} 
+
+    Now let $B$ be an object of $\bb$. There are two ways we can
+    transfer this object to an object of $\cc$; namely, via mappings
+    of $F$ and $G$. Thus $F(B)$ and $G(B)$ are two objects of $\cc$.
+    Since $\eta: F \to G$ is a natural transformation between these
+    objects, we see that there's a way of mapping between these two
+    elements in $\cc$:
+    \[
+        \eta(B): F(B) \to G(B).
+    \]     
+    Hence, we have two objects in $\cc$ and a morphism in between
+    them. Hence, we know that the natural transformation $\eta': F'
+    \to G'$ implies the following diagram commutes. 
+    \begin{center}
+        \begin{tikzcd}[row sep = 1.2cm]
+            \textcolor{Red}{F(B)} \arrow[d, "\textcolor{Green}{\eta(B)}"]\\
+            \textcolor{Blue}{G(B)}
+        \end{tikzcd}
+        \hspace{2cm}
+        \begin{tikzcd}[row sep = 1.2cm, column sep = 1.4cm]
+            F'\circ \textcolor{Red}{F(B)} \arrow[r, "{\eta'\textcolor{Red}{F(B)}}"] \arrow[d,swap,
+            "{F'\circ \textcolor{Green}{\eta(B)}}"] 
+            &
+            G'\circ \textcolor{Red}{F(B)} \arrow[d, "{G' \circ \textcolor{Green}{\eta(B)}}"]\\
+            F'\circ \textcolor{Blue}{G(B)} \arrow[r, "{\eta' \textcolor{Blue}{G(B)}}"] 
+            &
+            G'\circ \textcolor{Blue}{G(B)}
+        \end{tikzcd}
+    \end{center}
+    Note that in the last diagram, all of the objects and morphisms
+    between them exist in $\dd$. The easiest way to see why this
+    diagram commutes is to go back directly to the definition of a
+    natural transformation; namely, the pair of objects along with
+    their morphism on the left imply the commutativity of the diagram
+    on the right. 
+
+    This can be done in general for categories $\bb, \cc$, and $\dd$
+    which have functors $F, G:\bb \to \cc$ and $F', G': \cc \to \dd$
+    associated with natural transformations $\eta: F \to G$ and
+    $\eta': F' \to G'$. Furthermore, it holds for all $B \in \bb$.
+
+    Note further that this diagram is similar to a diagram which represents a natural
+    transformation; but between which functors? If we look closely, we
+    see that it is
+    between $F\circ F'$ and $G \circ G'$. 
+
+    This leads us to make the following formulaic definition:
+    For natural transformations $\eta: F \to G$ and $\eta': F' \to
+    G'$ such that $F, G: \bb \to \cc$ and $F',G' : \cc \to \dd$, then
+    for $B \in \bb$ we define their "horizontal" composition as the
+    diagonal of the above diagram; that is,
+    \[
+        (\eta \circ \eta')B = G'(\eta(B)) \circ \eta' F(B) = \eta'(G(B))\circ F'(\eta(B)).
+    \]
+
+    The above diagram doesn't quite show that $\eta \circ \eta': F'
+    \circ F
+    \to G \circ G' $ is a natural transformation. In order to do this, we
+    need to start from two objects in $\bb$ and consider a morphism
+    between them. 
+
+    \begin{proposition}
+        The function $\eta \circ \eta':F\circ F'  \to G \circ G'$ is a natural
+        transformation between the functors $F'\circ F, G' \circ G:
+        \bb \to \dd$. 
+    \end{proposition}
+
+    \begin{prf}
+        To show this, we consider a morphism $f: B \to B'$ between two
+        objects $B$ and $B'$ in $\bb$. We then claim that the
+        following diagram is commutative:
+        \begin{center}
+            \begin{tikzcd}[row sep = 1.4cm]
+                B \arrow[d, "f"]\\
+                B'
+            \end{tikzcd}
+            \hspace{1cm}
+            \begin{tikzcd}[row sep = 1.4cm, column sep = 1.4cm]
+                F' \circ F(B) 
+                \arrow[r, "F'\circ \eta(B)"] 
+                \arrow[d, swap, "F'\circ F(f)"]
+                &
+                F' \circ G(B) 
+                \arrow[r, "\eta' \circ G(B)"]
+                \arrow[d, "F'\circ G(f)"]
+                &
+                G' \circ G(B) 
+                \arrow[d, "G' \circ G(f)"]\\
+                F'\circ F(B')
+                \arrow[r,swap, "F' \circ \eta(B')"]
+                &
+                F' \circ G(B')
+                \arrow[r, swap, "\eta' \circ \eta(B')"]
+                &
+                G'\circ G(B')
+            \end{tikzcd}
+        \end{center}
+        First, observe that the left square is commutative due to the
+        fact that $\eta$ is a natural transformation from $F$ to $G$.
+        Therefore, it produces a commutative square diagram, and we obtain
+        the above left square diagram by applying $F'$ to the
+        commutative diagram produced by $\eta: F \to G$.
+
+        The right square in the diagram is obtained by the fact that
+        $\eta'$ is a natural transformation between functors $F'$ and
+        $G'$. Hence the diagram is commutative, and it acts on the
+        objects $G(B)$ and in $\cc$. Therefore, we see that $\eta \circ
+        \eta'$ is a natural transformation. 
+    \end{prf}
+
+    \textcolor{NavyBlue}{Thus we see that we have "horizontal" and "vertical" notions of
+    composing natural transformations. Let us denote "horizontal"
+    transformations as $\circ$ and "vertical" transformations as
+    $\cdot$ between natural transformations.} 
+
+    It is also notationally convenient to denote functor and natural
+    transformation compositions as 
+    \[
+        F' \circ \tau : F' \circ F \to F' \circ T  \quad \eta' \circ G: F' \circ G \to G' \circ G
+    \]
+    which are two additional natural transformations. \textcolor{purple}{(Remember we
+    showed that the left square in the commutative diagram of the
+    previous proof commuted by observing that it was obtained by the
+    commutative diagram produced by the natural transformation $\eta$
+    and composing it with $F'$? What we really showed is that $F' \circ
+    \eta$ is a natural transformation, since this natural
+    transformation described that square. Similarly, $\eta' \circ G$ is
+    the natural transformation which represents the right square of
+    the commutative diagram in the previous proof.)}
+
+    With the above notation, we can then write that 
+    \[
+        \eta' \circ \eta = (G' \circ \eta) \cdot (\eta' \circ F) = (\eta' \circ G) \cdot (F' \circ \eta).       
+    \]
+    This idea of ours can be extended to a more general situation.
+    Suppose we have instead three categories $\bb, \cc$, and $\dd$ and
+    where $F, G, H: \bb \to \cc$ and $F, G, H: \cc \to \dd$ are
+    functors associated with natural transformations $\eta: F \to G,
+    \sigma : G \to H$, and $\eta': F' \to G', \sigma': G' \to H'$. The
+    following diagram may be more helpful than words:
+    \\
+
+    \begin{minipage}{0.65\textwidth}
+    \begin{center}
+        \begin{tikzpicture}
+            \draw[->] (1.1,0.65) -- (1.1, 0.15) node at (1.4, 0.4) {$\eta$};
+            \draw[->] (1.1,0) -- (1.1, -0.45) node at (1.4, -0.2)
+            {$\sigma$};
+            \draw[->] (2.7,0.65) -- (2.7, 0.15) node at (3, 0.4) {$\eta'$};
+            \draw[->] (2.7,0) -- (2.7, -0.45) node at (3, -0.2) {$\sigma'$};
+            node at (0,0) {
+                \begin{tikzcd}
+                \bb 
+                \arrow[r]
+                \arrow[r, shift left = 6, "F"]
+                \arrow[r, shift right= 6, swap, "H"]
+                & 
+                \cc
+                \arrow[r]
+                \arrow[r, shift left=6, "F'"]
+                \arrow[r, shift right=6, swap,"H'"]
+                &
+                \dd
+                \end{tikzcd}};
+        \end{tikzpicture}
+        \end{center}
+        \hspace{7cm}   
+    \end{minipage}
+    \vspace{-0.5cm} 
+
+    Note we've omitted the label of $G$ and $G'$ on the middle
+    horizontal arrows since they don't exactly fit in there when we
+    include the labels for the natural transformations. 
+
+    Now suppose we have an object $B$ in $\bb$. Then we can create
+    three objects $F(B), G(B)$ and $H(B)$ in $\cc$, and we may
+    interchange between these objects via the given natural
+    transformations. Specifically, $\eta(B) : F(B) \to G(B)$ and
+    $\sigma(B): G(B) \to H(B)$. However, we also know that $\eta',
+    \sigma'$ are natural transformations between $\cc$ and $\dd$, and
+    hence imply the following commutative diagram. 
+
+    \begin{center}
+        \begin{tikzcd}[row sep = 1.4cm]
+            \textcolor{Red}{F(B)}
+            \arrow[d, "\eta(B)"]\\
+            \textcolor{Green}{G(B)}
+            \arrow[d, "\sigma(B)"]\\
+            \textcolor{Blue}{H(B)}
+        \end{tikzcd}
+        \hspace{1cm}
+        \begin{tikzcd}[row sep = 1.4cm, column sep = 1.4cm]
+            F' \circ \textcolor{Red}{F(B)}
+            \arrow[r, "\eta'\textcolor{Red}{F(B)}"]
+            \arrow[d, swap, "F' \circ \eta(B)"]
+            &
+            G' \circ \textcolor{Red}{F(B)}
+            \arrow[r, "\sigma'\textcolor{Red}{F(B)}"]
+            \arrow[d, "G' \circ \eta(B)"]
+            &
+            H' \circ \textcolor{Red}{F(B)}
+            \arrow[d, "H' \circ \eta(B)"]
+            \\
+            F' \circ \textcolor{Green}{G(B)}
+            \arrow[r, "\eta'\textcolor{Green}{G(B)}"]
+            \arrow[d, swap, "F' \circ \sigma(B)"]
+            &
+            G' \circ \textcolor{Green}{G(B)}
+            \arrow[r, "\sigma'\textcolor{Green}{G(B)}"]
+            \arrow[d, "G' \circ \sigma(B)"]
+            &
+            H' \circ \textcolor{Green}{G(B)}
+            \arrow[d, "H' \circ \sigma(B)"]  
+            \\
+            F' \circ \textcolor{Blue}{H(B)}
+            \arrow[r, swap, "\eta'\textcolor{Blue}{H(B)}"]
+            &
+            G' \circ \textcolor{Blue}{H(B)}
+            \arrow[r, swap, "\sigma'\textcolor{Blue}{H(B)}"]
+            &
+            H' \circ \textcolor{Blue}{H(B)}
+        \end{tikzcd}
+    \end{center}
+    Suppose we start at the upper left corner and want to achieve the
+    value at the bottom right. There are two ways we can do this: We
+    can travel within the interior of the diagram, or we can travel on
+    the outside of the diagram.
+    
+    In traveling on the interior of the diagram, 
+    note that the composition of the arrows of the upper left square
+    is $\eta' \circ \eta$. In addition, composition of the arrows of
+    the bottom right square is $\sigma' \circ \sigma$. 
+
+    In traveling on the exterior of the diagram note that the
+    composition of the top row is  $\eta' \cdot \sigma'$  and
+    composition of the right most vertical arrows is $\eta \cdot
+    \sigma$. Since both paths achieve the same value, we see that 
+    \[
+        (\eta' \cdot \sigma') \circ (\eta \cdot \sigma)
+        =  (\eta' \circ \eta) \cdot (\sigma' \circ \sigma)
+    \]
+    which is known as the \textbf{Interchange Law}.
+
+    This leads us to make the following definition.
+
+    \begin{definition}
+        We define a \textbf{double category} to be a set of arrows
+        which obey two different forms of composition, generally
+        denoted as $\circ$ and $\cdot$, which together satisfy the
+        interchange law. 
+
+        Furthermore, a \textbf{2-category} is a double category in
+        which $\cdot$ and $\circ$ have the same exact identity arrows.
+        
+    \end{definition}
+
+
+    
+
+    \newpage
+    \section{Slice and Comma Categories.}
+    In this section we introduce comma categories, which serve as 
+    a very useful categorical construction. The reason why it is so useful is 
+    because the notion of a comma category has 
+    the potential to simplify an otherwise complicated discussion. 
+    As they can be constructed in any category, and 
+    because they contain a large amount of useful data,
+    they are frequently used as an intermediate step in 
+    more complex categorical constructions. Thus, while the concept 
+    is ``simple,'' they nevertheless appear in all kinds of complicated
+    discussions in category theory.
+
+    \begin{definition}
+        Let $\cc$ be a category and suppose $\textcolor{Purple}{A}$ is an object of $\cc$.
+        We define the \textbf{slice category (with $\textcolor{Purple}{A}$ over $\cc$)}, 
+        denoted $(\textcolor{Purple}{A} \downarrow\cc)$, as the category 
+
+        \begin{description}
+            \item[Objects.] All pairs $(C, f: \textcolor{Purple}{A} \to C)$ 
+            for all $C \in  \cc$  and morphims $f:\textcolor{Purple}{A} \to C$.
+            In other words, the objects are all morphisms in $\cc$ which \emph{originate}
+            at $\textcolor{Purple}{A}$. 
+
+            \item[Morphisms.]
+            For two objects $(C, f:\textcolor{Purple}{A}\to C)$ and $(C', f': \textcolor{Purple}{A} \to C')$, 
+            we define 
+            \[
+                \textcolor{NavyBlue}{h} : (C, f) \to (C', f')
+            \]
+            as a morphism between the objects, where $h: C \to C'$ is a morphism in 
+            our category such that $f' = h \circ f$. Alternatively we can describe 
+            the homset more directly:
+            \[
+                \hom_{(A\downarrow \cc)}\Big( (f, C), (f', C')\Big)
+                =
+                \{ h: C \to C' \in \cc \mid f' = h \circ f \}.
+            \]
+        \end{description}
+    \end{definition}
+    At this point you may be a bit overloaded with notation if this is the first 
+    time you've seen this before. You need to figure out how this is a category (what's the identity? composition?)
+    and ultimately why you should care about this category.
+    To aid your understanding, a picture might help.
+
+    We can represent the objects and morphisms of the
+    category $(\textcolor{Purple}{A} \downarrow \cc)$ in a visual manner. 
+    \begin{center}
+        Objects $(C, f)$:
+        \begin{tikzcd}[row sep = 1.4cm]
+            \textcolor{Purple}{A} \arrow[d, "f"]\\
+            C
+        \end{tikzcd}
+        \hspace{1cm}
+        \parbox{6cm}{Morphisms $\textcolor{NavyBlue}{h}: (C, f) \to (C', f')$
+        are given by $\textcolor{NavyBlue}{h}: C \to C'$ such that}
+        \begin{tikzcd}[row sep = 1.4cm, column sep = 0.5cm]
+            & \textcolor{Purple}{A} \arrow[dl, swap, "f"] \arrow[dr, "f'"] & \\
+            C \arrow[rr, swap, NavyBlue, "h"] & & C'
+        \end{tikzcd}
+    \end{center}
+    Now, how does composition work?
+    Composition of two composable morphisms $h : (f, C) \to
+    (f', C')$ and $h' : (f', C') \to (f'', C'')$ is given by 
+    $h' \circ h : (f, C) \to (f'', C'')$ since clearly 
+    \[
+        f'' = h' \circ f' \hspace{0.5cm}\text{and}\hspace{0.5cm} f' = h \circ f \implies f'' = h' \circ (h \circ f) = (h' \circ h) \circ f.
+    \]  
+    We can visually justify composition as well. If we have two commutative diagrams 
+    as on the left, we can just squish them together to get the final commutative diagram on the right. 
+    \begin{center}
+        \begin{tikzcd}[row sep = 1.4cm, column sep = 0.5cm]
+            & \textcolor{Purple}{A} 
+            \arrow[dl, swap, "f"] 
+            \arrow[dr, "f'"] & \\
+            C 
+            \arrow[rr, NavyBlue, swap, "h"] & & C'
+        \end{tikzcd}
+        and 
+        \begin{tikzcd}[row sep = 1.4cm, column sep = 0.5cm]
+            & \textcolor{Purple}{A} \arrow[dl, swap, "f'"] \arrow[dr, "f''"] & \\
+            C' \arrow[rr, NavyBlue, swap, "h'"] & & C''
+        \end{tikzcd}
+        implies
+        \begin{tikzcd}[row sep = 1.4cm, column sep = 0.5cm]
+            & \textcolor{Purple}{A} 
+            \arrow[dl, swap, "f"] 
+            \arrow[dr, "f''"] & \\
+            C \arrow[rr, swap, NavyBlue, "h' \circ h"] & & C''
+        \end{tikzcd}
+    \end{center}
+
+    Hence, we see that $h' \circ h :(f, C) \to (f'', C'')$ is
+    defined whenever $h'$ and $h$ are composable as morphisms of
+    $\cc$.
+
+    One use of comma categories is to capture and generalize 
+    the notion of a pointed category.
+    Such pointed categories include
+    the category of pointed sets $\textbf{Set}^*$ or the category of pointed 
+    topological spaces $\textbf{Top}^*$, etc. 
+
+    We've seen, in particular on the discussion of functors, the necessity for 
+    pointed categories. For example, we cannot discuss ``the'' fundamental 
+    group $\pi_1(X)$ of a topological space $X$ (unless $X$ is path connected, but still only 
+    up to isomorphism). To discuss
+    a fundamental group in a topological space $X$, one needs to select a base point $x_0$. 
+    As we saw in Example \ref{example:fundamental_group}, 
+    $\pi_1$ is not a functor $\textbf{Top} \to \textbf{Grp}$, but is rather a 
+    functor 
+    \[
+        \pi_1: \textbf{Top}^* \to \textbf{Grp}
+    \]
+    where $\textbf{Top}^*$, which consists of pairs $(X, x_0)$ with $x_0 \in X$,
+    is the category of pointed topological spaces.
+
+    Similarly, it makes no sense to talk about ``the'' tangent plane of 
+    a smooth manifold. Such an association requires the selection of a point $p \in X$
+    to calculate $T_p(M)$. 
+    So, as we saw in Example \ref{example:manifold_tangent_plane}, this process is not 
+    a functor from $\textbf{DMan}$ to $\textbf{Vect}$, but is rather a functor 
+    \[
+        T: \textbf{DMan}^* \to \textbf{Vect}
+    \]
+    where $\textbf{DMan}^*$, which consists of pairs $(M, p)$ with $p \in M$,
+    is the category of pointed smooth manifolds. This now motivates the next two examples.
+
+    \begin{example} 
+        Consider the category $\textbf{Top}^*$ where 
+        \begin{description}
+            \item[Objects.] The objects are pairs $(X, x_0)$ with $X$ a topological space 
+            and $x_0 \in X$.
+            \item[Morphisms.] A morphism $f: (X, x_0) \to (Y, y_0)$ is any continuous function 
+            $f: X \to Y$ such that $y_0 = f(x_0)$.  
+        \end{description}
+        Recall that the one point set $\{\bullet\}$ is trivially a topological space. 
+        Then we can form the category $(\{\bullet\}\downarrow \textbf{Top})$. The claim now is that 
+        \[
+            (\{\bullet\}\downarrow \textbf{Top}) 
+            \cong 
+            \textbf{Top}^*.
+        \]
+        Why? Well, an object of $(\{\bullet\}\downarrow \textbf{Top})$ is simply 
+        a pair $(X, f: \{\bullet\} \to X)$. Observe that 
+        \[
+            f(\bullet) = x_0 \in X,
+        \]
+        for some $x_0 \in  X$.
+        So, the pair $(X, f: \{\bullet\} \to X)$ is logically equivalent to a 
+        pair $(X, x_0)$ with $x_0 \in X$. \textcolor{NavyBlue}{That is, a continuous function
+        from the one point set into a topological space $X$ is equivalent to simply selecting 
+        a single point $x_0 \in X$}.  Hence, on objects it is clear why we have an isomorphism.
+
+        Now, a morphism in this comma category will be of the form 
+        $p: (X, f_1: \{\bullet\} \to X) \to (Y, f_1: \{\bullet\} \to Y)$. 
+        Specifically, it is a continuous function $p: X \to Y$ such that the diagram below commutes. 
+        \begin{center}
+            \begin{tikzcd}[column sep = 0.5cm, row sep = 1.4cm]
+                &\{\bullet \}
+                \arrow[dl, swap, "f_1"]
+                \arrow[dr, "f_2"]
+                &\\
+                X \arrow[rr, swap, "p"] 
+                &
+                &
+                Y 
+            \end{tikzcd}
+        \end{center}
+        In other words, if $f_1(\bullet) = x_0$ and $f_2(\bullet) = y_0$, 
+        it is a continuous function $p: X \to Y$ such that $f(x_0) = y_0$.
+        This is exactly a morphism in $\textbf{Top}^*$! We clearly have a bijection 
+        as claimed.
+    \end{example}
+
+    The above example generalizes to many pointed categories, some of which are 
+    \begin{itemize}
+        \item $\textbf{DMan}^* \cong (\bullet \downarrow \textbf{DMan})$
+        \item $\textbf{Set}^* \cong (\bullet \downarrow \textbf{Set})$
+        \item $\textbf{Grp}^* \cong (\bullet \downarrow \textbf{Grp})$
+    \end{itemize}
+
+    We now briefly comment for any slice category $(A \downarrow \cc)$ 
+    built from a category $\cc$, we can construct a ``projection'' functor 
+    \[
+        P: (A \downarrow \cc) \to \cc  
+    \]
+    where on objects $P(C, f: A \to C) = C$ and on morphisms
+    $P(h:(C, f) \to (C', f'))= h: C  \to C'$. Clearly, this functor is 
+    faithful, but it is generally not full. Such a projection functor  
+    is used in technical constructions involving slice categories as 
+    it has nice properties; we will make use of it later when we discuss 
+    limits. 
+
+    Next,we introduce how we can also describe the category of an objects \textit{under}
+        another category. 
+        \begin{definition}
+            Let $\cc$ be a category, and $\textcolor{Purple}{B}$ an object of $\cc$. Then
+            we define the \textbf{category $\textcolor{Purple}{B}$ under $\cc$}, denoted as
+            $(\cc \downarrow \textcolor{Purple}{B})$ as follows.
+            \begin{description}
+                \item[Objects.] All 
+                pairs $(C, f)$ where $f: C \to \textcolor{Purple}{B}$
+                is a morphism in $\cc$. That is, the objects are morphisms \emph{ending} 
+                at $\textcolor{Purple}{B}$. 
+
+                \item[Morphisms.] For two objects $(C, f: C  \to \textcolor{Purple}{B})$
+                and $(C', f': C'  \to \textcolor{Purple}{B})$, we define
+                \[ 
+                    \textcolor{NavyBlue}{h}: (C, f) \to (C', f')
+                \] 
+                to be a morphism between the objects to correspond  to  a morphism
+                $\textcolor{NavyBlue}{h}:C \to C'$ in $\cc$ 
+                such that $f = f' \circ h$.  
+            \end{description}
+        \end{definition}
+        Composition of functions $\textcolor{NavyBlue}{h}: (f, C) \to (f', C')$ and
+        $\textcolor{NavyBlue}{h'}: (f', C') \to (f'', C'')$ exists whenever 
+        $\textcolor{NavyBlue}{h'} \circ \textcolor{NavyBlue}{h}$ is
+        defined as morphisms in $\cc$. Again, we can represent the
+        elements of the category in a visual manner 
+        \begin{center}
+            Objects $(C, f)$:
+            \begin{tikzcd}[row sep = 1.4cm]
+                C \arrow[d, "f"]\\
+                \textcolor{Purple}{B}
+            \end{tikzcd}
+            \hspace{1cm}
+            Morphisms $\textcolor{NavyBlue}{h}: (f, C) \to (f', C')$
+            \begin{tikzcd}[row sep = 1.4cm, column sep = 0.5cm]
+                C \arrow[rr, NavyBlue, "h"] \arrow[dr, "f",swap]& & C'\arrow[dl, "f'"]\\
+                & \textcolor{Purple}{B} & 
+            \end{tikzcd}
+        \end{center}
+
+        The following is a nice example that isn't traditionally seen as
+        an example of a functor. 
+
+        \begin{example}
+            Let $(G, \cdot)$ and $(H, \cdot)$ be two groups, and consider a group 
+            homomorphism $\phi: (G, \cdot) \to (H, \cdot)$. Abstractly, this 
+            is an element of the comma category $(\textbf{Grp} \downarrow H)$.
+            
+            Now for for every group 
+            homomorphism, we may calculate 
+            the kernal of $\ker(\phi) = \{g \in G \mid \phi(g) = 0\}$. This 
+            is always a subgroup of $G$. What is interesting is that, 
+            from the perspective of slice categories, this 
+            process is functorial:
+            \[
+                \ker(-): (\textbf{Grp}\downarrow H) \to \textbf{Grp}.  
+            \]
+            To see this, we have to understand what happens on the morphisms.
+            So, suppose we have two objects $(G, \phi: G \to H)$ and $(K, \psi: K \to H)$ 
+            of $(\textbf{Grp}\downarrow H)$ and a morphism $h: G \to K$ between the objects. 
+            \begin{center}
+                \begin{tikzcd}[row sep = 1.4cm, column sep = 0.5cm]
+                    G \arrow[rr, "h"] 
+                    \arrow[dr, "\phi",swap]
+                    & 
+                    & 
+                    K
+                    \arrow[dl, "\psi"]\\
+                    & H & 
+                \end{tikzcd}
+            \end{center}
+            Then we can define $\ker(h): \ker(\phi) \to \ker(\psi)$, the image 
+            of $h$ under the functor, to 
+            be the restriction $h|_{\text{ker}(\phi)}: \ker(\phi) \to \ker(\psi)$. 
+            This is a bonafied group homomorphism: by the commutativity of the above 
+            triangle, if $g \in G$ then $\phi(g) = \psi(h(g))$. Hence, if $\phi(g) = 0$, 
+            i.e., $g \in \ker(\phi)$, then $\psi(h(g)) = 0$, i.e., $h(g) \in \ker(\psi)$. 
+            So we see that our proposed function makes sense. 
+
+            What this means is that the commutativity of the above triangle forces 
+            a natural relationship between the kernels of $\phi$ and $\psi$; not only 
+            as a function of sets, but as a group homomorphism.
+            Therefore, the kernel of a group homomorphism is actually a 
+            functor from a slice category. 
+        \end{example}
+
+
+
+        \begin{example}
+            In geometry and topology, one often meets the need to define a $(-)$-bundle. By $(-)$
+            we mean vector, group, etc. That is, we often want topological spaces to parameterize 
+            a family of vector spaces or groups in a coherent way. 
+            \begin{center}
+                \includegraphics[width = 0.9\textwidth]{mobius_sphere.png}
+            \end{center}
+ 
+            For example, on the above left we can map the Möbius strip onto $S_1$ in such a way that the 
+            inverse image of each $x \in S_1$ is homeomorphic to the interval $[0, 1]$. Hence, 
+            each point of $x \in S_1$ carries the information of a topological space, specifically one of $[0, 1]$.
+    
+            On the right, we can recall that $S^2$ is a differentiable manifold, and so each point $p$
+            has a tangent plane $T_p(S^2)$, which is a vector space. Hence every point on $S^2$, or more generally 
+            for any differentiable manifold, carries the information of a vector space. 
+
+            In general, for a topological space $X$, 
+            we define a \textbf{bundle} over $X$ to be a continuous map $p: E \to X$ with $E$ being some topological 
+            space of interest. If $p: E \to X$ an $p': E' \to X$ are two bundles, a 
+            \textbf{morphism of bundles} $q :p  \to p'$ is given by a continuous map $q: E \to E'$ such 
+            that 
+            \[
+                p = p' \circ q.
+            \]
+            Hence we see that a bundle over a topological space $X$ is an element of the 
+            comma category $\textbf{Top}/X$, and a morphism of bundles is a morphism in the comma category. 
+            We therefore see that $\textbf{Top}/X$ can be interpreted as the \textbf{category of 
+            bundles of $X$}.
+
+            One particular case of interest concerns \textbf{vector bundles.}
+            Let $E, X$ be topological spaces. Recall that a vector bundle 
+            consists of a continuous map $\pi: E \to X$ such that
+            \begin{itemize}
+                \item[1.] $\pi^{-1}(x)$ is a finite-dimensional 
+                vector space over some field $k$
+                \item[2.] For each $p \in X$, there is an open neighborhood $U_{\alpha}$ 
+                and a homeomorphism 
+                \[
+                    \phi_{\alpha}: U_{\alpha} \times \rr^{n} \isomarrow \pi^{-1}(U_{\alpha})
+                \] 
+                with $n$ some natural number. We also require that $\pi \circ \phi_{\alpha} = 1_{U_\alpha}$.
+            \end{itemize}
+            As we might expect, a \textbf{morphism of vector bundles} between $\pi_1: E \to X$ and $\pi_2: E' \to X$
+            is given by a continuous map $q: E \to E'$ such that for each $x \in X$, 
+            $q\big|_{\pi_1^{-1}(x)}: \pi_1^{-1}(x) \to \pi_2^{-1}(x)$ is linear map between vector spaces. 
+
+            To realize this in real mathematics, we can take the classic example of the 
+            \textbf{tangent bundle} on a 
+            smooth manifold $M$ (if you've seen this before, hopefully it is now clear why the word "bundle" 
+            is here). In differential geometry this is defined as the set 
+            \[
+                TM = \{(p, v) \mid p \in M \text{ and } v \in T_p(M)\}
+            \]
+            where we recall that $T_p(M)$ is the tangent (vector) space at 
+            a point $p \in M$. 
+            Since $M$ is a smooth manifold there is a differentiable 
+            structure $(U_\alpha, \bm{x}_\alpha: U_\alpha \to M)$
+            which allow us to define a map 
+            \begin{gather*}
+                \bm{y}_\alpha: U_\alpha \times \rr^n \to TM \\
+                ((x_1, \dots, x_n), (u_1, \dots, u_n)) \mapsto 
+                \left(\bm{x_{\alpha}}(x_1, \dots, x_n), \sum_{i=1}^{n}u_i\frac{\partial}{\partial x_i} \right).
+            \end{gather*}
+            This actually provides a differentiable structure on $TM$, demonstrating it 
+            too is a smooth manifold (see Do Carmo). Hence we see that $TM$ is in fact a topological space. 
+            We then see that the mapping
+            $\pi: TM \to M$ where 
+            \[
+                \pi(p, v) = p \text{ and } \pi^{-1}(x) = T_x(M).
+            \]
+            is a continuous mapping.
+            Hence we've satisfied both (1.) and (2.) in the the definition of a vector bundle. 
+            The other properties can be easily verified so that this provides a nice example of a 
+            vector bundle.
+        \end{example}
+
+        We can also formulate categories of objects \textit{under} and
+        \textit{over} functors. 
+
+        \begin{definition}
+            Let $\cc$ be a category, $C$ an object of $\cc$ and $F: 
+            \bb \to \cc$ a functor. Then we define the \textbf{category $C$
+            over the functor $F$}, denoted as $(C \downarrow F)$,
+            as follows. 
+            \begin{description}
+                \item[Objects.] All
+                pairs $(f, B)$ where $B \in \text{Obj}(\bb)$ such
+                that 
+                \[
+                    f : C \to F(B)
+                \]
+                where $f$ is a morphism in $\cc$. 
+
+                \item[Morphisms.] The morphisms $h: (f, B) \to (f', B')$ of
+                $(C \downarrow F)$ are defined whenever there exists a
+                $h:B \to B'$ in $\bb$ such that $f' = F(h) \circ f$. 
+            \end{description}
+        \end{definition}
+        Representing this visually, we have that 
+        \begin{center}
+            Objects $(f, B)$:
+            \begin{tikzcd}[row sep = 1.4cm]
+                C \arrow[d, "f"]\\
+                F(B)
+            \end{tikzcd}
+            \hspace{1cm}
+            Morphisms $h: (f, B) \to (f', B')$
+            \begin{tikzcd}[row sep = 1.4cm, column sep = 0.5cm]
+                & C \arrow[dl, swap, "f"] \arrow[dr, "f'"] & \\
+                F(B) \arrow[rr, swap, "F(h)"] & & F(B')
+            \end{tikzcd}
+        \end{center}
+        Composition of the morphisms in $(C \downarrow F)$ simply
+        requires composition of morphisms in $\bb$. 
+
+        One can easily construct the \textbf{category $C$ under the
+        functor $F$}, $(F \downarrow C)$, in a completely analogous
+        manner as before. But we'll move onto finally defining the
+        concept of the comma category. 
+
+        \begin{definition}
+            Let $\bb, \cc, \dd$ be categories and let $F: \bb \to \dd$
+            and $G:\cc \to \dd$ functors. That is, 
+            \begin{center}
+                \begin{tikzcd}
+                    \bb \arrow[r, "F"] & \dd & \cc \arrow[l, "G", swap].
+                \end{tikzcd}
+            \end{center}
+            Then we define the \textbf{comma category} $(F \downarrow
+            G)$ as follows. 
+            \begin{description}
+                \item[Objects.] All pairs $(B, C, f)$
+                where $B, C$ are objects of $\bb, \cc$, respectively,
+                such that  
+                \[
+                    f : F(B) \to G(C)
+                \]
+                where $f$ is a morphism in $\dd$. 
+
+                \item[Morphisms.] All pairs $(h, k) : (B,
+                C, f) \to (B', C', f')$ where $h: B \to B'$ and $k: C
+                \to C'$ are morphisms in $\bb, \cc$, respectively, such that \
+                \[
+                    f' \circ F(h) = G(k) \circ f.
+                \]
+            \end{description}
+        \end{definition}
+        As usual, we can represent this visually via diagrams:
+        \begin{center}
+            Objects $(B, C, f)$:
+            \begin{tikzcd}[row sep = 1.4cm]
+                F(B) \arrow[d, "f"]\\
+                G(C)
+            \end{tikzcd}
+            \hspace{1cm} Morphisms $(h,k)$
+            \begin{tikzcd}[row sep = 1.4cm, column sep = 1.4cm]
+                F(B) \arrow[d, swap, "f"] \arrow[r, "F(h)"] & F(B' )\arrow[d, "f'"] & \\
+                G(C) \arrow[r, swap, "G(k)"] & G(C')
+            \end{tikzcd}
+        \end{center}
+        where in the above picture we have that $(h, k):(B, C, f) \to
+        (B', C', f')$. Since functors naturally respect composition of
+        functions, one can easily define composition of morphism $(h,
+        k)$ and $(h', k')$ as $(h \circ h', k \circ k')$ whenever $h
+        \circ h'$ and $ k\circ k'$ are defined as morphisms in $\bb$ and
+        $\cc$, respectively. 
+        \vspace{0.5cm}
+
+        {\large \textbf{Exercises}
+        \vspace{0.5cm}}
+        \begin{itemize}
+            \item[\textbf{1.}]
+            Let $\cc$ be a category with initial and terminal objects $I$ and $T$. 
+            \begin{itemize}
+                \item[\emph{i}.]
+                Show that $(\cc \downarrow T) \cong \cc$.
+                \item[\emph{i}.]
+                Also show that $(I \downarrow \cc) \cong \cc$. 
+            \end{itemize} 
+
+            \item[\textbf{2.}]
+            Consider again a group homomorphism $\phi: G \to H$, but this time 
+            consider the image $\im(\phi) = \{\phi(g) \mid g \in G\}$. 
+            Show that this defines a functor 
+            \[
+                \im(-): (G \downarrow \textbf{Grp}) \to \textbf{Grp}
+            \] 
+            where on morphisms, a morphism 
+            \[
+                h: (H, \phi: G \to H) \to (K, \phi: G \to K)                
+            \]
+            is mapped to the restriction 
+            $h|_{\text{Im}(\phi)}: \im(\phi) \to \im(\psi)$. 
+        
+            In some sense, this is the ``opposite'' construction of the 
+            kernel functor we introduced. Instead of taking the kernel of a group homomorphism, 
+            we can take its image.
+
+            \item[\textbf{3.}]
+            Here we prove that the processes of imposing the \textbf{induced topology} 
+            and the \textbf{coinduced topology} are functorial. Moreover, the correct language 
+            to describe this is via slice categories. 
+            \begin{itemize}
+                \item[\emph{i}.]
+                Let $X$ be a set and $(Y, \tau)$ a topological space. 
+                Denote $U: \textbf{Top} \to \textbf{Set}$ 
+                to be the forgetful functor. Given any function $f: X \to U(Y)$,
+                we can use the topology on $Y$ to impose a topology $\tau_X$ on $X$:
+                \[
+                    \tau_X = \{U \subset X \mid f(U) \text{ is open in }Y\}.
+                \]
+                This is called the \textbf{induced topology on} $X$.  
+                So, we see that (by abuse of notation) the function $f: X \to U(Y)$ 
+                is now a continuous function $f: (X, \tau_X) \to (Y, \tau_Y)$. 
+    
+                Prove that this process forms a functor $\text{Ind}: (\textbf{Top}\downarrow U(Y)) \to (\textbf{Top}\downarrow Y)$. 
+
+                \item[\emph{ii}.] 
+                This time, let $(X, \tau)$ be a topological space, $Y$ a set, 
+                and consider a function $f: U(X) \to Y$. We can similarly impose a 
+                topology $\tau_Y$ on $Y$:
+                \[
+                    \tau_Y= \{ V \subset Y \mid f^{-1}(V) \text{ is open in }X \}.
+                \]
+                This is called  the \textbf{coinduced topology on} $Y$. 
+                Show that this is also a functorial process. 
+
+            \end{itemize}
+
+
+            \item[\textbf{4.}]
+            \begin{itemize}
+                \item[\emph{i}.]
+                Let $X$, $Y$ be topological spaces with $\phi: X \to Y$ a continuous function.
+                Show that this induces a functor $\phi_*: (\textbf{Top}\downarrow X) \to (\textbf{Top}\downarrow Y)$ 
+                where on objects $(f: E \to X) \mapsto (\phi \circ f: E \to Y)$. 
+
+                \item[\emph{ii}.]
+                Let $\cc$ be a category. Show that we generalize (\emph{i}) to define a functor 
+                \[
+                    (\cc \downarrow -): \cc \to \textbf{Cat}
+                \]
+                where $A \mapsto (\cc \downarrow A)$.
+
+
+                \item[\emph{ii}.]
+                Let $\textbf{Cat}_*$ be the \textbf{pointed category of categories} 
+                which we describe as 
+                \begin{description}
+                    \item[Objects.] All pairs $(\cc, A)$ with $\cc$ a category and $A \in C$
+                    \item[Morphisms.] Functors $F$ which preserve the objects.  
+                \end{description}
+                Can we overall describe the construction of a slice category as a functor
+                \[
+                    (-  \downarrow -): \textbf{Cat}_* \to \textbf{Cat}    
+                \]
+                where $(\cc,  A) \mapsto  (\cc \downarrow A)$? 
+            \end{itemize}
+            
+            \item[\textbf{5.}]
+            In this exercise we'll see that slice categories describe intervals for thin categories.
+            \begin{itemize}
+                \item[\emph{i}.] Regard $\mathbb{R}$ as 
+                a thin category, specifically as one with a partial order. For a given  $a \in \rr$, 
+                describe the thin category $(a \downarrow  \mathbb{R})$.
+
+                \item[\emph{ii}.] Suppose $P$ is a partial order (so that $p \le p'$ and $p' \le p$ implies 
+                $p = p'$). Describe in general the categories $(p \downarrow P)$ and $(P \downarrow p)$.
+            \end{itemize}
+            
+        \end{itemize}
+
+        
+    \newpage
+    \section{Graphs, Quivers and Free Categories}
+    In studying category it is often helpful to imagine the objects
+    and morphisms in action as vertices and edges corresponding to a
+    graph. In fact, such a pictorial representation of a category is
+    not even incorrect; one can pass categories and graphs from one to
+    the other. To speak of this, we first review some terminology.
+    
+    \begin{definition}
+        A (small) \textbf{graph} $G$ is a set of vertices $V(G)$ and a set 
+        edges $E(G)$ such that there exists an assignment function
+        \[
+            \partial: E(G) \to V(G)\times V(G)
+        \]
+        which assigns every edge to the ordered pair containing its endpoints.
+
+        On the other hand, a \textbf{directed graph} is a graph $G$ 
+        where $E(G)$ is now a set of 2-tuples $(v_1, v_2)$. This allows 
+        each edge of $E(G)$ to have a specified direction. In this case, 
+        the assignment function has the form $\partial: E(G) \to V(G)$. 
+    \end{definition}
+    Now, how do we formulate a morphism between two graphs? 
+
+    \begin{definition}
+        A \textbf{graph homomorphism} between two graphs $G$ and $H$ is a 
+        function $f: G \to H$ which induces maps $f_V: V(G) \to V(H)$ and
+        $f_E: E(G) \to E(H)$ where if $\partial(e) = (v_1, v_2)$, then  
+        \[
+            \partial \circ f_E(e) = (f_V(v_1), f_V(v_2)).
+        \]
+    \end{definition}
+
+    \begin{center}
+        \begin{tikzpicture}
+            \draw[->] (1.5, 2.2) to [bend left] (4.5, 2.2) node at (3,3) {$f_V$};
+            \draw[thick, Magenta, *-*] (-1,0)--(1,2) node at (-0.2, 1.2) {$\textcolor{Black}{e}$};
+            \draw[thick, ProcessBlue, *-*] (5,2)--(7,0) node at (6.2, 1.2) {$\textcolor{Black}{e'}$};
+            \draw[->] (0.5, 1) to [bend right] (5, 1) node at (3, 0) {$f_E$};
+            \node at (0.8, 2.3) {$\textcolor{Black}{v_2}$};
+            \node at (-1.3, 0){$\textcolor{Black}{v_1}$};
+            \node at (5, 2.35) {$\textcolor{Black}{v_2'}$};
+            \node at (7.3, 0) {$\textcolor{Black}{v_1'}$};
+        \end{tikzpicture}    
+    \end{center}
+
+    In some sense, this behaves almost like a functor. This observation 
+    will become important later. 
+    Now since we have a consistent way to speak of graphs and their
+    morphisms, we can form the category \textbf{Grph} where the
+    objects are small graphs and the morphisms are graph morphisms as
+    described above. 
+
+    Finally we introduce the concept of a quiver, which we will 
+    see is basically the skeleton of a category. 
+
+    \begin{definition}
+        A \textbf{quiver} is a directed graph $G$ which allows multiple edges 
+        between vertices. Instead of a function $\partial$, a quiver is equipped with 
+        \textbf{source} and \textbf{target} functions 
+        \[
+            s: E(G) \to V(G) \qquad t: E(G) \to V(G).
+        \]
+        So a quiver is a 4-tuple $(E(G), V(G), s, t)$.
+        Now as before, a \textbf{morphism} $f: Q \to Q'$ between quivers $(E(Q), V(Q), s, t)$ and 
+        $(E(Q'), V(Q'), s', t')$ is one which preserves edge-vertex
+        relations. Thus, it is a pair of functions $f_E: E(Q) \to E(Q')$ 
+        and $f_V: V(Q) \to V(Q)'$ such that 
+        \[
+            f_V \circ s = s' \circ f_E \qquad f_V \circ t = t' \circ f_E.
+        \]
+    \end{definition}
+
+    \begin{center}
+        \begin{tikzpicture}
+            \draw[thick, ProcessBlue, *-*] (4,0) -- (0,0) node[left]{$\textcolor{Black}{v_1}$};
+            \draw[thick, ProcessBlue, *-*] (0,0) -- (6,0) node[right]{$\textcolor{Black}{v_3}$};
+            \draw[thick, ProcessBlue, ->] (0, 0.2) to [bend left = 30] (3.8, 0.2);
+            \draw[thick, ProcessBlue, ->] (0, 0.2) to [bend left = 80] (4, 0.2);
+            \draw[thick, ProcessBlue, ->] (0, -0.2) to [bend right = 60] (5.8, -0.2);
+            \draw[thick, ProcessBlue, ->] (0, -0.2) to [bend right = 40] (3.8, -0.2);
+            \node at (4.2, -0.3) {$\textcolor{Black}{v_2}$};
+            \node at (2, 1) {$\textcolor{Black}{e_1}$};
+            \node at (2, -1.2) {$\textcolor{Black}{e_2}$};
+            \node at (3, -1.9) {$\textcolor{Black}{e_4}$};
+            \node at (2, 1.6) {$\textcolor{Black}{e_3}$};
+        \end{tikzpicture}
+    \end{center}
+
+    \noindent Now that we have all of those definitions out of the way, what's really going 
+    on here? A quiver can be abstracted as a pair of objects and morphisms.
+    \begin{center}
+        \begin{tikzcd}[row sep = 1.4cm, column sep = 1.4cm]
+            E \arrow[r, shift left=0.6ex,"s"]
+            \arrow[r,shift left =-0.6ex, swap, "t"]
+            &
+            V
+        \end{tikzcd}
+    \end{center}
+    If we let $C\op$ be the category with two objects, two nontrivial morphisms 
+    and two identity morphisms as below
+    \begin{center}
+        \begin{tikzcd}[row sep = 1.4cm, column sep = 1.4cm]
+            1 \arrow[r, shift left=0.6ex,"f"]
+            \arrow[r,shift left =-0.6ex, swap, "g"]
+            &
+            0
+        \end{tikzcd}
+    \end{center}
+    then we see that a \textbf{quiver is a functor} $F: \cc\op \to \textbf{Set}$. 
+    With that said, 
+    we can define the \textbf{category of quivers Quiv}, which, based on what we just showed, 
+    is a functor category with objects $F: \cc\op \to \textbf{Set}$. This 
+    allows us to interpret quiver homomorphisms as natural transformations.
+    
+    \textcolor{MidnightBlue}{Now why on earth do we care about these things called quivers?}
+    The reason is because the underlying structure of small categories 
+    take the form of a quiver. For example, the category on the left below 
+    can be turned into a quiver, as on the right, after "forgetting" composition and identity 
+    morphisms. 
+    \begin{center}
+        \begin{tikzcd}[row sep = 1.4cm, column sep = 1.4cm]
+            & A\arrow[dr, "f"]
+            \arrow[out=120,in=60,looseness=3,loop, "1_A"] &\\
+            C \arrow[ur, shift left = 0.5ex, "h"] 
+            \arrow[ur, shift left=-0.5ex, swap, "g"]
+            \arrow[rr, bend right = 20, swap, "f \circ h"]
+            \arrow[rr, bend left = 20, "f \circ g"]
+            \arrow[rr, "j"]
+            \arrow[out=120,in=60,looseness=3,loop, "1_C"] 
+            & & B
+            \arrow[out=115,in=65,looseness=4,loop,"1_B"]
+        \end{tikzcd}
+        \hspace{1cm}
+        \begin{tikzcd}[row sep = 1.4cm, column sep = 1.4cm, ProcessBlue]
+            & \textcolor{Black}{\bullet} \arrow[dr]
+            \arrow[out=120,in=60,looseness=3,loop] &\\
+            \textcolor{Black}{\bullet} \arrow[ur, shift left = 0.5ex] 
+            \arrow[ur, shift left=-0.5ex, swap]
+            \arrow[rr, bend right = 20, swap]
+            \arrow[rr, bend left = 20]
+            \arrow[rr]
+            \arrow[out=120,in=60,looseness=3,loop] 
+            & & \textcolor{Black}{\bullet}
+            \arrow[out=115,in=65,looseness=4,loop]
+        \end{tikzcd}
+    \end{center}
+
+    In general, since categories allow multiple arrows between objects, 
+    we can construct a forgetful functor which forgets composition 
+    and identity arrows.
+    \[
+        U: \textbf{Cat} \to \textbf{Quiv}.
+    \]
+    Note that if $F : \cc \to \cc'$ is a functor then $U(F)
+    : U(\cc) \to U(\cc')$ is in fact a well-behaved morphism between
+    two quivers. \textcolor{NavyBlue}{Recall that the construction of a
+    graph homomorphism is basically a functor as we've known to so far}. 
+
+    Not only can we forget categories to generate quivers, we can generate 
+    categories using the skeletal structure of a quiver. This leads to the concept 
+    of a \textbf{free category}; the concept is no different than the concept 
+    of, say, a free group generated by a set $X$. 
+
+    \begin{definition}
+        Let $Q$ be a quiver with vertex set $V$ and edge set $E$. 
+        We define the \textbf{free category generated by $Q$} as 
+        the category with 
+        \begin{description}
+            \item[Objects.] The set $V$ 
+            \item[Morphisms.] The \textbf{paths} of the quiver.   
+        \end{description}
+        Precisely, a \textbf{path} is any sequence of edges and vertices 
+        \begin{center}
+            \begin{tikzcd}
+                v_0 \arrow[r, "e_0"] 
+                &
+                v_1 \arrow[r, "e_1"]
+                &
+                \cdots \arrow[r, "e_{n-1}"]
+                &
+                v_n
+            \end{tikzcd}
+        \end{center}
+        with composition of paths defined in the intuitive way: 
+        \begin{center}
+            \begin{tikzcd}
+                (v_0 \arrow[r, "e_0"] 
+                &
+                v_1 \arrow[r, "e_1"]
+                &
+                \cdots \arrow[r, "e_{n-1}"]
+                &
+                v_n)
+            \end{tikzcd}
+            $\circ$
+            \begin{tikzcd}
+                (v_n \arrow[r, "e'_0"] 
+                &
+                w_0 \arrow[r, "e'_1"]
+                &
+                w_1 \arrow[r, "e'_2"]
+                &
+                \cdots \arrow[r, "e'_{m}"]
+                &
+                w_m)
+            \end{tikzcd}
+        \end{center}
+        \begin{center}
+            $=$
+            \begin{tikzcd}
+                v_0 \arrow[r, "e_0"] 
+                &
+                v_1 \arrow[r, "e_1"]
+                &
+                \cdots \arrow[r, "e_{n-1}"]
+                &
+                v_n \arrow[r, "e'_0"] 
+                &
+                w_0 \arrow[r, "e'_1"]
+                &
+                w_1 \arrow[r, "e'_2"]
+                &
+                \cdots \arrow[r, "e'_{m}"]
+                &
+                w_m
+            \end{tikzcd}
+        \end{center}
+        When we generate the free category, we also remember to add identity arrows to 
+        each vertex. 
+    \end{definition}
+
+    Since for each quiver $Q$, we can define a free category $F_C(Q)$ on $Q$, 
+    we can realize that this mapping is functorial. That is,  we can define a
+    functor 
+    \[ 
+        F_C: \textbf{Quiv} \to \textbf{Cat}
+    \] 
+    where it maps on objects and morphisms as
+    \begin{statement}{Red!10}
+    \begin{align_topbot}
+        Q &\longmapsto F_C(Q)\\
+        (f: Q \to Q') &\longmapsto (F_C(f): F_C(Q') \to F_C(Q)).
+    \end{align_topbot}
+    \end{statement}
+    That is, quiver homomorphisms can map to functors $F_C(f)$ between the free categories
+    generated by the respective quivers. 
+    
+    Now, what is the relationship between a quiver $Q$ and the quiver $U(F_C(Q))$? 
+    There must exist an injection $i: Q \to U(F(Q))$ which sends $Q$ to the skeleton 
+    of $U(F_C(Q))$. It turns out that this morphism is universal from $Q$ to $U$. 
+
+
+    \begin{thm}
+        Let $Q$ be a quiver. Then there is a graph homomorphism $i: Q \to U(F_C(Q))$ 
+        such that, for any other graph homomorphism
+        $\phi: Q \to U(\cc)$ with $\cc$ a category, there exists a unique
+        functor $F: F_C(Q) \to \cc$ where $U(F) \circ i = \phi$. That is,
+        \begin{center}
+            \begin{tikzcd}[row sep = 1.4cm, column sep = 1.4cm]
+                Q \arrow[r, "i"] \arrow[dr, swap, "\phi"] & U(F_C(Q))\arrow[d, dashed, "U(F)"] \\
+                & U(\cc)
+            \end{tikzcd}
+            \hspace{1cm}
+            \begin{tikzcd}[row sep = 1.4cm, column sep = 1.4cm]
+                F_C(Q) \arrow[d, dashed, "F"]\\
+                \cc
+            \end{tikzcd}
+        \end{center} 
+    \end{thm}
+    This is an example of a universal arrow; the dotted lines are the
+    morphisms which are forced to exist by the conditions of the
+    diagram, which is the idea of a universal element.
+
+    \begin{prf}
+        Denote each morphism or path in $F_C(Q)$ of length $n$
+        \begin{center}
+            \begin{tikzcd}
+                v_0 \arrow[r, "e_0"] 
+                &
+                v_1 \arrow[r, "e_1"]
+                &
+                \cdots \arrow[r, "e_{n-1}"]
+                &
+                v_n
+            \end{tikzcd}
+        \end{center}
+        as $(v_0, e_0e_1\cdots e_{n-1}, v_n): v_0 \to v_n$. Now define the inclusion 
+        $i: Q \to U(F_C(Q))$ where each vertex and edge is sent identically. That is, vertices 
+        $v$ map to $v$ in $F_C(Q)$,  and morphisms are sent identically and for each 
+        edge $e: v \to v'$:
+        \[
+            i(e: v \to v') = (v, e, v').
+        \]
+        An important observation to make is the fact that every morphism $(v_0, e_0e_1\cdots e_{n-1}, v_n): v_0 \to v_n)$
+        in $F_C(Q)$ is a composition of length 2-morphism: 
+        \begin{center}
+            \begin{tikzcd}
+                v_0 \arrow[r, "e_0"] 
+                &
+                v_1 \arrow[r, "e_1"]
+                &
+                \cdots \arrow[r, "e_{n-1}"]
+                &
+                v_n
+            \end{tikzcd}
+        \end{center}
+        \begin{center}
+            $=$
+            \begin{tikzcd}
+                (v_0 \arrow[r, "e_0"] 
+                &
+                v_1)
+            \end{tikzcd}
+            $\circ$
+            \begin{tikzcd}
+                (v_1 \arrow[r, "e_1"] 
+                &
+                v_2)
+            \end{tikzcd}
+            $\circ$
+            $\cdots$
+            $\circ$
+            \begin{tikzcd}
+                (v_{n-1} \arrow[r, "e_{n-1}"] 
+                &
+                v_n)
+            \end{tikzcd}
+        \end{center}
+        Therefore, for any graph homomorphism $\phi: Q \to U(\cc)$, 
+        we can create a unique functor $F: F_C(Q) \to \cc$ where 
+        \begin{align*}
+            v &\longmapsto \phi(v)\\
+            (v_0, e_0e_1\cdots e_{n-1}, v_n): v_0 \to v_n &\longmapsto 
+            \phi(e_0:  v_0 \to v_1) \circ \phi(e_1: v_1 \to v_2)
+            \circ \cdots \circ \phi(e_{n-1}: v_{n-1} \to v_n)
+        \end{align*}
+        which then gives us 
+        \begin{align*}
+            U(F) \circ i = \phi
+        \end{align*}
+        as desired. 
+    \end{prf}
+    
+    \newpage
+    \section{Quotient Categories}
+    The quotient category is a concept that generalizes the ideas of
+    forming quotient groups, rings, modules, and even topological
+    spaces. The core idea of obtaining a quotient "object" revolves
+    around the concept of an equivalence class. 
+
+    For example, in constructing the quotient group, one can go about
+    constructing it in two different ways. One is easy, in which you
+    simply form the concept of a coset, and then observe that nice
+    things happen when you make cosets with normal subgroups. The hard
+    way is to construct an equivalence relation, which \textit{gives
+    rise} to what we recognize as the concept of a coset, and then
+    continuing further to create the quotient groups from normal
+    subgroups. Both ways are equivalent, but one ignores the crucial
+    and powerful idea of equivalence relations. 
+
+    \begin{definition}
+        Let $\cc$ be a locally small category. Suppose $R$ is a function which, for every  
+        pair of objects $A, B$, assigns equivalence 
+        relations $\sim_{A, B}$ on the hom set $\hom_{\cc}(A, B)$. Then we may define the 
+        quotient category $\cc/R$ where 
+        \begin{description}
+            \item[Objects.] The same objects of $\cc$.
+            \item[Morphisms.] For any objects $A,B$ of $\cc$, we 
+            set $\hom_{\cc/R}(A, B) = \hom_{\cc}(A, B)/\sim_{A, B}$.
+        \end{description}
+    \end{definition}    
+    Thus we see that morphisms between $f: A \to B$ in $\cc$ becomes equivalence classes 
+    $[f]$ in $\cc/R$. 
+
+    With that said, we can naturally define a canonical functor $Q: \cc \to \cc/R$ 
+    where $Q$ acts identically on objects and where 
+    $Q(f: A \to B) = [f] \in \hom_{\cc/R}(A,B)$. This in fact defines a functor 
+    if we observe that, for a pair of composable morphisms $g, f$.
+    \[
+        Q(g) \circ Q(f) = [g \circ f] = Q(g \circ f). 
+    \]
+    A nice property of this functor is the fact that if $f \sim f'$, then $Q(f) = Q(f')$.
+    What is even nicer about this functor is that it has the following property. 
+
+    \begin{proposition}
+        Let $\cc$ be a locally small category with an equivalence relation $\sim_{A, B}$ on each set 
+        $\hom_{\cc}(A, B)$. Then for any functor $F: \cc \to \dd$ into some category $\dd$ 
+        such that $f \sim f'$, $F(f) = F(f')$, there exists a \emph{unique} functor 
+        $H: \cc/R \to \dd$ such that $H \circ Q = F$;
+        or, diagrammatically, such that the following diagram commutes.
+        \begin{center}
+            \begin{tikzcd}[row sep = 1.4cm, column sep = 1.4cm]
+                \cc \arrow[r, "Q"] 
+                \arrow[dr, swap, "F"]
+                &
+                \cc/R
+                \arrow[d, dashed, "H"]
+                \\
+                &
+                \dd 
+            \end{tikzcd}
+        \end{center}
+    \end{proposition}
+
+    \begin{prf}
+        Observe that one functor $H: \cc/R \to \dd$ that we can supply, 
+        which will have the above diagram commute, is one where 
+        $H(C) = F(C)$ on objects and where for any $[f] \in \hom_{\cc/R}(A, B)$,
+        \[
+            H([f]) = F(f)   
+        \]
+        where $f$ is an representative of the equivalence class $f$. Note that 
+        this is well defined since $F(f) = F(f')$ if $f \sim_{A,B} f'$; hence this 
+        will appropriately send equivalent elements to the same morphism. It 
+        is not hard to show that it's unique; one can just suppose such an $H$ exists and then 
+        demonstrate that it behaves like the functor we proposed initially. 
+    \end{prf}
+
+    \begin{example}
+        
+    \end{example}
+
+
+    
+    
+
+\newpage
+\section{Monoids, Groups and Groupoids in Categories}
+
+One of the most simplest, useful and yet underrated concepts in mathematics 
+is the concept of a monoid. The reason why monoids are so useful is because 
+they capture three main concepts: \textbf{stacking} "things" together to create another 
+"thing," in such a way that our stacking operation is \textbf{associative}, 
+with the additional assumption of an \textbf{identity} element which doesn't change the 
+value. Often times in cooking up a mathematical construction, we want to maintain these 
+three concepts because they are so familiar to our basic human nature. 
+
+Now recall the definition of a monoid.
+\begin{definition}
+    A monoid $M$ is a set equipped with a binary operation $\cdot: M \times M \to M$ 
+    and an identity element $e$ such that 
+    \begin{itemize}
+        \item[1.] For any $x, y, z \in M$, we have that $x \cdot (y \cdot z) = (x \cdot y) \cdot z$ 
+        \item[2.] For any $x \in M$, $x \cdot e = x = e \cdot x$.  
+    \end{itemize}
+\end{definition} 
+It turns out that we can abstract the above definition very easily if we just resist the 
+temptation to explicitly refer to our elements. In order to do this, we need 
+to find a way to diagrammatically express the above axioms. 
+
+Towards that goal, rename the binary operation as $\mu: M \times M \to M$ (for notational convenience). 
+Then to express axiom 
+(1), we mean that we have 3 elements $x, y, z \in M$ and there are two ways to compute them, but we  
+want them to be the same. So lets make each different way to compute them one side of a square, which 
+we'll say it commutes. 
+\begin{center}
+    \begin{tikzcd}[row sep = 1.4cm, column sep = 1.4cm]
+        (x, y, z) 
+        \arrow[r, maps to, "\mu \times 1"]
+        \arrow[d, maps to, swap, "1 \times \mu"]
+        &
+        (x \cdot y, z)
+        \arrow[d, maps to, "\mu"]
+        \\
+        (x, y \cdot z)
+        \arrow[r, maps to, swap, "\mu"]
+        &
+        x\cdot (y\cdot z) = (x \cdot y) \cdot z
+    \end{tikzcd}
+    \hspace{1cm}
+    \begin{tikzcd}[row sep = 1.4cm, column sep = 1.4cm]
+        M \times M \times M 
+        \arrow[r, "\mu \times 1"]
+        \arrow[d, swap, "1 \times \mu"]
+        &
+        M \times M
+        \arrow[d, "\mu"]
+        \\
+        M \times M
+        \arrow[r, swap, "\mu"]
+        &
+        M
+    \end{tikzcd}
+\end{center}
+The result is the diagram on the above left. Since we want this to hold for 
+all elements in $M$, we construct the diagram more generally on the above right; 
+this expresses our associativity axiom. Now to express the second axiom diagrammatically, we need a way to discuss the 
+identity map. So define the map $\eta: \{\bullet\} \to M$ where $\eta(\bullet) = e$. This 
+is just a stupid map that picks out the identity. Then axiom (2) can be translated 
+diagramatically to state that the bottom left diagram commutes. 
+\begin{center}
+    \begin{tikzcd}[row sep = 1.4cm, column sep = 0.7cm]
+        (\bullet, m) 
+        \arrow[r, maps to, "\eta \times 1_M"]
+        \arrow[dr, maps to, swap, "\pi_M", end anchor={[xshift = -8ex]}]
+        &
+        (e, m) 
+        \arrow[d, maps to, shift right = -0.5ex, start anchor = {[xshift = 3ex]},end anchor={[xshift = 3ex]}, "\mu"]
+        \quad
+        (m, e)
+        \arrow[d, maps to, shift right = 0.5ex, swap, start anchor = {[xshift = -3ex]}, end anchor={[xshift = -3ex]}, "\mu"]
+        &
+        (m, \bullet) \arrow[l, swap, maps to, "1_M \times \eta"]
+        \arrow[dl, maps to, "1_M \times \eta", end anchor={[xshift=8ex]}]
+        \\
+        &
+        m = e \cdot m = m \cdot e = m
+        &
+    \end{tikzcd}
+    \begin{tikzcd}[row sep = 1.4cm, column sep = 1cm]
+        \{\bullet\}\times M
+        \arrow[r, "\eta \times 1_M"]
+        \arrow[dr, swap, "\pi_M"]
+        &
+        M \times M
+        \arrow[d, "\mu"]
+        &
+        M \times \{\bullet\}
+        \arrow[l, swap, "1_M \times \eta"]
+        \arrow[dl, "\pi_M"]
+        \\
+        &
+        M
+        &
+    \end{tikzcd}
+\end{center}
+Since we want this to hold for all $m \in M$, we generalize this to create a
+commutative diagram as on the above right. We now have what we need to define a monoid more generally. 
+
+\begin{definition}
+    Let $\cc$ be a category with cartesian products. Denote the terminal 
+    object as $T$. An object $M$ is said to 
+    be a \textbf{monoid} in $\cc$ if there exist maps 
+    \begin{align*}
+        &\mu: M \times M \to M \qquad &&\textbf{(Multiplication)}\\
+        &\eta: T \to M \qquad &&\textbf{(Identity)}
+    \end{align*}
+    such that the diagrams below commute. 
+    \begin{center}
+        \begin{tikzcd}[row sep = 1.4cm, column sep = 1.4cm]
+            M \times M \times M 
+            \arrow[r, "\mu \times 1"]
+            \arrow[d, swap, "1 \times \mu"]
+            &
+            M \times M
+            \arrow[d, "\mu"]
+            \\
+            M \times M
+            \arrow[r, swap, "\mu"]
+            &
+            M
+        \end{tikzcd}
+        \hspace{1cm}
+        \begin{tikzcd}[row sep = 1.4cm, column sep = 1cm]
+            T\times M
+            \arrow[r, "\eta \times 1_M"]
+            \arrow[dr, swap, "\pi_M'"]
+            &
+            M \times M
+            \arrow[d, "\mu"]
+            &
+            M \times T
+            \arrow[l, swap, "1_M \times \eta"]
+            \arrow[dl, "\pi_M"]
+            \\
+            &
+            M
+            &
+        \end{tikzcd}
+    \end{center}
+    Dually, a \textbf{comonoid} is an object $C$ with maps 
+    \begin{align*}
+        &\Delta: C \to C \times C \qquad &&\textbf{(Comultiplication)}\\
+        &\epsilon: C \to T \qquad &&\textbf{(Identity)}
+    \end{align*}
+    such that the dual diagrams commute. 
+    \begin{center}
+        \begin{tikzcd}[row sep = 1.4cm, column sep = 1.4cm]
+            C \arrow[r, "\Delta"]
+            \arrow[d, "\Delta"]
+            &
+            C \times C
+            \arrow[d, "\Delta \times 1_C"]
+            \\
+            C \times C 
+            \arrow[r, swap, "1_C \otimes \Delta"]
+            &
+            C \times C \times C
+        \end{tikzcd}
+        \hspace{1cm}
+        \begin{tikzcd}[row sep = 1.4cm, column sep = 1cm]
+            T\times C
+            &
+            \arrow[l, "\epsilon \times 1_C"]
+            C \times C
+            \arrow[r, "1_C \times \epsilon"]
+            &
+            C \times T
+            \\
+            &
+            C
+            \arrow[ul, "\sigma'"]
+            \arrow[ur, "\sigma"]
+            \arrow[u, "\Delta"]
+            &
+        \end{tikzcd}
+    \end{center}
+\end{definition}
+\textcolor{NavyBlue}{Note that we're being a little sloppy here. For example, the object 
+$M \times M \times M$ doesn't actually exist; we have either $M \times (M \times M)$ or $(M \times M) \times M$. 
+} However, for any category with cartesian products, we always have that these two objects 
+are isomorphic. Hence we mean either of the equivalent products when we discuss $M \times M \times M$. 
+
+\begin{example}
+    Let $k$ be a field. Consider the category $\textbf{Vect}_k$. Then a monoid 
+    in this category is an object $A$ equipped with maps 
+\end{example}
+
+\begin{example}
+    Group object in the category of Top is a topological group.
+\end{example}
+
+\begin{example}
+    Monoid in the category of $R$ modules is an associative algebra.
+\end{example}
