@@ -6,6 +6,10 @@ begin_document = re.compile("\\\\begin{document}")
 end_document = re.compile("\\\\end{document}")
 chapter = re.compile(r"\\chapter{(.*?)}")
 section = re.compile(r"\\section{(.*?)}")
+textbf = re.compile("\\\\textbf{(.*?)}")
+textit = re.compile("\\\\textit{(.*?)}")
+emph_cmd = re.compile("\\\\emph{(.*?)}")
+latex_quotes = re.compile("``(.*?)''")
 
 # label statement
 label_stmt = re.compile(r"\\label{(.*?)}")
@@ -87,6 +91,15 @@ def clean_code(code: str, chapter:int, section: int) -> str:
     new_code = re.sub(example_stmt, repl_example, new_code)
     new_code = re.sub(description_stmt, repl_desc, new_code)
     new_code = re.sub(proof_stmt, repl_proof, new_code)
+
+
+    # replace latex bolding with ** syntax
+    new_code = re.sub(textbf, "**\\1**", new_code)
+    # replace latex bolding with * syntax
+    new_code = re.sub(emph_cmd, "*\\1*", new_code)
+    new_code = re.sub(textit, "*\\1*", new_code)
+    # replace latex quotes with " syntax
+    new_code = re.sub(latex_quotes, "\"\\1\"", new_code)
 
     return new_code
 
