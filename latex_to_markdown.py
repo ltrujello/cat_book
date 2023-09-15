@@ -1,5 +1,11 @@
 import re
 import yaml
+from pathlib import Path
+
+begin_document = re.compile("\\\\begin{document}")
+end_document = re.compile("\\\\end{document}")
+chapter = re.compile(r"\\chapter{(.*?)}")
+section = re.compile(r"\\section{(.*?)}")
 
 # label statement
 label_stmt = re.compile(r"\\label{(.*?)}")
