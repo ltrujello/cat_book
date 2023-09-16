@@ -10,6 +10,11 @@ textbf = re.compile("\\\\textbf{(.*?)}")
 textit = re.compile("\\\\textit{(.*?)}")
 emph_cmd = re.compile("\\\\emph{(.*?)}")
 latex_quotes = re.compile("``(.*?)''")
+display_math = re.compile("(\\\\\\[([\s\S]*?)\\\\\\])")
+align_stmt = re.compile("(\\\\begin{align}([\s\S]*?)\\\\end{align})")
+align_star_stmt = re.compile("(\\\\begin{align\*}([\s\S]*?)\\\\end{align\*})")
+gather_env = re.compile("(\\\\begin{gather}([\s\S]*?)\\\\end{gather})")
+gather_star_env = re.compile("(\\\\begin{gather\*}([\s\S]*?)\\\\end{gather\*})")
 
 # label statement
 label_stmt = re.compile(r"\\label{(.*?)}")
@@ -100,6 +105,16 @@ def clean_code(code: str, chapter:int, section: int) -> str:
     new_code = re.sub(textit, "*\\1*", new_code)
     # replace latex quotes with " syntax
     new_code = re.sub(latex_quotes, "\"\\1\"", new_code)
+    # set display math on newlines
+    new_code = re.sub(display_math, "\n\\1\n", new_code)
+    # set align environments on newlines
+    new_code = re.sub(align_stmt, "\n\\1\n", new_code)
+    # set align* environments on newlines 
+    new_code = re.sub(align_star_stmt, "\n\\1\n", new_code)
+    # set gather environments on newlines
+    new_code = re.sub(gather_env, "\n\\1\n", new_code)
+    # set gather environments on newlines
+    new_code = re.sub(gather_star_env, "\n\\1\n", new_code)
 
     return new_code
 
