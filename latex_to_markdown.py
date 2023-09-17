@@ -16,6 +16,8 @@ align_star_stmt = re.compile("(\\\\begin{align\*}([\s\S]*?)\\\\end{align\*})")
 gather_env = re.compile("(\\\\begin{gather}([\s\S]*?)\\\\end{gather})")
 gather_star_env = re.compile("(\\\\begin{gather\*}([\s\S]*?)\\\\end{gather\*})")
 
+itemize_env = re.compile("\\\\begin{itemize}([\s\S]*?)\\\\end{itemize}")
+
 # label statement
 label_stmt = re.compile(r"\\label{(.*?)}")
 label_stmt2 = re.compile(r"label{(.*?)}")
@@ -115,6 +117,8 @@ def clean_code(code: str, chapter:int, section: int) -> str:
     new_code = re.sub(gather_env, "\n\\1\n", new_code)
     # set gather environments on newlines
     new_code = re.sub(gather_star_env, "\n\\1\n", new_code)
+    # replace itemize environments
+    new_code = re.sub(itemize_env, repl_itemize_env, new_code)
 
     return new_code
 
