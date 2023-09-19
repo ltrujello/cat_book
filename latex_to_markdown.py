@@ -15,6 +15,8 @@ align_stmt = re.compile("(\\\\begin{align}([\s\S]*?)\\\\end{align})")
 align_star_stmt = re.compile("(\\\\begin{align\*}([\s\S]*?)\\\\end{align\*})")
 gather_env = re.compile("(\\\\begin{gather}([\s\S]*?)\\\\end{gather})")
 gather_star_env = re.compile("(\\\\begin{gather\*}([\s\S]*?)\\\\end{gather\*})")
+newpage_cmd = re.compile("\\\\newpage")
+tabular_env = re.compile("\\\\begin{tabular}([\s\S]*?)\\\\end{tabular}")
 
 itemize_env = re.compile("\\\\begin{itemize}([\s\S]*?)\\\\end{itemize}")
 
@@ -75,6 +77,67 @@ def repl_itemize_env(match):
     return res
 
 
+def repl_tabular_env(match):
+    contents = match.group(1)
+    contents = re.sub("\\\\hline", "", contents)
+    # find the index 
+    num_brackets_seen = 0
+    j = 0
+    for ind, ch in enumerate(contents):
+        if ch == "{":
+            num_brackets_seen += 1
+        elif ch == "}":
+            num_brackets_seen -= 1
+            if num_brackets_seen == 0:
+                j = ind + 1
+                break
+    rows = []
+    while j < len(contents):
+        code = contents[j:]
+        ind = 0
+        row = []
+        while True:
+            curr_match = re.search(ampersand, code[ind:])
+            next_match = re.search("\\\\\\\\", code[ind:])
+            if curr_match is not None and next_match is not None:
+                if next_match.start() < curr_match.start():
+                    curr_match = None
+
+            if curr_match is not None:
+                row.append(re.sub("\\n", " ", code[ind: ind + curr_match.start()]))
+                ind += curr_match.end() + 1
+                continue
+            else:
+                curr_match = re.search("\\\\\\\\", code[ind:])
+                if curr_match is not None:
+                    row.append(re.sub("\\n", " ", code[ind: ind + curr_match.start()]))
+                    # update index in the outer while loop
+                    j += ind + curr_match.end() + 1
+                else:
+                    curr_match = re.search(end_tabular_env, code[ind:])
+                    if curr_match is not None:
+                    else:
+                        print(f"Warning: failed to find an ampersand or \\\\\\\\ in {code[ind:]}")
+                    j = len(contents)
+                break
+        rows.append(row)
+
+    output = "\n"
+    first_row = rows[0]
+    output += "|"
+    output += "|".join(first_row)
+    output += "|\n"
+
+    for elem in first_row:
+        output += "|"
+        output += "-"*len(elem)
+    output += "|\n"
+
+    for row in rows[1:]:
+        output += "|"
+        output += "|".join(row)
+        output += "|\n"
+    return output
 
 def clean_code(code: str, chapter:int, section: int) -> str:
     # remove comments
@@ -119,6 +182,10 @@ def clean_code(code: str, chapter:int, section: int) -> str:
     new_code = re.sub(gather_star_env, "\n\\1\n", new_code)
     # replace itemize environments
     new_code = re.sub(itemize_env, repl_itemize_env, new_code)
+    # remove \newpage
+    new_code = re.sub(newpage_cmd, "", new_code)
+    # replace tabular environments with markdown tables
+    new_code = re.sub(tabular_env, repl_tabular_env, new_code)
 
     return new_code
 
