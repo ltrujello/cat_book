@@ -17,6 +17,7 @@ gather_env = re.compile("(\\\\begin{gather}([\s\S]*?)\\\\end{gather})")
 gather_star_env = re.compile("(\\\\begin{gather\*}([\s\S]*?)\\\\end{gather\*})")
 newpage_cmd = re.compile("\\\\newpage")
 tabular_env = re.compile("\\\\begin{tabular}([\s\S]*?)\\\\end{tabular}")
+indent_space = re.compile("^\\s*")
 
 itemize_env = re.compile("\\\\begin{itemize}([\s\S]*?)\\\\end{itemize}")
 
@@ -187,7 +188,12 @@ def clean_code(code: str, chapter:int, section: int) -> str:
     # replace tabular environments with markdown tables
     new_code = re.sub(tabular_env, repl_tabular_env, new_code)
 
-    return new_code
+    # de indent everything
+    final_code = ""
+    for line in new_code.split("\n"):
+        final_code += re.sub(indent_space, "", line)
+        final_code += "\n"
+    return final_code
 
 def latex_to_markdown():
     with open("tex/cat_theory_long.tex") as f:
