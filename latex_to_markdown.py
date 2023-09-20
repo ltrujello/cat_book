@@ -19,6 +19,11 @@ newpage_cmd = re.compile("\\\\newpage")
 tabular_env = re.compile("\\\\begin{tabular}([\s\S]*?)\\\\end{tabular}")
 indent_space = re.compile("^\\s*")
 
+# tikz regex
+center_env = re.compile("(\\\\begin{center}([\s\S]*?)\\\\end{center})")
+tikz_stmt = re.compile("\\\\begin{tikzpicture}([\s\S]*?)\\\\end{tikzpicture}")
+tikz_cd_stmt = re.compile("\\\\begin{tikzcd}([\s\S]*?)\\\\end{tikzcd}")
+
 itemize_env = re.compile("\\\\begin{itemize}([\s\S]*?)\\\\end{itemize}")
 
 # label statement
@@ -140,12 +145,40 @@ def repl_tabular_env(match):
         output += "|\n"
     return output
 
+
+def repl_center_env(match, chapter, section, ind):
+    code = match.group(0)
+    tikz_code_match = re.search(tikz_stmt, code)
+    tikz_cd_code_match = re.search(tikz_cd_stmt, code)
+    if tikz_code_match is None and tikz_cd_code_match is None:
+        print(f"Found a center environment but it contains no tikz code, returning {code=}")
+        return code, False
+    compile_tikz_blocks(code, chapter, section, ind)
+    img_url = f"\n<img src=\"../../png/chapter_{chapter}/section_{section}_figure_{ind}.png\" width=\"99%\" style=\"display: block; margin-left: auto; margin-right: auto;\"/>\n"
+
+    return img_url, True
+
 def clean_code(code: str, chapter:int, section: int) -> str:
+    print(f"doing {chapter=} {section=}")
     # remove comments
     code = re.sub(tex_comment, "", code)
 
     new_code = code
     ind = 0
+    num_figures = 0
+    center_env_match = re.search(center_env, new_code)
+    while center_env_match is not None:
+        i = ind + center_env_match.start() - 1
+        replaced_code, updated = repl_center_env(center_env_match, chapter, section, num_figures)
+        j = ind + center_env_match.end() + 1
+
+        # look for next instance of \begin{center} before updating new_code
+        center_env_match = re.search(center_env, new_code[j:])
+        # update new code
+        new_code = new_code[:i] + replaced_code + new_code[j:]
+        ind = i + len(replaced_code) + 1
+        if updated:
+            num_figures += 1
     # get rid of labels for now. alg might be chopping off leading backslash after label.
     new_code = re.sub(label_stmt, "", new_code)
     new_code = re.sub(label_stmt2, "", new_code)
