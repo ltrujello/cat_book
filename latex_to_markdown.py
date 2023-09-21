@@ -1,6 +1,8 @@
 import re
 import yaml
 from pathlib import Path
+import tempfile
+import subprocess
 
 begin_document = re.compile("\\\\begin{document}")
 end_document = re.compile("\\\\end{document}")
@@ -144,6 +146,40 @@ def repl_tabular_env(match):
         output += "|".join(row)
         output += "|\n"
     return output
+
+COMPILE = True
+def compile_tikz_blocks(raw_tikz_code: str, chapter_num:int, section_num:int, figure_num:int):
+    print(f"Working on {chapter_num=} {section_num=} {figure_num=}")
+    if not COMPILE:
+        return 
+
+    pdf_destination = Path(f"docs/pdf/chapter_{chapter_num}/section_{section_num}_figure_{figure_num}.pdf")
+    if pdf_destination.exists():
+        return
+
+    with tempfile.TemporaryDirectory() as tmpdirname:
+        with open(f"tikz_template.tex") as f:
+            tikz_code = f.read()
+
+        tikz_code = re.sub("fillme", lambda x: raw_tikz_code, tikz_code)
+
+        with open(f"{tmpdirname}/tikz_code.tex", "w") as f:
+            f.write(tikz_code)
+
+        with open(f"docs/tikz/chapter_{chapter_num}/tikz_code_{section_num}_{figure_num}.tex", "w") as f:
+            f.write(tikz_code)
+
+        proc_res = subprocess.run(
+            f"latexmk -pdf -quiet -output-directory={tmpdirname} {tmpdirname}/tikz_code.tex",
+            shell=True,
+        )
+        if proc_res.returncode != 0:
+            print(f"Experience an error while processing docs/tikz/chapter_{chapter_num}/tikz_code_{section_num}_{figure_num}.tex")
+
+        pdf_file = Path(f"{tmpdirname}/tikz_code.pdf")
+        pdf_file.replace(pdf_destination)
+        print("replaced bitch")
+        print(tmpdirname)
 
 
 def repl_center_env(match, chapter, section, ind):
