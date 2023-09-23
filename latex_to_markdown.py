@@ -219,9 +219,6 @@ def clean_code(code: str, chapter:int, section: int) -> str:
     new_code = re.sub(label_stmt, "", new_code)
     new_code = re.sub(label_stmt2, "", new_code)
 
-    # deindent the code
-    new_code = textwrap.dedent(new_code)
-
     # amsthm env
     new_code = re.sub(definition_stmt, repl_def, new_code)
     new_code = re.sub(proposition_stmt, repl_prop, new_code)
@@ -231,7 +228,6 @@ def clean_code(code: str, chapter:int, section: int) -> str:
     new_code = re.sub(example_stmt, repl_example, new_code)
     new_code = re.sub(description_stmt, repl_desc, new_code)
     new_code = re.sub(proof_stmt, repl_proof, new_code)
-
 
     # replace latex bolding with ** syntax
     new_code = re.sub(textbf, "**\\1**", new_code)
@@ -263,6 +259,82 @@ def clean_code(code: str, chapter:int, section: int) -> str:
         final_code += re.sub(indent_space, "", line)
         final_code += "\n"
     return final_code
+
+
+def find_image_start_boundary(img_data):
+    ind = 0
+    while ind < len(img_data):
+        row = img_data[ind]
+        found = False
+        for col in row:
+            if col < 255:
+                print(ind)
+                found = True
+                break
+        if found:
+            break
+        ind += 1
+    return ind
+
+def find_image_end_boundary(img_data):
+    ind = len(img_data) - 1
+    while ind > 0:
+        row = img_data[ind]
+        found = False
+        for col in row:
+            if col < 255:
+                print(ind)
+                found = True
+                break
+        if found:
+            break
+        ind -= 1
+    return ind
+
+def convert_pdf_to_png(pdf_file):
+    pdf_file = Path(pdf_file)
+    chapter_dir = pdf_file.parts[-2]
+    png_filename = Path(pdf_file.parts[-1]).with_suffix(".png")
+    png_destination = Path(f"docs/png/{chapter_dir}/{png_filename}")
+    print(png_destination.resolve())
+
+    pdf_fp = str(pdf_file.resolve())
+    page_pngs = convert_from_path(pdf_fp)
+
+    # Create the png of the pdf
+    total = len(page_pngs)
+    ind = 0
+    if total > 1:
+        print(f"WARNING! {pdf_file=} has more than two pages, expected only one. Going to use"
+              " the last page. ")
+        ind = len(page_pngs) - 1
+
+    page_pngs = list(page_pngs)
+    image = page_pngs[ind]
+    print(f"Converting page {ind}/{total}")
+    # easier to find boundaries of a grayscale image
+    grayscale_image = image.convert("L")
+    img_data = np.asarray(grayscale_image)
+    y_0 = find_image_start_boundary(img_data)
+    y_1 = find_image_end_boundary(img_data)
+    x_0 = find_image_start_boundary(img_data.T)
+    x_1 = find_image_end_boundary(img_data.T)
+    horizontal_len = len(img_data.T)
+    x_0 = int(min(.20*horizontal_len, x_0))
+    x_1 = int(max(.80*horizontal_len, x_1))
+    
+    true_img = image.convert("RGB")
+    img_data = np.asarray(true_img)
+    cropped_img_data= img_data[y_0:y_1, x_0:x_1]
+    cropped_img = Image.fromarray(np.uint8(cropped_img_data))
+    cropped_img.save(str(png_destination), "PNG")
+
+        
+    # png -> np.array
+    # numpy.asarray(PIL.Image.open('test.jpg'))
+
+    # np.array -> img
+    # Image.fromarray(np.uint8(img_data))
 
 def latex_to_markdown():
     with open("tex/cat_theory_long.tex") as f:
