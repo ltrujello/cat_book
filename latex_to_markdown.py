@@ -4,6 +4,9 @@ from pathlib import Path
 import tempfile
 import subprocess
 
+from PIL import Image
+from pdf2image import convert_from_path
+
 begin_document = re.compile("\\\\begin{document}")
 end_document = re.compile("\\\\end{document}")
 chapter = re.compile(r"\\chapter{(.*?)}")
@@ -20,13 +23,21 @@ gather_star_env = re.compile("(\\\\begin{gather\*}([\s\S]*?)\\\\end{gather\*})")
 newpage_cmd = re.compile("\\\\newpage")
 tabular_env = re.compile("\\\\begin{tabular}([\s\S]*?)\\\\end{tabular}")
 indent_space = re.compile("^\\s*")
+ampersand = re.compile("&")
+end_tabular_env = re.compile("\\\\end{tabular}")
+
+# tex comment
+tex_comment = re.compile("(?<!\\\)%(.)*")
 
 # tikz regex
 center_env = re.compile("(\\\\begin{center}([\s\S]*?)\\\\end{center})")
 tikz_stmt = re.compile("\\\\begin{tikzpicture}([\s\S]*?)\\\\end{tikzpicture}")
 tikz_cd_stmt = re.compile("\\\\begin{tikzcd}([\s\S]*?)\\\\end{tikzcd}")
 
+# itemize environment
 itemize_env = re.compile("\\\\begin{itemize}([\s\S]*?)\\\\end{itemize}")
+item_stmt = re.compile("\\\\item")
+end_itemize_env = re.compile("\\\\end{itemize}")
 
 # label statement
 label_stmt = re.compile(r"\\label{(.*?)}")
@@ -41,7 +52,6 @@ theorem_stmt = re.compile("\\\\begin{theorem}([\s\S]*?)\\\\end{theorem}")
 example_stmt = re.compile("\\\\begin{example}([\s\S]*?)\\\\end{example}")
 description_stmt = re.compile("\\\\begin{example}([\s\S]*?)\\\\end{example}")
 proof_stmt = re.compile("\\\\begin{prf}([\s\S]*?)\\\\end{prf}")
-
 
 repl_def = lambda x: repl_asmthm_statement(x, "definition")
 repl_prop = lambda x: repl_asmthm_statement(x, "proposition" )
