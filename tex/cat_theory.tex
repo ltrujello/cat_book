@@ -143,7 +143,7 @@
 \renewcommand{\wp}{\mathcal{W}_{\mathrm{P}}}
 
 % Category of Sets
-\DeclareMathOperator{\Set}{\mathbf{Set}}
+\newcommand{\Set}{\textbf{Set}}
 \DeclareMathOperator{\finset}{\mathbf{FinSet}}
 \DeclareMathOperator{\finord}{\mathbf{FinOrd}}
 % "Algebraic" categories
@@ -166,7 +166,8 @@
 \renewcommand{\to}{\mathbin{\tikz[baseline] \draw[-{Stealth[length=5pt,width=4pt]}] (0pt,.6ex) -- (3.5ex,.6ex);}} 
 
 % A nice isomorphism arrow
-\newcommand{\isomarrow}{\mathrel{\setstackgap{S}{-0.5pt}\ensurestackMath{\Shortstack{\scriptstyle\sim\\ \longrightarrow}}}} 
+% \newcommand{\isomarrow}{\mathrel{\setstackgap{S}{-0.5pt}\ensurestackMath{\Shortstack{\scriptstyle\sim\\ \longrightarrow}}}} 
+\newcommand{\isomarrow}{\xrightarrow{\sim}}
 
 % A nice \cdot symbol, which is bigger than \cdot but smaller than \bullet. 
 \makeatletter % So that we access commands with "@" in them
