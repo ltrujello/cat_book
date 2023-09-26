@@ -11,13 +11,14 @@ be extended to other categories, one may wonder "well, why? And when
 will I no longer be able to apply this strategy?" The theorem 
 below answers this question. 
 
-\begin{thm}
+
+<span style="display:block" class="theorem">
 Let $\cc$ be a category and $J$ a small category. 
 Suppose $\cc$ has equalizers for every
 pair of morphisms in $\cc$, and all products indexed by
 objects of $J$ and morphisms of $J$. Then every functor 
 $F: J \to \cc$ has a limit in $\cc$. 
-\end{thm}
+</span>
 
 \textcolor{purple}{What do we mean by all products "indexed by 
 objects of $J$ and morphisms of $J$"?} What we want to do is be able 
@@ -194,9 +195,10 @@ and $i: A \to A \times A$ to obtain the equalizer.
 <img src="../../png/chapter_5/section_3_figure_10.png" width="99%" style="display: block; margin-left: auto; margin-right: auto;"/>
 Hence we see that for finite limits, we can reduce our assumptions to pullbacks and 
 a terminal object, giving rise to the final corollary. 
-\begin{thm}
+
+<span style="display:block" class="theorem">
 If a category has pullbacks and a terminal object, then it has all finite limits. 
-\end{thm}
+</span>
 
 
 

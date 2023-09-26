@@ -55,10 +55,11 @@ etc. For example, the fundamental group functor preserves products, and this is 
 one usually proves a topology course. 
 
 We now explain why we have this nice behavior.
-\begin{thm}
+
+<span style="display:block" class="theorem">
 Suppose $G: \dd \to \cc$ is a right adjoint and $F: \cc \to \dd$ is its left adjoint.
 Then $G$ preserves limits and $F$ preserves colimits.
-\end{thm}
+</span>
 
 Before a proof, we make some comments. 
 

@@ -352,7 +352,8 @@ situations with the functors $\hom_{\cc}(R, -): \cc \to **Set**$. While this
 might not seem that relevant, it applicability expands when we combine the result with our 
 previous work on representable functors in this section.
 
-\begin{thm}[ (Yoneda "Lemma")]
+
+<span style="display:block" class="theorem">[ (Yoneda "Lemma")]
 Let $K: \cc \to **Set**$ be a functor. Then for every
 object $R$ of $\cc$, we have that 
 
@@ -365,7 +366,7 @@ object $R$ of $\cc$, we have that
 
 where $\nat(F, G)$ denotes the set of all natural
 transformations between functors $F, G$.
-\end{thm}
+</span>
 
 
 <span style="display:block" class="proof">

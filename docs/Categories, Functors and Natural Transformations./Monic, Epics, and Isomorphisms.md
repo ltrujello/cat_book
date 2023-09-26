@@ -136,7 +136,7 @@ $\sigma = \tau$. Hence, we see $\pi$ is an epimorphism.
 
 Since the above constructions can be repeated in the 
 categories $\ab$, $\ring$, 
-and $R\mod$, so can the above argument. We'll see more generally 
+and $R\rmod$, so can the above argument. We'll see more generally 
 the deeper reason for why this is the case later on.
 </span>
 

@@ -5,7 +5,7 @@ window.MathJax = {
         id: ["\\mathrm{id}"],
         ob: ["\\mathrm{Ob}"],
         //\DeclareMathOperator{\*}{ \mathbin{*} }
-        path: ["\\mathrm{Path}}"],
+        path: ["\\mathrm{Path}"],
         nat: ["\\mathrm{Nat}"],
         dom: ["\\mathrm{Dom}"],
         cod: ["\\mathrm{Cod}"],
@@ -68,7 +68,8 @@ window.MathJax = {
         vect: ["\\mathbf{Vect}"],
         cat: ["\\mathbf{Cat}"],
         bm: ["\\boldsymbol{#1}",1],
-        bigcdot: ["\\bullet"]
+        bigcdot: ["\\bullet"],
+        isomarrow : ["\\xrightarrow{\\sim}"]
     }
   }
 };

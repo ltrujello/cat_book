@@ -315,7 +315,7 @@ A category $\cc$ is said to be **concrete** if there is a faithful
 functor $F: \cc \to \Set$.
 </span>
 
-Examples of concrete categories includ $\grp$, $\top$, $R\mod$,
+Examples of concrete categories includ $\grp$, $\top$, $R\rmod$,
 and many others since these categories are, in some sense, built from $\Set$. 
 Their objects are sets, and their morphisms are functions with extra properties; nevertheless, 
 at the end of the day the morphisms are still functions. Note in particular 

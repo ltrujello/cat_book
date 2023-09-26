@@ -118,9 +118,20 @@ nav:
   - 11.3 Interleaving Distances via Sublinear Projections and Superlinear Families: Persistence
       Modules/Interleaving Distances via Sublinear Projections and Superlinear Families.md
   - 11.4 General Persistence Diagrams: Persistence Modules/General Persistence Diagrams.md
-site_name: My Docs
+site_name: Category Theory
 theme:
   features:
   - content.code.copy
   - navigation.expand
   name: material
+  palette:
+  - media: '(prefers-color-scheme: light)'
+    scheme: default
+    toggle:
+      icon: material/brightness-7
+      name: Switch to dark mode
+  - media: '(prefers-color-scheme: dark)'
+    scheme: mydarkscheme
+    toggle:
+      icon: material/brightness-4
+      name: Switch to light mode

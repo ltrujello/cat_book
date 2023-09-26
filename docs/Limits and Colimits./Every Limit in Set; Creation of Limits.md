@@ -156,7 +156,8 @@ commutes for every $f_n: F_{n+1} \to F_n$, so that's how we can
 regard every $x \in \Lim F$ as a cone.
 Therefore, if we denote $\cone(*, F)$ as the set of all cones of
 $\{*\}$ over $F$, we see that $\cone(*, F) = \Lim F$. 
-\begin{thm}
+
+<span style="display:block" class="theorem">
 The category **Set** is complete. That is, if $J$ is a
 small category, every functor $F: J \to **Set**$ has a 
 limit 
@@ -176,7 +177,7 @@ v_i: \cone(*, F) \to F_i \qquad v_i(x) = \sigma^x_i(*).
 \]
 
 \vspace{-0.8cm}
-\end{thm}
+</span>
 
 
 <span style="display:block" class="proof">

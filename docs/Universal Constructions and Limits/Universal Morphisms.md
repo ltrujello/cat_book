@@ -74,10 +74,11 @@ The arrow $h$ is dashed, and should be read as
 that we will continue to use throughout this text. 
 </span>
 
-\begin{remark}
+
+<span style="display:block" class="remark">
 To the beginner, this definition will most likely make zero sense. 
 The only way that it will make sense is to see the definition in action.
-\end{remark}
+</span>
 
 A universal arrow can also be thought of as a pair $(\textcolor{NavyBlue}{C}, \textcolor{red}{u}: D \to F(\textcolor{NavyBlue}{C}))$.
 This just emphasizes that $\textcolor{NavyBlue}{C}$ is special. 

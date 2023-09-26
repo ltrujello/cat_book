@@ -20,7 +20,7 @@ To discuss these categories, we will use the notation in the leftmost column.
 |            **Ring** |Rings $(R, \cdot, +)$ |Ring homomorphisms $\phi: (R, \cdot, +) \to (S, \cdot, +)$|
 |            **CRing** |Commutative Rings $(R, \cdot, +)$ |Ring homomorphisms |
 |            $\ring$ |Rings $(R, \cdot, +)$ with identity $1 \ne 0$ |Ring homomorphisms|
-|            $R\mod$|$R$-modules $(M, +)$ |$R$-module homomorphisms|
+|            $R\rmod$|$R$-modules $(M, +)$ |$R$-module homomorphisms|
 |            $\fld$ |Fields $k$ |Field homomorphisms|
 |            $\top^*$ |Topological spaces $(X, x_0)$ with basepoint $x_0 \in X$  |Continuous functions preserving basepoints|
 |            **Toph** |Topological spaces $(X, \tau)$ |Homotopy equivalence classes |
@@ -53,7 +53,7 @@ This category, while fairly trivial, is called a **discrete category**.
 
 <span style="display:block" class="example">
 Consider any of the categories $\mon$, $\grp$, $\ring$, or 
-$R\mod$. For any object of these categories, we can create 
+$R\rmod$. For any object of these categories, we can create 
 the notion of a *grading*. Such a concept is a useful algebraic construction which 
 appears in different areas of mathematics. For simplicity, we'll consider a grading 
 on a group.
@@ -133,7 +133,7 @@ as one object categories.
 
 <span style="display:block" class="definition">
 A category $\mathcal{P}$ is said to be **thin** or a **preorder**
-if there is *at most* one morphism $f:  A \to B$ for each $A, B \in \mathcal{P}$. 
+if there is **at most** one morphism $f:  A \to B$ for each $A, B \in \mathcal{P}$. 
 </span>
 The simplest thin categories are of the form below 
 \

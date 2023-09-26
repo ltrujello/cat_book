@@ -164,12 +164,13 @@ such that the diagram below commutes.
 <img src="../../png/chapter_3/section_3_figure_0.png" width="99%" style="display: block; margin-left: auto; margin-right: auto;"/>
 </span>
 
-\begin{remark}
+
+<span style="display:block" class="remark">
 Note that to utilize the above universal property, one requires a *pair* of morphisms 
 $f: Z \to A$ and $g: Z \to B$. That is, it is not true that, if I have a single 
 morphism $f: Z \to A$, then there exists a unique $h: Z \to A \times B$ such that $\pi_A \circ h = k$. 
 That would be false in many cases. 
-\end{remark}
+</span>
 
 The above definition is a very nice one. For example, it returns the 
 concepts of products of groups or topological spaces when it is imposed 

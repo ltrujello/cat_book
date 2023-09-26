@@ -167,11 +167,12 @@ we have that they must be equal, as desired.
 
 We now introduce an important implication of these results. 
 
-\begin{thm}
+
+<span style="display:block" class="theorem">
 For any sublinear translation $\omega: **Trans**_P \to [0, \infty]$, 
 The interleaving distance $d = d^\omega$ becomes an extended psuedometric
 on $\dd^P$. 
-\end{thm}
+</span>
 
 
 <span style="display:block" class="proof">
@@ -278,9 +279,10 @@ d^{\Omega}(F,G)
 If the above set is empty, we set $d^{\Omega}(F,G) = \infty$. 
 </span>
 
-\begin{thm}
+
+<span style="display:block" class="theorem">
 The interleaving distance $d^{\Omega}$ is an extended pseudometric.
-\end{thm}
+</span>
 
 
 <span style="display:block" class="proof">

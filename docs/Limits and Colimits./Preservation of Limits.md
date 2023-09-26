@@ -20,7 +20,8 @@ Below we see a visual definition of a continuous functor.
 There's one particular and important functor which is always continuous 
 in any category. 
 
-\begin{thm}
+
+<span style="display:block" class="theorem">
 Let $\cc$ be a small category. Then for each $C \in \cc$, 
 the functor 
 
@@ -31,7 +32,7 @@ the functor
 preserves limits. (Dually, the functor 
 $\hom_{\cc}(-, C) = \hom_{\cc}(C, -):
 \cc\op \to **Set**$ takes colimits to limits.)
-\end{thm}
+</span>
 
 
 <span style="display:block" class="proof">
@@ -69,11 +70,12 @@ a functor which "creates limits" and one which preserves them?
 We'll see that their definitions are different, but creating limits 
 is the same as preserving them 
 
-\begin{thm}
+
+<span style="display:block" class="theorem">
 Suppose $G: \cc \to \dd$ creates limits for $F: J \to \cc$. 
 If $G \circ F: J \to \dd$ has a limit in $\dd$, then 
 $G$ is continuous. 
-\end{thm}
+</span>
 
 
 <span style="display:block" class="proof">

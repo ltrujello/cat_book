@@ -29,7 +29,8 @@ then $F$ and $G$ are called a \textbf{antitone Galois
 connection}. 
 </span>
 
-\begin{thm}
+
+<span style="display:block" class="theorem">
 Let $\mathcal{P}, \mathcal{Q}$ be two preorders, and suppose
 $F: \mathcal{P} \to \mathcal{Q}\op$ and
 $G:\mathcal{Q}\op \to \mathcal{P}$ are two order preserving 
@@ -44,7 +45,7 @@ F(P) \ge Q \iff P \le G(Q).
 Given such an adjunction, we then have that our unit
 establishes $P \le G(F(P))$ and the counit establishes $F(G(Q)) \le
 Q$. 
-\end{thm}
+</span>
 
 
 <span style="display:block" class="proof">

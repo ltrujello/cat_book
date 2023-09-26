@@ -130,7 +130,8 @@ $(C, i: F \to \Delta_n(C))$ is universal from \hyperref[definition:universal_mor
 
 
 </span>
-\begin{remark}
+
+<span style="display:block" class="remark">
 By Observation (**3**) as above, if $\displaystyle p: \Delta_n\left( \prod_{i=1}^{n}A_i \right) \to F$
 is a natural transformation, then it corresponds to $n$-many morphisms 
 
@@ -150,7 +151,7 @@ i_k: A_k \to \coprod_{i = 1}^{n}A_i \qquad k = 1, 2, \dots, n
 
 which again matches our intuition: A coproduct of $n$-objects should have 
 $n$-many morphisms between each of its factors and the coproduct.
-\end{remark}
+</span>
 
 We now have everything we need to define arbitrary products and coproducts, including 
 infinite ones.
@@ -196,12 +197,13 @@ $(C, i:  F \to \Delta_{\lambda}(C))$ is universal from
 
 </span>
 
-\begin{remark}
+
+<span style="display:block" class="remark">
 Notice the inherent duality present in the definition of a product and coproduct. 
 This is one of the reasons category theory is nice; one now has a new perspective of 
 understanding, for example, the free product operation and the 
 group product operation in **Grp**; they're dual concepts!
-\end{remark}
+</span>
 
 Since products and coproducts of objects are universal objects, we obtain some 
 nice results since we already know how universal objects operate. Before introduce 
@@ -297,12 +299,13 @@ The second result is left as an exercise (we outline the steps for the reader).
 
 </span>
 
-\begin{remark}
+
+<span style="display:block" class="remark">
 Note that the above proposition is saying something very deep and beautiful 
 about products and coproducts as a concept. Moreover, also note that a direct proof would have been very long-winded 
 and complicated, but that our previous work made it possible to give a proof consisting 
 of a few lines. Thus, a categorical perspective is evidently sometimes useful. 
-\end{remark}
+</span>
 
 We now introduce the following interesting property. This property becomes 
 an important observation when we begin look at *abelian categories*. 
@@ -339,11 +342,23 @@ Then we can compose them to obtain the natural transformation
 
 By the universal property of the coproduct, this implies a unique $\phi: \prod_{i \in \lambda}A_i \to \coprod_{i \in \lambda}A_i$
 such that the diagram below commutes. 
-\
-<img src="../../png/chapter_3/section_5_figure_0.png" width="99%" style="display: block; margin-left: auto; margin-right: auto;"/>
+
+
+
+
+
+
+
+
+
+
+
+
+
 </span>
 
-\begin{remark}
+
+<span style="display:block" class="remark">
 Here is one of our first uses of the word "canonical." This is not an adjective 
 that adds detail to our morphism (e.g., an extra mathematical property),
 but it is a word we superfluously wrote to emphasize to the reader 
@@ -353,7 +368,7 @@ The word "canonical" is often used in category theory language, but it is never 
 because its always secretly assumed that everyone knows what it means. 
 It's a useful word, so we will use it later on, but again: it means nothing 
 more than "There exists an obvious morphism of a given form."
-\end{remark}
+</span>
 
 {\large **Exercises**
 \vspace{0.5cm}}

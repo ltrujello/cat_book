@@ -110,10 +110,10 @@ where on objects the addition is simply permuted; on morphisms, however,
 $\sigma_{n,m}$ corresponds to the braid of length $n + m$ as below.
 \begin{figure}[h!]
 \centering
-\begin{tikzpicture}
 \def\height{5}
 \def\ptsep{0.7}
 \def\sep{5.333}
+\begin{tikzpicture}
 \tikzset{
 position label/.style={
 below = 3pt,

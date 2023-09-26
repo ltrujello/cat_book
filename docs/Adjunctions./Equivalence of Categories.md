@@ -213,7 +213,8 @@ lemma, that holds if and only if $\epsilon_D$ is a split monomorphism.
 
 
 
-\begin{thm}
+
+<span style="display:block" class="theorem">
 Let $F: \cc \to \dd$ be a functor. Then the following are
 equivalent. 
 \begin{description}
@@ -225,7 +226,7 @@ isomorphisms
 object $C$ is isomorphic to $G(D)$ for 
 some object $D$. 
 \end{description} 
-\end{thm}
+</span>
 Note that this theorem is symmetric; one could interchange $G$
 with $F$, and then obtain the same exact results. \textcolor{MidnightBlue}{Thus, one 
 way of stating this theorem is that $\cc$ and $\dd$ are equivalent

@@ -122,7 +122,8 @@ if, for all $C \in \cc$, $D \in \dd$, there is a natural bijection
 </span>
 
 This definition is somewhat strange, so we comment a few remarks. 
-\begin{remark}
+
+<span style="display:block" class="remark">
 
 *  To define an adjunction between two functors, it suffices to specify which 
 functor is the left adjoint, or which functor is the right adjoint (since one specification determines the other). 
@@ -154,7 +155,7 @@ tells us how to write down the bijection.
 
 
 
-\end{remark}
+</span>
 
 We now observe that this definition is equivalent to the existence of universal morphisms; 
 this is something we already saw in our introductory example. 

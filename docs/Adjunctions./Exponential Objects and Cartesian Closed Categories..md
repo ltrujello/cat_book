@@ -367,5 +367,5 @@ of exponentials, which isn't known when being introduced functor
 categories.}
 
 
-\chapterimage{pictures/chapter5_pic/chapt5head.pdf} 
+\chapterimage{chapter5_pic/chapt5head.pdf} 
 

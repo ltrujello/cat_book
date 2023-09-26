@@ -3,6 +3,7 @@ import yaml
 from pathlib import Path
 import tempfile
 import subprocess
+import textwrap
 
 from PIL import Image
 from pdf2image import convert_from_path
@@ -25,6 +26,8 @@ tabular_env = re.compile("\\\\begin{tabular}([\s\S]*?)\\\\end{tabular}")
 indent_space = re.compile("^\\s*")
 ampersand = re.compile("&")
 end_tabular_env = re.compile("\\\\end{tabular}")
+description_env = re.compile("\\\\begin{description}([\s\S]*?)\\\\end{description}")
+remark_env = re.compile("\\\\begin{remark}([\s\S]*?)\\\\end{remark}")
 
 # tex comment
 tex_comment = re.compile("(?<!\\\)%(.)*")
@@ -33,11 +36,13 @@ tex_comment = re.compile("(?<!\\\)%(.)*")
 center_env = re.compile("(\\\\begin{center}([\s\S]*?)\\\\end{center})")
 tikz_stmt = re.compile("\\\\begin{tikzpicture}([\s\S]*?)\\\\end{tikzpicture}")
 tikz_cd_stmt = re.compile("\\\\begin{tikzcd}([\s\S]*?)\\\\end{tikzcd}")
+minipage_env = re.compile("(\\\\begin{minipage}([\s\S]*?)\\\\end{minipage})")
 
 # itemize environment
 itemize_env = re.compile("\\\\begin{itemize}([\s\S]*?)\\\\end{itemize}")
 item_stmt = re.compile("\\\\item")
 end_itemize_env = re.compile("\\\\end{itemize}")
+end_description_env = re.compile("\\\\end{description}")
 
 # label statement
 label_stmt = re.compile(r"\\label{(.*?)}")
@@ -49,8 +54,8 @@ proposition_stmt = re.compile("\\\\begin{proposition}([\s\S]*?)\\\\end{propositi
 lemma_stmt = re.compile("\\\\begin{lemma}([\s\S]*?)\\\\end{lemma}")
 corollary_stmt = re.compile("\\\\begin{corollary}([\s\S]*?)\\\\end{corollary}")
 theorem_stmt = re.compile("\\\\begin{theorem}([\s\S]*?)\\\\end{theorem}")
+thm_env = re.compile("\\\\begin{thm}([\s\S]*?)\\\\end{thm}")
 example_stmt = re.compile("\\\\begin{example}([\s\S]*?)\\\\end{example}")
-description_stmt = re.compile("\\\\begin{example}([\s\S]*?)\\\\end{example}")
 proof_stmt = re.compile("\\\\begin{prf}([\s\S]*?)\\\\end{prf}")
 
 repl_def = lambda x: repl_asmthm_statement(x, "definition")
@@ -59,8 +64,17 @@ repl_lemma = lambda x: repl_asmthm_statement(x, "lemma")
 repl_corollary = lambda x: repl_asmthm_statement(x, "corollary")
 repl_theorem = lambda x: repl_asmthm_statement(x, "theorem")
 repl_example = lambda x: repl_asmthm_statement(x, "example")
-repl_desc = lambda x: repl_asmthm_statement(x, "description")
 repl_proof = lambda x: repl_asmthm_statement(x, "proof")
+repl_remark = lambda x: repl_asmthm_statement(x, "remark")
+
+# TODO: don't replace \textbf{} in math environments. 
+# DONE: convert latex tables to markdown tables
+# DONE: put \begin{gather} on new lines
+# TODO: address statement, description, environments
+# TODO: consider compiling TikzPictures with surrounding begin{center} or minipage code
+# TODO: handle section references
+# DONE: handle isomarrow macro
+# TODO: remove footnotes
 
 
 def repl_asmthm_statement(match, class_name):
@@ -69,21 +83,30 @@ def repl_asmthm_statement(match, class_name):
     repl = f"\n<span style=\"display:block\" class=\"{class_name}\">{env_contents}</span>"
     return repl
 
-def repl_itemize_env(match):
+def repl_listing_env(match, env):
     code = match.group(0)
 
     items = []
     ind = 0
     while True:
         curr_match = re.search(item_stmt, code[ind:])
-        next_match = re.search(item_stmt, code[ind + curr_match.end():])
+        # Early out if env contains no items
+        if curr_match is None:
+            return code
+
+        next_match = re.search(item_stmt, code[ind + curr_match.end() :])
 
         if next_match is not None:
             items.append(code[ind + curr_match.end():ind + curr_match.end() + next_match.start()])
             ind = ind + curr_match.end() + next_match.start()
-
         else:
-            next_match = re.search(end_itemize_env, code[ind + curr_match.end():])
+            print(f"{items=}")
+            print("looking for the end {env=}")
+            if env == "itemize":
+                next_match = re.search(end_itemize_env, code[ind + curr_match.end():])
+            else:
+                next_match = re.search(end_description_env, code[ind + curr_match.end():])
+
             if next_match is not None:
                 items.append(code[ind + curr_match.end(): ind + curr_match.end() + next_match.start()])
             else:
@@ -93,6 +116,9 @@ def repl_itemize_env(match):
     for item in items:
         res += f"* {item}\n\n"
     return res
+
+repl_itemize_env = lambda x: repl_listing_env(x, "itemize")
+repl_description_env = lambda x: repl_listing_env(x, "description")
 
 
 def repl_tabular_env(match):
@@ -133,8 +159,7 @@ def repl_tabular_env(match):
                     j += ind + curr_match.end() + 1
                 else:
                     curr_match = re.search(end_tabular_env, code[ind:])
-                    if curr_match is not None:
-                    else:
+                    if curr_match is None:
                         print(f"Warning: failed to find an ampersand or \\\\\\\\ in {code[ind:]}")
                     j = len(contents)
                 break
@@ -157,7 +182,7 @@ def repl_tabular_env(match):
         output += "|\n"
     return output
 
-COMPILE = True
+COMPILE = False
 def compile_tikz_blocks(raw_tikz_code: str, chapter_num:int, section_num:int, figure_num:int):
     print(f"Working on {chapter_num=} {section_num=} {figure_num=}")
     if not COMPILE:
@@ -204,6 +229,11 @@ def repl_center_env(match, chapter, section, ind):
 
     return img_url, True
 
+def repl_minipage_env(match):
+    
+
+    return 
+
 def clean_code(code: str, chapter:int, section: int) -> str:
     print(f"doing {chapter=} {section=}")
     # remove comments
@@ -214,7 +244,7 @@ def clean_code(code: str, chapter:int, section: int) -> str:
     num_figures = 0
     center_env_match = re.search(center_env, new_code)
     while center_env_match is not None:
-        i = ind + center_env_match.start() - 1
+        i = ind + center_env_match.start()
         replaced_code, updated = repl_center_env(center_env_match, chapter, section, num_figures)
         j = ind + center_env_match.end() + 1
 
@@ -235,9 +265,10 @@ def clean_code(code: str, chapter:int, section: int) -> str:
     new_code = re.sub(lemma_stmt, repl_lemma, new_code)
     new_code = re.sub(corollary_stmt, repl_corollary, new_code)
     new_code = re.sub(theorem_stmt, repl_theorem, new_code)
+    new_code = re.sub(thm_env, repl_theorem, new_code)
     new_code = re.sub(example_stmt, repl_example, new_code)
-    new_code = re.sub(description_stmt, repl_desc, new_code)
     new_code = re.sub(proof_stmt, repl_proof, new_code)
+    new_code = re.sub(remark_env, repl_remark, new_code)
 
     # replace latex bolding with ** syntax
     new_code = re.sub(textbf, "**\\1**", new_code)
@@ -258,10 +289,13 @@ def clean_code(code: str, chapter:int, section: int) -> str:
     new_code = re.sub(gather_star_env, "\n\\1\n", new_code)
     # replace itemize environments
     new_code = re.sub(itemize_env, repl_itemize_env, new_code)
+    # replace description environments
+    # new_code = re.sub(description_env, repl_description_env, new_code)
     # remove \newpage
     new_code = re.sub(newpage_cmd, "", new_code)
     # replace tabular environments with markdown tables
     new_code = re.sub(tabular_env, repl_tabular_env, new_code)
+    # replace minipage environment
 
     # de indent everything
     final_code = ""
@@ -399,6 +433,7 @@ def latex_to_markdown():
         chapter_num += 1
     create_mkdocs_yaml_nav(chapters)
 
+
 def create_mkdocs_yaml_nav(chapters):
     nav = []
     chapter_num = 1
@@ -410,7 +445,7 @@ def create_mkdocs_yaml_nav(chapters):
             nav_chapter[chapter].append({f"{chapter_num}.{section_num} {section_name}": f"{chapter}/{section_name}.md"})
             section_num += 1
 
-       nav.append(nav_chapter)
+        nav.append(nav_chapter)
         chapter_num += 1
     
     with open("mkdocs.yml") as f:
@@ -423,5 +458,12 @@ def create_mkdocs_yaml_nav(chapters):
     with open("mkdocs.yml", "w") as f:
         f.write(yaml_output)
 
+
+# def collect_section_labels():
+#     re.search(label)
+
 if __name__ == "__main__":
     latex_to_markdown()
+    # convert tikz drawings to pngs
+    # for pdf_file in Path(".").glob("docs/pdf/**/*.pdf"):
+    #     convert_pdf_to_png(str(pdf_file))

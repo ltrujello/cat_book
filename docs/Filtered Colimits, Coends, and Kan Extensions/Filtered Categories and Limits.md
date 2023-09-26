@@ -128,5 +128,5 @@ inclusions. The maximal element $X \in **Open**(X)$
 always exists, and hence makes this thin category filtered.
 </span>
 
-\chapterimage{pictures/chapter7_pic/chapt7head.pdf} 
+\chapterimage{chapter7_pic/chapt7head.pdf} 
 

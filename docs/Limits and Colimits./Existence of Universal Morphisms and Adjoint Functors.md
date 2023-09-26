@@ -179,7 +179,8 @@ $V$ is an initial object as desired.
 We can now combine all of our propositions and theorems into the following 
 one, which is the main adjoint functor theorem of interest. 
 
-\begin{thm}[ (General Adjoint Functor Theorem.)]
+
+<span style="display:block" class="theorem">[ (General Adjoint Functor Theorem.)]
 Let $\dd$ be complete with small homsets. A functor 
 $G: \dd \to \cc$ has a left adjoint if and only if it preserves all small 
 limits and satisfies the **solution set condition**: 
@@ -201,7 +202,7 @@ h = G(t) \circ f_i.
 \]
 
 \end{minipage}  
-\end{center}   \end{thm}
+\end{center}   </span>
 
 \textcolor{Plum}{The above theorem helps us find out when we can get a 
 left adjoint. Prior to this theorem, we already know what happened if 
@@ -214,7 +215,8 @@ which preserves limits from a complete category, but still has no left adjoint.}
 
 As a converse to the above theorem, we have the following. 
 
-\begin{thm}[ (Representability Theorem.)]
+
+<span style="display:block" class="theorem">[ (Representability Theorem.)]
 Let $\cc$ be a small, complete category. A functor $K: \cc \to 
 **Set**$ is representable if and only if $K$ preserves limits 
 and satisfies the following **solution set condition**: 
@@ -229,7 +231,7 @@ f: s \to C \text{ such that } K(f)(y) = x.
 \]
 
 \end{minipage}
-\end{center}   \end{thm}
+\end{center}   </span>
 
 
 

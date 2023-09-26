@@ -89,5 +89,5 @@ Group object in the category of Top is a topological group.
 Monoid in the category of $R$ modules is an associative algebra.
 </span>
 
-\chapterimage{pictures/chapter3_pic/chapt3head.pdf}
+\chapterimage{chapter3_pic/chapt3head.pdf}
 

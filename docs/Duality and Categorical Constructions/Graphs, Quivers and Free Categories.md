@@ -155,14 +155,15 @@ There must exist an injection $i: Q \to U(F(Q))$ which sends $Q$ to the skeleton
 of $U(F_C(Q))$. It turns out that this morphism is universal from $Q$ to $U$. 
 
 
-\begin{thm}
+
+<span style="display:block" class="theorem">
 Let $Q$ be a quiver. Then there is a graph homomorphism $i: Q \to U(F_C(Q))$ 
 such that, for any other graph homomorphism
 $\phi: Q \to U(\cc)$ with $\cc$ a category, there exists a unique
 functor $F: F_C(Q) \to \cc$ where $U(F) \circ i = \phi$. That is,
 \
 <img src="../../png/chapter_2/section_6_figure_8.png" width="99%" style="display: block; margin-left: auto; margin-right: auto;"/>
-\end{thm}
+</span>
 This is an example of a universal arrow; the dotted lines are the
 morphisms which are forced to exist by the conditions of the
 diagram, which is the idea of a universal element.

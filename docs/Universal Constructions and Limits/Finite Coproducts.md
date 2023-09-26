@@ -168,12 +168,13 @@ end{definition}
 
 It is now clear that, coproducts in **Set** exist; it is the disjoint union.
 
-\begin{remark}
+
+<span style="display:block" class="remark">
 Note that to utilize the above universal property, one requires a *pair* of morphisms 
 $f: A \to Z$ and $g: B \to Z$. That is, it is not true that, if I have a single 
 morphism $k: A \to Z$, then there exists a unique $h: A \amalg B \to Z$ such that $h \circ i_X = k$. 
 That would be false in many cases. 
-\end{remark}
+</span>
 
 
 <span style="display:block" class="proposition">

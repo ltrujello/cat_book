@@ -141,5 +141,5 @@ of a morphism $t: R \to S$, so that we have
 Hence we see that a pushout is a universal arrow from $(f, g)$ to
 $\Delta$.
 
-\chapterimage{pictures/chapter4_pic/chapt4head.pdf}
+\chapterimage{chapter4_pic/chapt4head.pdf}
 

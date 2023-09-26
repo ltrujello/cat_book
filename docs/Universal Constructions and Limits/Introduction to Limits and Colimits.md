@@ -110,11 +110,12 @@ below commutes.
 
 </span>
 
-\begin{remark}
+
+<span style="display:block" class="remark">
 We remind the reader that limits do not always exist for certain functors. 
 This is because universal objects do not always exist. We will eventually discuss 
 conditions for existence of limits.
-\end{remark}
+</span>
 
 Next, we offer the definition of a limit. 
 
@@ -132,7 +133,8 @@ Now is a good time to use Proposition \ref{proposition:cones_are_natural_transfo
 and reinterpret the definition of a colimit as a family of morphisms 
 like we did in the definition of a limit.
 
-\begin{remark}
+
+<span style="display:block" class="remark">
 We comment on the notation of a limit. 
 
 *  Many people denote the limit of a functor as $\Limfrom F$. 
@@ -155,7 +157,7 @@ warrants a comment to the reader.
 
 Moving forward, I will simply write  $\Lim F$ and $\Colim F$, since I see no need to make 
 the notation anymore complicated than it needs to be. 
-\end{remark}
+</span>
 
 
 <span style="display:block" class="example">
@@ -288,7 +290,8 @@ with $F$ over some object $C$, there exists a unique $h$ such that the diagram b
 This then means that $R = \Colim F$, which proves this direction.
 </span>
 
-\begin{remark}
+
+<span style="display:block" class="remark">
 The above theorem is actually quite remarkable. 
 We have linked the existence of our limit 
 to the representability of a particular 
@@ -296,7 +299,7 @@ functor (one which we understand fairly well).
 This tells us
 the concept of a cone is very intimately linked to that of a 
 limit and colimit.
-\end{remark}
+</span>
 
 {\large **Exercises**
 \vspace{0.5cm}}
