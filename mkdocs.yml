@@ -8,121 +8,101 @@ markdown_extensions:
 - pymdownx.arithmatex:
     generic: true
 nav:
-- Categories, Functors and Natural Transformations.:
-  - '1.1 Introduction: What are the Foundations of Math?': 'Categories, Functors and
-      Natural Transformations./Introduction: What are the Foundations of Math?.md'
-  - 1.2 Motivation for Category Theory: Categories, Functors and Natural Transformations./Motivation
-      for Category Theory.md
-  - 1.3 Category Theory Axioms.: Categories, Functors and Natural Transformations./Category
-      Theory Axioms..md
-  - 1.4 Examples of Categories: Categories, Functors and Natural Transformations./Examples
-      of Categories.md
-  - 1.5 Paths and Diagrams in Categories: Categories, Functors and Natural Transformations./Paths
-      and Diagrams in Categories.md
-  - 1.6 Functors: Categories, Functors and Natural Transformations./Functors.md
-  - 1.7 Examples and Nonexamples of Functors: Categories, Functors and Natural Transformations./Examples
-      and Nonexamples of Functors.md
-  - 1.8 Forgetful, Full and Faithful Functors.: Categories, Functors and Natural Transformations./Forgetful,
-      Full and Faithful Functors..md
-  - 1.9 Natural Transformations: Categories, Functors and Natural Transformations./Natural
-      Transformations.md
-  - 1.10 Monic, Epics, and Isomorphisms: Categories, Functors and Natural Transformations./Monic,
-      Epics, and Isomorphisms.md
-  - 1.11 Initial, Terminal, and Zero Objects: Categories, Functors and Natural Transformations./Initial,
-      Terminal, and Zero Objects.md
-- Duality and Categorical Constructions:
-  - 2.1 $\mathcal{C: Duality and Categorical Constructions/$\mathcal{C.md
-  - 2.2 Products of Categories, Functors: Duality and Categorical Constructions/Products
-      of Categories, Functors.md
-  - 2.3 Functor Categories: Duality and Categorical Constructions/Functor Categories.md
-  - 2.4 Vertical, Horizontal Composition; Interchange Laws: Duality and Categorical
-      Constructions/Vertical, Horizontal Composition; Interchange Laws.md
-  - 2.5 Slice and Comma Categories.: Duality and Categorical Constructions/Slice and
-      Comma Categories..md
-  - 2.6 Graphs, Quivers and Free Categories: Duality and Categorical Constructions/Graphs,
-      Quivers and Free Categories.md
-  - 2.7 Quotient Categories: Duality and Categorical Constructions/Quotient Categories.md
-  - 2.8 Monoids, Groups and Groupoids in Categories: Duality and Categorical Constructions/Monoids,
-      Groups and Groupoids in Categories.md
-- Universal Constructions and Limits:
-  - 3.1 Universal Morphisms: Universal Constructions and Limits/Universal Morphisms.md
-  - 3.2 Representable Functors and Yoneda's Lemma: Universal Constructions and Limits/Representable
-      Functors and Yoneda's Lemma.md
-  - 3.3 Finite Products: Universal Constructions and Limits/Finite Products.md
-  - 3.4 Finite Coproducts: Universal Constructions and Limits/Finite Coproducts.md
-  - 3.5 Arbitrary Products and Coproducts in Categories: Universal Constructions and
-      Limits/Arbitrary Products and Coproducts in Categories.md
-  - 3.6 Introduction to Limits and Colimits: Universal Constructions and Limits/Introduction
-      to Limits and Colimits.md
-  - 3.7 Equalizers and Coequalizers: Universal Constructions and Limits/Equalizers
-      and Coequalizers.md
-  - 3.8 Pullbacks and Pushouts: Universal Constructions and Limits/Pullbacks and Pushouts.md
-- Adjunctions.:
-  - 4.1 Introduction to Adjunctions.: Adjunctions./Introduction to Adjunctions..md
-  - 4.2 Reflective Subcategories.: Adjunctions./Reflective Subcategories..md
-  - 4.3 Equivalence of Categories: Adjunctions./Equivalence of Categories.md
-  - 4.4 Adjoints on Preorders.: Adjunctions./Adjoints on Preorders..md
-  - 4.5 Exponential Objects and Cartesian Closed Categories.: Adjunctions./Exponential
-      Objects and Cartesian Closed Categories..md
-- Limits and Colimits.:
-  - 5.1 Every Limit in Set; Creation of Limits: Limits and Colimits./Every Limit in
-      Set; Creation of Limits.md
-  - 5.2 Inverse and Direct Limits.: Limits and Colimits./Inverse and Direct Limits..md
-  - 5.3 Limits from Products, Equalizers, and Pullbacks.: Limits and Colimits./Limits
-      from Products, Equalizers, and Pullbacks..md
-  - 5.4 Preservation of Limits: Limits and Colimits./Preservation of Limits.md
-  - 5.5 Adjoints on Limits: Limits and Colimits./Adjoints on Limits.md
-  - 5.6 Existence of Universal Morphisms and Adjoint Functors: Limits and Colimits./Existence
-      of Universal Morphisms and Adjoint Functors.md
-  - 5.7 Subobjects and Quotient Objects: Limits and Colimits./Subobjects and Quotient
-      Objects.md
-- Filtered Colimits, Coends, and Kan Extensions:
-  - 6.1 Filtered Categories and Limits: Filtered Colimits, Coends, and Kan Extensions/Filtered
-      Categories and Limits.md
-- Monoidal Categories:
-  - 7.1 Monoidal Categories: Monoidal Categories/Monoidal Categories.md
-  - 7.2 Monoidal Functors: Monoidal Categories/Monoidal Functors.md
-  - 7.3 What are those Coherence Conditions?: Monoidal Categories/What are those Coherence
-      Conditions?.md
-  - 7.4 Mac Lane's Coherence Theorem: Monoidal Categories/Mac Lane's Coherence Theorem.md
-  - 7.5 Braided and Symmetric Monoidal Categories: Monoidal Categories/Braided and
-      Symmetric Monoidal Categories.md
-  - 7.6 Coherence for Braided Monoidal Categories: Monoidal Categories/Coherence for
-      Braided Monoidal Categories.md
-  - 7.7 Monoids, Groups, in Symmetric Monoidal Categories: Monoidal Categories/Monoids,
-      Groups, in Symmetric Monoidal Categories.md
-  - 7.8 Enriched Categories: Monoidal Categories/Enriched Categories.md
-- Abelian Categories:
-  - 8.1 Preadditive Categories: Abelian Categories/Preadditive Categories.md
-  - 8.2 Additive Categories: Abelian Categories/Additive Categories.md
-  - 8.3 Preabelian Categories: Abelian Categories/Preabelian Categories.md
-  - 8.4 Kernels and Cokernels: Abelian Categories/Kernels and Cokernels.md
-  - 8.5 Abelian Categories: Abelian Categories/Abelian Categories.md
-- Operads:
-  - 9.1 Operads on Sets: Operads/Operads on Sets.md
-  - 9.2 General Operads in Symmetric Monoidal Categories: Operads/General Operads
-      in Symmetric Monoidal Categories.md
-  - '9.3 Partial Composition: Restructuring Operads': 'Operads/Partial Composition:
-      Restructuring Operads.md'
-  - 9.4 The Braid Groups Form a (nonsymmetric) Operad: Operads/The Braid Groups Form
-      a (nonsymmetric) Operad.md
-- Sheaves:
-  - 10.1 Topological Presheaves and Sheaves: Sheaves/Topological Presheaves and Sheaves.md
-  - 10.2 Abstracting Sheaves: Sheaves/Abstracting Sheaves.md
-  - 10.3 Stalks and Germs: Sheaves/Stalks and Germs.md
-- Persistence Modules:
-  - 11.1 Persistence modules on $\rr$.: Persistence Modules/Persistence modules on
-      $\rr$..md
-  - 11.2 Generalized Persistence Modules.: Persistence Modules/Generalized Persistence
-      Modules..md
-  - 11.3 Interleaving Distances via Sublinear Projections and Superlinear Families: Persistence
-      Modules/Interleaving Distances via Sublinear Projections and Superlinear Families.md
-  - 11.4 General Persistence Diagrams: Persistence Modules/General Persistence Diagrams.md
+    - Home: http://localhost:8891
+    - Category Theory: 
+        - Home: index.md
+        - Categories, Functors and Natural Transformations.: 
+            - '1.1 Introduction: What are the Foundations of Math?': 'Categories, Functors and
+            Natural Transformations./Introduction: What are the Foundations of Math?.md'
+            - 1.2 Motivation for Category Theory: Categories, Functors and Natural Transformations./Motivation
+                for Category Theory.md
+            - 1.3 Category Theory Axioms.: Categories, Functors and Natural Transformations./Category
+                Theory Axioms..md
+            - 1.4 Examples of Categories: Categories, Functors and Natural Transformations./Examples
+                of Categories.md
+            - 1.5 Paths and Diagrams in Categories: Categories, Functors and Natural Transformations./Paths
+                and Diagrams in Categories.md
+            - 1.6 Functors: Categories, Functors and Natural Transformations./Functors.md
+            - 1.7 Examples and Nonexamples of Functors: Categories, Functors and Natural Transformations./Examples
+                and Nonexamples of Functors.md
+            - 1.8 Forgetful, Full and Faithful Functors.: Categories, Functors and Natural Transformations./Forgetful,
+                Full and Faithful Functors..md
+            - 1.9 Natural Transformations: Categories, Functors and Natural Transformations./Natural
+                Transformations.md
+            - 1.10 Monic, Epics, and Isomorphisms: Categories, Functors and Natural Transformations./Monic,
+                Epics, and Isomorphisms.md
+            - 1.11 Initial, Terminal, and Zero Objects: Categories, Functors and Natural Transformations./Initial, Terminal, and Zero Objects.md
+        - Duality and Categorical Constructions:
+            - 2.1 $\mathcal: Duality and Categorical Constructions/$\mathcal{C.md
+            - 2.2 Products of Categories, Functors: Duality and Categorical Constructions/Products of Categories, Functors.md
+            - 2.3 Functor Categories: Duality and Categorical Constructions/Functor Categories.md
+            - 2.4 Vertical, Horizontal Composition; Interchange Laws: Duality and Categorical Constructions/Vertical, Horizontal Composition; Interchange Laws.md
+            - 2.5 Slice and Comma Categories.: Duality and Categorical Constructions/Slice and Comma Categories..md
+            - 2.6 Graphs, Quivers and Free Categories: Duality and Categorical Constructions/Graphs, Quivers and Free Categories.md
+            - 2.7 Quotient Categories: Duality and Categorical Constructions/Quotient Categories.md
+            - 2.8 Monoids, Groups and Groupoids in Categories: Duality and Categorical Constructions/Monoids, Groups and Groupoids in Categories.md
+        - Universal Constructions and Limits:
+            - 3.1 Universal Morphisms: Universal Constructions and Limits/Universal Morphisms.md
+            - 3.2 Representable Functors and Yoneda's Lemma: Universal Constructions and Limits/Representable Functors and Yoneda's Lemma.md
+            - 3.3 Finite Products: Universal Constructions and Limits/Finite Products.md
+            - 3.4 Finite Coproducts: Universal Constructions and Limits/Finite Coproducts.md
+            - 3.5 Arbitrary Products and Coproducts in Categories: Universal Constructions and Limits/Arbitrary Products and Coproducts in Categories.md
+            - 3.6 Introduction to Limits and Colimits: Universal Constructions and Limits/Introduction to Limits and Colimits.md
+            - 3.7 Equalizers and Coequalizers: Universal Constructions and Limits/Equalizers and Coequalizers.md
+            - 3.8 Pullbacks and Pushouts: Universal Constructions and Limits/Pullbacks and Pushouts.md
+        - Adjunctions.:
+            - 4.1 Introduction to Adjunctions.: Adjunctions./Introduction to Adjunctions..md
+            - 4.2 Reflective Subcategories.: Adjunctions./Reflective Subcategories..md
+            - 4.3 Equivalence of Categories: Adjunctions./Equivalence of Categories.md
+            - 4.4 Adjoints on Preorders.: Adjunctions./Adjoints on Preorders..md
+            - 4.5 Exponential Objects and Cartesian Closed Categories.: Adjunctions./Exponential Objects and Cartesian Closed Categories..md
+        - Limits and Colimits.:
+            - 5.1 Every Limit in Set; Creation of Limits: Limits and Colimits./Every Limit in Set; Creation of Limits.md
+            - 5.2 Inverse and Direct Limits.: Limits and Colimits./Inverse and Direct Limits..md
+            - 5.3 Limits from Products, Equalizers, and Pullbacks.: Limits and Colimits./Limits from Products, Equalizers, and Pullbacks..md
+            - 5.4 Preservation of Limits: Limits and Colimits./Preservation of Limits.md
+            - 5.5 Adjoints on Limits: Limits and Colimits./Adjoints on Limits.md
+            - 5.6 Existence of Universal Morphisms and Adjoint Functors: Limits and Colimits./Existence of Universal Morphisms and Adjoint Functors.md
+            - 5.7 Subobjects and Quotient Objects: Limits and Colimits./Subobjects and Quotient Objects.md
+        - Filtered Colimits, Coends, and Kan Extensions:
+            - 6.1 Filtered Categories and Limits: Filtered Colimits, Coends, and Kan Extensions/Filtered Categories and Limits.md
+        - Monoidal Categories:
+            - 7.1 Monoidal Categories: Monoidal Categories/Monoidal Categories.md
+            - 7.2 Monoidal Functors: Monoidal Categories/Monoidal Functors.md
+            - 7.3 What are those Coherence Conditions?: Monoidal Categories/What are those Coherence Conditions?.md
+            - 7.4 Mac Lane's Coherence Theorem: Monoidal Categories/Mac Lane's Coherence Theorem.md
+            - 7.5 Braided and Symmetric Monoidal Categories: Monoidal Categories/Braided and Symmetric Monoidal Categories.md
+            - 7.6 Coherence for Braided Monoidal Categories: Monoidal Categories/Coherence for Braided Monoidal Categories.md
+            - 7.7 Monoids, Groups, in Symmetric Monoidal Categories: Monoidal Categories/Monoids, Groups, in Symmetric Monoidal Categories.md
+            - 7.8 Enriched Categories: Monoidal Categories/Enriched Categories.md
+        - Abelian Categories:
+            - 8.1 Preadditive Categories: Abelian Categories/Preadditive Categories.md
+            - 8.2 Additive Categories: Abelian Categories/Additive Categories.md
+            - 8.3 Preabelian Categories: Abelian Categories/Preabelian Categories.md
+            - 8.4 Kernels and Cokernels: Abelian Categories/Kernels and Cokernels.md
+            - 8.5 Abelian Categories: Abelian Categories/Abelian Categories.md
+        - Operads:
+            - 9.1 Operads on Sets: Operads/Operads on Sets.md
+            - 9.2 General Operads in Symmetric Monoidal Categories: Operads/General Operads in Symmetric Monoidal Categories.md
+            - '9.3 Partial Composition: Restructuring Operads': 'Operads/Partial Composition: Restructuring Operads.md'
+            - 9.4 The Braid Groups Form a (nonsymmetric) Operad: Operads/The Braid Groups Form a (nonsymmetric) Operad.md
+        - Sheaves:
+            - 10.1 Topological Presheaves and Sheaves: Sheaves/Topological Presheaves and Sheaves.md
+            - 10.2 Abstracting Sheaves: Sheaves/Abstracting Sheaves.md
+            - 10.3 Stalks and Germs: Sheaves/Stalks and Germs.md
+        - Persistence Modules:
+            - 11.1 Persistence modules on $\rr$.: Persistence Modules/Persistence modules on $\rr$..md
+            - 11.2 Generalized Persistence Modules.: Persistence Modules/Generalized Persistence Modules..md
+            - 11.3 Interleaving Distances via Sublinear Projections and Superlinear Families: Persistence Modules/Interleaving Distances via Sublinear Projections and Superlinear Families.md
+            - 11.4 General Persistence Diagrams: Persistence Modules/General Persistence Diagrams.md
+
 site_name: Category Theory
 theme:
   features:
   - content.code.copy
   - navigation.expand
+  - navigation.tabs
+
   name: material
   palette:
   - media: '(prefers-color-scheme: light)'
