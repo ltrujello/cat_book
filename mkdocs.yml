@@ -95,6 +95,11 @@ nav:
             - 11.2 Generalized Persistence Modules.: Persistence Modules/Generalized Persistence Modules..md
             - 11.3 Interleaving Distances via Sublinear Projections and Superlinear Families: Persistence Modules/Interleaving Distances via Sublinear Projections and Superlinear Families.md
             - 11.4 General Persistence Diagrams: Persistence Modules/General Persistence Diagrams.md
+    - Algebra Notes: http://localhost:8890
+    - Neural Network Notes: http://localhost:8892
+    - Associahedron: foo
+    - Tikz-Python: https://ltrujello.github.io/Tikz-Python/
+    - Poly-Rust: https://github.com/ltrujello/poly-rust
 
 site_name: Category Theory
 theme:

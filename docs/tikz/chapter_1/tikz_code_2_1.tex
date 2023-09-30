@@ -1,0 +1,450 @@
+\documentclass[12pt,letterpaper]{book}
+\usepackage[margin=0.9in]{geometry}
+\usepackage[utf8]{inputenc} 
+\usepackage[english]{babel}
+\usepackage{graphicx}
+\usepackage{amsmath, amsfonts, amssymb, amsthm, thmtools}
+\usepackage{braket} 
+\usepackage{relsize} 
+\usepackage{float}
+\usepackage{mathtools}
+\usepackage{lmodern} 
+\usepackage[T1]{fontenc}
+\usepackage{fancyhdr}
+\usepackage[dvipsnames]{xcolor} % Colors, use dvipsnames for more color options
+\usepackage{framed} % Fancy leftbar
+\usepackage[normalem]{ulem}
+\usepackage{tikz-cd} % Diagrams
+\usepackage{tikz} % General purpose graphics
+\usepackage{tikz-3dplot}
+\usepackage[most]{tcolorbox} % For theorem boxing
+\usepackage{bm} % For better bold math font
+\usepackage{old-arrows} 
+\usepackage[usestackEOL]{stackengine}
+\usepackage{sectsty}
+\usepackage[hyperfootnotes=false]{hyperref} % For clickable table of contents
+\usepackage[linesnumbered, ruled, boxruled]{algorithm2e} % Fancy algorithm presentation
+\usepackage{calc} % For simpler calculation - used for spacing the index letter headings correctly
+\usepackage{makeidx} % Required to make an index
+\usepackage{verbatim}
+\usepackage{titlesec} % Allows customization of titles
+\usepackage{enumitem} % Customize lists
+\usepackage{booktabs} %  Required for nicer horizontal rules in tables
+\usepackage{eso-pic} %  Required for specifying an image background in the title page
+\usepackage{titletoc, tocloft, pgffor}
+\usepackage[titletoc]{appendix} % For appendix
+\usepackage{braids}
+\usepackage{adjustbox} % Very useful boxing environment
+\usepackage{setspace} % Variable line spacing
+\usepackage{soul}
+
+%----------------------------------------------------------------------------------------
+%	Global Document Settings
+%----------------------------------------------------------------------------------------
+\setcounter{section}{1} % Avoid counting from zero
+\linespread{1.1} % Set line spacing
+\graphicspath{{pictures/}}% Set graphics directory
+\hypersetup{ % Set hyperref settings
+    colorlinks,
+    citecolor=black,
+    filecolor=black,
+    linkcolor=black,
+    urlcolor=black
+}
+\setitemize{noitemsep,topsep=0.5em, parsep=0.5em ,partopsep=0pt}
+\setlist{nolistsep} %  Reduce spacing between bullet points and numbered lists
+
+%----------------------------------------------------------------------------------------
+%	TikZ Settings
+%----------------------------------------------------------------------------------------
+\usetikzlibrary{
+    arrows, 
+    arrows.meta, 
+    braids, 
+    calc, 
+    shapes.geometric,
+    decorations.markings,
+    decorations.pathreplacing, 
+    intersections,
+    hobby
+}
+% Set stealth arrows in TikzCD
+\tikzcdset{
+    arrow style = tikz, diagrams={>={Stealth[scale=1]}}
+} 
+% Set stealth arrows in TikZ
+\tikzset{
+    >={Stealth[scale=1]}
+} 
+\def\tikzpicc{tikzpicture}
+
+%----------------------------------------------------------------------------------------
+%	Math Commands
+%----------------------------------------------------------------------------------------
+% First we need to overwrite some existing commands. 
+\let\*\relax 
+\let\path\relax 
+\let\ker\relax 
+\let\im\relax
+\let\hom\relax
+\let\Set\relax
+\let\top\relax
+\let\ll\relax
+%% Various Math Operators
+\DeclareMathOperator{\im}{\rm{Im}}
+\DeclareMathOperator{\id}{\mathrm{id}}
+\DeclareMathOperator{\ob}{\mathrm{Ob}}
+\DeclareMathOperator{\*}{ \mathbin{*} }
+\DeclareMathOperator{\path}{\mathrm{Path}} 
+\DeclareMathOperator{\nat}{\mathrm{Nat}}
+\DeclareMathOperator{\dom}{\mathrm{Dom}}
+\DeclareMathOperator{\cod}{\mathrm{Cod}}
+\DeclareMathOperator{\gal}{\mathrm{Gal}}
+\DeclareMathOperator{\aut}{\mathrm{Aut}}
+\DeclareMathOperator{\cone}{\mathrm{Cone}}
+\DeclareMathOperator{\fun}{\mathrm{Fun}}
+\DeclareMathOperator{\proj}{\mathrm{proj}}
+\DeclareMathOperator{\coker}{\mathrm{Coker}}
+\DeclareMathOperator{\aend}{\mathrm{End}} %a is added because LaTeX does not allow commands to begin with "end."
+\DeclareMathOperator{\spec}{\mathrm{Spec}}
+\DeclareMathOperator{\ker}{\mathrm{Ker}}
+\DeclareMathOperator*{\Lim}{\mathrm{Lim }}
+\DeclareMathOperator*{\Colim}{\mathrm{Colim }}
+\DeclareMathOperator{\hom}{\mathrm{Hom}}
+\DeclareMathOperator{\Char}{\mathrm{char}} % We'd prefer \char, but... NEVER overwrite \char! TeX will die.
+\DeclareMathOperator{\ll}{\mathcal{L}}
+
+%% General Math Shortcuts
+\newcommand{\zz}{\mathbb{Z}}
+\newcommand{\rr}{\mathbb{R}}
+\newcommand{\nn}{\mathbb{N}}
+\newcommand{\qq}{\mathbb{Q}}
+\newcommand{\normal}{\unlhd}
+\newcommand{\join}{\vee}
+\newcommand{\meet}{\wedge}
+\renewcommand{\epsilon}{\varepsilon}
+\renewcommand{\phi}{\varphi}
+\renewcommand{\subset}{\subseteq}
+\newcommand{\op}{^{\mathrm{op}}}
+
+%% Category Shortcuts
+\newcommand{\bb}{\mathcal{B}}
+\newcommand{\cc}{\mathcal{C}}
+\newcommand{\dd}{\mathcal{D}}
+\newcommand{\ee}{\mathcal{E}}
+\newcommand{\ff}{\mathcal{F}}
+\newcommand{\mm}{\mathcal{M}}
+\newcommand{\pp}{\mathcal{P}} 
+\newcommand{\qqq}{\mathcal{Q}}
+\newcommand{\vv}{\mathcal{V}}
+\newcommand{\ww}{\mathcal{W}}
+\renewcommand{\aa}{\mathcal{A}}
+\renewcommand{\ee}{\mathcal{E}}
+\renewcommand{\ss}{\mathcal{S}}
+\renewcommand{\wp}{\mathcal{W}_{\mathrm{P}}}
+
+% Category of Sets
+\DeclareMathOperator{\Set}{\mathbf{Set}}
+\DeclareMathOperator{\finset}{\mathbf{FinSet}}
+\DeclareMathOperator{\finord}{\mathbf{FinOrd}}
+% "Algebraic" categories
+\DeclareMathOperator{\grp}{\mathbf{Grp}}
+\DeclareMathOperator{\ab}{\mathbf{Ab}}
+\DeclareMathOperator{\ring}{\mathbf{Ring}}
+\DeclareMathOperator{\cring}{\mathbf{CRing}}
+\DeclareMathOperator{\mon}{\mathbf{Mon}}
+\DeclareMathOperator{\rmod}{\mathbf{-Mod}}
+\DeclareMathOperator{\alg}{\mathbf{Alg}}
+\DeclareMathOperator{\fld}{\mathbf{Fld}}
+% Other Categories
+\DeclareMathOperator{\open}{\mathbf{Open}}
+\DeclareMathOperator{\top}{\mathbf{Top}}
+\DeclareMathOperator{\Toph}{\mathbf{Toph}}
+\DeclareMathOperator{\vect}{\mathbf{Vect}}
+\DeclareMathOperator{\cat}{\mathbf{Cat}}
+
+% A nice \to command
+\renewcommand{\to}{\mathbin{\tikz[baseline] \draw[-{Stealth[length=5pt,width=4pt]}] (0pt,.6ex) -- (3.5ex,.6ex);}} 
+
+% A nice isomorphism arrow
+\newcommand{\isomarrow}{\mathrel{\setstackgap{S}{-0.5pt}\ensurestackMath{\Shortstack{\scriptstyle\sim\\ \longrightarrow}}}} 
+
+% A nice \cdot symbol, which is bigger than \cdot but smaller than \bullet. 
+\makeatletter % So that we access commands with "@" in them
+\newcommand*\bcdot{\mathpalette\bcdot@{.6}}
+\newcommand*\bcdot@[2]{\mathbin{\vcenter{\hbox{\scalebox{#2}{$\m@th#1\bullet$}}}}}
+\DeclareMathOperator{\bigcdot}{\mathbin{\bcdot}}
+\makeatother
+
+% These are \Lim and \Colim with arrows underneath
+\newcommand{\Arrowto}[1]{\parbox{#1}{\tikz{\draw[->](0,0)--(#1,0);}}}
+\newcommand{\Arrowfrom}[1]{\parbox{#1}{\tikz{\draw[<-](0,0)--(#1,0);}}}
+\DeclareMathOperator*{\Limto}{\Lim_{\Arrowto{0.8cm}}}
+\DeclareMathOperator*{\Limfrom}{\Lim_{\Arrowfrom{0.8cm}}}
+\DeclareMathOperator*{\Colimto}{\Colim_{\Arrowto{1cm}}}
+\DeclareMathOperator*{\Colimfrom}{\Colim_{\Arrowfrom{1cm}}}
+
+% To type out adjunctions
+\newcommand{\adjunction}[4]{
+    \begin{tikzcd}[ampersand replacement = \&] %\newcommand freaks out with & symbols
+        #1
+        \arrow[r, shift right = -0.5ex, "#2"]
+        \&
+        #3
+        \arrow[l, shift right = -0.5ex, "#4"]
+    \end{tikzcd}
+}
+
+%----------------------------------------------------------------------------------------
+%	Non-Math Commands
+%----------------------------------------------------------------------------------------
+
+% Some colors
+\definecolor{processBlue}{HTML}{E0F8FF}
+\definecolor{mypurple}{HTML}{4D34A4}
+\definecolor{navy}{RGB}{20,150,220}
+\definecolor{purp}{HTML}{CDCBFF}  
+
+\begin{document}
+\pagestyle{empty} % no page numbers
+
+\begin{center}
+
+\begin{center}
+    
+        \begin{tikzpicture}[>=stealth]
+            
+            \tikzstyle{surface}=[left color=NavyBlue!30,right color=NavyBlue!60, 
+            opacity = 0.8
+            ]
+            
+            \tikzstyle{em_triangle}=[left color=Purple!30,right color=Purple!60,
+            opacity = 0.8
+            ]
+            
+            \tikzstyle{triangle}=[left color=Purple!30,right color=Purple!50,
+            opacity = 0.8
+            ]
+            
+            \tikzstyle{shadow}=[left color=gray!10,right color=gray!20, opacity = 0.8, rounded corners=0.5cm]
+            \pgfmathsetmacro{\scale}{4}
+            \pgfmathsetmacro{\zoffset}{-10}
+            \pgfmathsetmacro{\yoffset}{-3}
+            \pgfmathsetmacro{\xoffset}{-6}
+        
+            
+            \coordinate (origin) at (-\xoffset, -\yoffset, -\zoffset);
+        
+            
+            \coordinate (A) at (\scale -\xoffset, -\yoffset,-\zoffset);
+            \coordinate (B) at (-\xoffset, \scale-\yoffset,-\zoffset);
+            \coordinate (C) at (-\xoffset, -\yoffset,\scale-\zoffset);
+        
+            \draw[semithick, ->] (origin) --  (A);
+            \draw[semithick, ->] (origin) --  (B);
+            \draw[semithick, ->] (origin) --  (C);
+    
+            
+            \pgfmathsetmacro{\axesshift}{8}
+            \coordinate (a) at (\scale -\xoffset - \axesshift, -\yoffset,-\zoffset);
+            \coordinate (b) at (-\xoffset -  \axesshift, \scale-\yoffset,-\zoffset);
+            \coordinate (c) at (-\xoffset - \axesshift, -\yoffset,\scale-\zoffset);
+            
+            
+            \coordinate (left_origin) at (-\xoffset - \axesshift, -\yoffset, -\zoffset);
+            \draw[semithick, ->] (left_origin) --  (a);
+            \draw[semithick, ->] (left_origin) --  (b);
+            \draw[semithick, ->] (left_origin) --  (c);
+    
+            
+            \pgfmathsetmacro{\trianglelength}{2.5}
+    
+            
+            \draw (\trianglelength-\xoffset - \axesshift,-\yoffset,-\zoffset) 
+            -- 
+            (-\xoffset -\axesshift, \trianglelength-\yoffset, -\zoffset) 
+            -- 
+            (-\xoffset -\axesshift, -\yoffset, \trianglelength-\zoffset) -- cycle;
+    
+            
+            \shade[triangle]
+            (\trianglelength-\xoffset - \axesshift,-\yoffset,-\zoffset) 
+            -- 
+            (-\xoffset -\axesshift, \trianglelength-\yoffset, -\zoffset) 
+            -- 
+            (-\xoffset -\axesshift, -\yoffset, \trianglelength-\zoffset) -- cycle;
+    
+            
+            
+            \draw[->] ([xshift = -2cm, yshift = 1.5cm]a) 
+            to[bend left] 
+            ([xshift= 0.5cm, yshift = 4cm]C);
+            \node at ([xshift = 0.5cm, yshift = 3.1cm]a) {$f$};
+    
+            
+            \pgfmathsetmacro{\nlines}{22}
+            
+            \coordinate (A) at (0,0);
+            \path (A);\pgfgetlastxy{\ax}{\ay} 
+            \coordinate (B) at (3,-2);
+            \path (B);\pgfgetlastxy{\bx}{\by}
+            \coordinate (C) at (8,0);
+            \path (C);\pgfgetlastxy{\cx}{\cy}
+            \coordinate (D) at (5, 2);
+            \path (D);\pgfgetlastxy{\dx}{\dy}
+        
+            
+            \pgfmathsetmacro{\ABout}{-5}
+            \pgfmathsetmacro{\ABin}{150}
+            
+            \pgfmathsetmacro{\BCout}{-5}
+            \pgfmathsetmacro{\BCin}{150}
+        
+            \pgfmathsetmacro{\CDout}{150}
+            \pgfmathsetmacro{\CDin}{-10}
+            
+            \pgfmathsetmacro{\DAout}{150}
+            \pgfmathsetmacro{\DAin}{-10}
+        
+            
+            \shade[shadow]
+            ([xshift = 1cm, yshift = -2cm]A)
+            --
+            ([xshift = 0cm, yshift = -2cm]B) 
+            --
+            ([xshift = -1cm, yshift = -2cm]C)
+            --
+            ([xshift = 0cm, yshift = -2.7cm]D) 
+            --
+            
+            cycle;
+        
+            
+            \shade[surface] 
+            (A)
+            to[out=\ABout,in=\ABin] 
+            (B) 
+            to[out=\BCout,in=\BCin] 
+            (C)
+            to[out=\CDout,in=\CDin] 
+            (D) 
+            to[out=\DAout,in=\DAin]  cycle;
+        
+            
+            \draw[line width = 0.05mm]
+            (A)
+            to[out=\ABout,in=\ABin] 
+            (B) 
+            to[out=\BCout,in=\BCin] 
+            (C)
+            to[out=\CDout,in=\CDin] 
+            (D) to[out=155,in=\DAin] cycle;
+        
+            
+            \foreach \n in {1,2, ..., \nlines}{
+                \pgfmathsetmacro{\step}{\n/\nlines}
+                \path (A) to[out=\ABout,in=\ABin] coordinate[pos=\step] (A\n) (B);
+                \path (B) to[out=\BCout,in=\BCin] coordinate[pos=\step] (B\n) (C);
+                \path (D) to[in=\CDout,out=\CDin] coordinate[pos=\step] (C\n) (C);
+                \path (A) to[in=\DAout,out=\DAin] coordinate[pos=\step] (D\n) (D);
+            }
+        
+            
+            \foreach \n in {1,2,...,\nlines}{
+                \path (A\n); \pgfgetlastxy{\ax\n}{\ay\n} 
+                \path (B\n); \pgfgetlastxy{\bx\n}{\by\n} 
+                \path (C\n); \pgfgetlastxy{\cx\n}{\cy\n} 
+                \path (D\n); \pgfgetlastxy{\dx\n}{\dy\n} 
+                \draw[line width = 0.05mm]
+                (\bx\n,\by\n) to[out=\DAout,in=\DAin] (\dx\n,\dy\n);
+                \draw[line width = 0.05mm]
+                (\ax\n,\ay\n) to[out=\ABout,in=\ABin] (\cx\n,\cy\n);
+            }
+        
+            
+            \begin{scope}
+                
+                \clip ([xshift = 0.1cm]A5)
+                to[out=\ABout,in=\ABin] 
+                ([xshift = -0.5cm]B5) 
+                to[out=\BCout,in=\BCin] 
+                ([xshift = 0.1cm]C5)
+                to[out=\CDout,in=\CDin] 
+                cycle;
+    
+                
+                \pgfmathsetmacro{\nlines}{22}
+                
+                \coordinate (A) at (0,0);
+                \path (A);\pgfgetlastxy{\ax}{\ay} 
+                \coordinate (B) at (3,-2);
+                \path (B);\pgfgetlastxy{\bx}{\by}
+                \coordinate (C) at (8,0);
+                \path (C);\pgfgetlastxy{\cx}{\cy}
+                \coordinate (D) at (5, 2);
+                \path (D);\pgfgetlastxy{\dx}{\dy}
+            
+                
+                \pgfmathsetmacro{\ABout}{-5}
+                \pgfmathsetmacro{\ABin}{150}
+                
+                \pgfmathsetmacro{\BCout}{-5}
+                \pgfmathsetmacro{\BCin}{150}
+            
+                \pgfmathsetmacro{\CDout}{150}
+                \pgfmathsetmacro{\CDin}{-10}
+                
+                \pgfmathsetmacro{\DAout}{150}
+                \pgfmathsetmacro{\DAin}{-10}
+            
+                
+                \shade[em_triangle] 
+                (A)
+                to[out=\ABout,in=\ABin] 
+                (B) 
+                to[out=\BCout,in=\BCin] 
+                (C)
+                to[out=\CDout,in=\CDin] 
+                (D) 
+                to[out=\DAout,in=\DAin]  cycle;
+            
+                
+                \draw[line width = 0.05mm]
+                (A)
+                to[out=\ABout,in=\ABin] 
+                (B) 
+                to[out=\BCout,in=\BCin] 
+                (C)
+                to[out=\CDout,in=\CDin] 
+                (D) to[out=\DAout,in=\DAin] cycle;
+            
+                
+                \foreach \n in {1,2, ..., \nlines}{
+                    \pgfmathsetmacro{\step}{\n/\nlines}
+                    \path (A) to[out=\ABout,in=\ABin] coordinate[pos=\step] (A\n) (B);
+                    \path (B) to[out=\BCout,in=\BCin] coordinate[pos=\step] (B\n) (C);
+                    \path (D) to[in=\CDout,out=\CDin] coordinate[pos=\step] (C\n) (C);
+                    \path (A) to[in=\DAout,out=\DAin] coordinate[pos=\step] (D\n) (D);
+                }
+            
+                
+                \foreach \n in {1,2,...,\nlines}{
+                    \path (A\n); \pgfgetlastxy{\ax\n}{\ay\n} 
+                    \path (B\n); \pgfgetlastxy{\bx\n}{\by\n} 
+                    \path (C\n); \pgfgetlastxy{\cx\n}{\cy\n} 
+                    \path (D\n); \pgfgetlastxy{\dx\n}{\dy\n} 
+                    \draw[line width = 0.05mm]
+                    (\bx\n,\by\n) to[out=\DAout,in=\DAin] (\dx\n,\dy\n);
+                    \draw[line width = 0.05mm]
+                    (\ax\n,\ay\n) to[out=\ABout,in=\ABin] (\cx\n,\cy\n);
+                }
+        
+            \end{scope}
+        \end{tikzpicture}
+
+        \emph{A 2-simplex gets embedded into a manifold in $\rr^3$.}
+    \end{center}
+
+\end{center}
+
+\end{document}

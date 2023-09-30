@@ -7,7 +7,9 @@ to obtain a definition for arbitrary products and coproducts in a category.
 <span style="display:block" class="definition">
 Let $\mathcal{D}_n$ be the discrete category with $n$-many objects (we use the letter $\dd$ for "discrete"). 
 We will often visualize $\mathcal{D}_n$ as below.  
-\begin{align_topbot}
+
+
+\begin{align}
 \begin{tikzpicture}
 \filldraw[yellow!30, rounded corners] (-4.3, -0.7) rectangle (4.3,0.7);
 \node at (0,0){
@@ -24,7 +26,9 @@ We will often visualize $\mathcal{D}_n$ as below.
 \end{tikzcd}
 };
 \end{tikzpicture}
-\end{align_topbot}
+\end{align}
+
+
 Note that 
 a functor $F: \dd_n \to \cc$ is one which simply picks out $n$ different objects $A_1$, $A_2, 
 \dots$, $A_n$ of $\cc$:

@@ -18,6 +18,7 @@ emph_cmd = re.compile("\\\\emph{(.*?)}")
 latex_quotes = re.compile("``(.*?)''")
 display_math = re.compile("(\\\\\\[([\s\S]*?)\\\\\\])")
 align_stmt = re.compile("(\\\\begin{align}([\s\S]*?)\\\\end{align})")
+align_topbot_stmt = re.compile("\\\\begin{align_topbot}([\s\S]*?)\\\\end{align_topbot}")
 align_star_stmt = re.compile("(\\\\begin{align\*}([\s\S]*?)\\\\end{align\*})")
 gather_env = re.compile("(\\\\begin{gather}([\s\S]*?)\\\\end{gather})")
 gather_star_env = re.compile("(\\\\begin{gather\*}([\s\S]*?)\\\\end{gather\*})")
@@ -71,10 +72,14 @@ repl_remark = lambda x: repl_asmthm_statement(x, "remark")
 # DONE: convert latex tables to markdown tables
 # DONE: put \begin{gather} on new lines
 # TODO: address statement, description, environments
+# To address description env
+# - Replace each itemize env. If an itemize env contains a description env, then stop and replace the description env.
+# - Replace each description env. If a description env contained an itemize env, then it already go replaced so ignore it. 
 # TODO: consider compiling TikzPictures with surrounding begin{center} or minipage code
 # TODO: handle section references
 # DONE: handle isomarrow macro
 # TODO: remove footnotes
+# TODO: replace alignbot environment
 
 
 def repl_asmthm_statement(match, class_name):
@@ -229,10 +234,9 @@ def repl_center_env(match, chapter, section, ind):
 
     return img_url, True
 
-def repl_minipage_env(match):
-    
-
-    return 
+def repl_align_topbot(match):
+    code = match.group(1)
+    return "\n\\begin{align}" + code + "\\end{align}\n"
 
 def clean_code(code: str, chapter:int, section: int) -> str:
     print(f"doing {chapter=} {section=}")
@@ -279,6 +283,8 @@ def clean_code(code: str, chapter:int, section: int) -> str:
     new_code = re.sub(latex_quotes, "\"\\1\"", new_code)
     # set display math on newlines
     new_code = re.sub(display_math, "\n\\1\n", new_code)
+    # set align_topbot environments on newlines
+    new_code = re.sub(align_topbot_stmt, repl_align_topbot, new_code)
     # set align environments on newlines
     new_code = re.sub(align_stmt, "\n\\1\n", new_code)
     # set align* environments on newlines 

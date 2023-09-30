@@ -150,12 +150,16 @@ is a category $\cc$ equipped with a bifunctor
 $\otimes: \cc \times \cc \to \cc$, a (special) object $I$,
 and three natural isomorphisms
 \begin{statement}{ProcessBlue!10}
-\begin{align_topbot}
+
+
+\begin{align}
 \alpha_{A, B, C}&: A\otimes(B\otimes C) \isomarrow
 (A \otimes B)\otimes C \quad &&**(Associator)**\\
 \lambda_A&: I \otimes A \isomarrow A \quad &&**(Left Unit)**\\
 \rho_A&: A \otimes I \isomarrow A \quad &&**(Right Unit)**
-\end{align_topbot}
+\end{align}
+
+
 \end{statement}
 such that the following **coherence conditions** hold.
 \begin{statement}{ProcessBlue!10}

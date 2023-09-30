@@ -197,10 +197,14 @@ that
 is bilinear. What we mean by bilinear is that, given morphisms $f, g: A \to B$ and $h, k: B \to C$, 
 we have that 
 \begin{statement}{Red!10}
-\begin{align_topbot}
+
+
+\begin{align}
 (h + k) \circ f = h \circ f + k \circ f\\
 h \circ (g + f) = h \circ g + h \circ f.
-\end{align_topbot}
+\end{align}
+
+
 \end{statement}
 </span>
 

@@ -76,11 +76,15 @@ persistence modules.
 Let $F, G \in \dd^{P}$, and suppose $\omega$ is a sublinear projection. 
 Then their interleaving distance is given by 
 \begin{statement}{NavyBlue!10}
-\begin{align_topbot}
+
+
+\begin{align}
 d^{\omega}(F, G) 
 &= \{ \epsilon \in [0, \infty) \mid F, G \text{ are } \epsilon \text{-interleaved w.r.t. } \omega  \}\\
 &= \{ \epsilon \in [0, \infty) \mid F, G \text{ are } (\Gamma, K)\text{-interleaved and } \omega_\Gamma, \omega_K \le \epsilon\}.
-\end{align_topbot}
+\end{align}
+
+
 \end{statement}
 </span>
 

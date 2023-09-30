@@ -26,9 +26,13 @@ $F(C) \in \dd$
 $f: C \to C'$ in $\cc$ is assigned uniquely to some morphism $F(f):
 F(C) \to  F(C')$ in $\dd$ such that 
 \begin{statement}{ProcessBlue!10}
-\begin{align_topbot}
+
+
+\begin{align}
 F(1_C) = 1_{F(C)} \quad\quad F(g \circ f) = F(g) \circ F(f)
-\end{align_topbot}
+\end{align}
+
+
 \end{statement}
 
 

@@ -1,0 +1,244 @@
+\documentclass[12pt,letterpaper]{book}
+\usepackage[margin=0.9in]{geometry}
+\usepackage[utf8]{inputenc} 
+\usepackage[english]{babel}
+\usepackage{graphicx}
+\usepackage{amsmath, amsfonts, amssymb, amsthm, thmtools}
+\usepackage{braket} 
+\usepackage{relsize} 
+\usepackage{float}
+\usepackage{mathtools}
+\usepackage{lmodern} 
+\usepackage[T1]{fontenc}
+\usepackage{fancyhdr}
+\usepackage[dvipsnames]{xcolor} % Colors, use dvipsnames for more color options
+\usepackage{framed} % Fancy leftbar
+\usepackage[normalem]{ulem}
+\usepackage{tikz-cd} % Diagrams
+\usepackage{tikz} % General purpose graphics
+\usepackage{tikz-3dplot}
+\usepackage[most]{tcolorbox} % For theorem boxing
+\usepackage{bm} % For better bold math font
+\usepackage{old-arrows} 
+\usepackage[usestackEOL]{stackengine}
+\usepackage{sectsty}
+\usepackage[hyperfootnotes=false]{hyperref} % For clickable table of contents
+\usepackage[linesnumbered, ruled, boxruled]{algorithm2e} % Fancy algorithm presentation
+\usepackage{calc} % For simpler calculation - used for spacing the index letter headings correctly
+\usepackage{makeidx} % Required to make an index
+\usepackage{verbatim}
+\usepackage{titlesec} % Allows customization of titles
+\usepackage{enumitem} % Customize lists
+\usepackage{booktabs} %  Required for nicer horizontal rules in tables
+\usepackage{eso-pic} %  Required for specifying an image background in the title page
+\usepackage{titletoc, tocloft, pgffor}
+\usepackage[titletoc]{appendix} % For appendix
+\usepackage{braids}
+\usepackage{adjustbox} % Very useful boxing environment
+\usepackage{setspace} % Variable line spacing
+\usepackage{soul}
+
+%----------------------------------------------------------------------------------------
+%	Global Document Settings
+%----------------------------------------------------------------------------------------
+\setcounter{section}{1} % Avoid counting from zero
+\linespread{1.1} % Set line spacing
+\graphicspath{{pictures/}}% Set graphics directory
+\hypersetup{ % Set hyperref settings
+    colorlinks,
+    citecolor=black,
+    filecolor=black,
+    linkcolor=black,
+    urlcolor=black
+}
+\setitemize{noitemsep,topsep=0.5em, parsep=0.5em ,partopsep=0pt}
+\setlist{nolistsep} %  Reduce spacing between bullet points and numbered lists
+
+%----------------------------------------------------------------------------------------
+%	TikZ Settings
+%----------------------------------------------------------------------------------------
+\usetikzlibrary{
+    arrows, 
+    arrows.meta, 
+    braids, 
+    calc, 
+    shapes.geometric,
+    decorations.markings,
+    decorations.pathreplacing, 
+    intersections,
+    hobby
+}
+% Set stealth arrows in TikzCD
+\tikzcdset{
+    arrow style = tikz, diagrams={>={Stealth[scale=1]}}
+} 
+% Set stealth arrows in TikZ
+\tikzset{
+    >={Stealth[scale=1]}
+} 
+\def\tikzpicc{tikzpicture}
+
+%----------------------------------------------------------------------------------------
+%	Math Commands
+%----------------------------------------------------------------------------------------
+% First we need to overwrite some existing commands. 
+\let\*\relax 
+\let\path\relax 
+\let\ker\relax 
+\let\im\relax
+\let\hom\relax
+\let\Set\relax
+\let\top\relax
+\let\ll\relax
+%% Various Math Operators
+\DeclareMathOperator{\im}{\rm{Im}}
+\DeclareMathOperator{\id}{\mathrm{id}}
+\DeclareMathOperator{\ob}{\mathrm{Ob}}
+\DeclareMathOperator{\*}{ \mathbin{*} }
+\DeclareMathOperator{\path}{\mathrm{Path}} 
+\DeclareMathOperator{\nat}{\mathrm{Nat}}
+\DeclareMathOperator{\dom}{\mathrm{Dom}}
+\DeclareMathOperator{\cod}{\mathrm{Cod}}
+\DeclareMathOperator{\gal}{\mathrm{Gal}}
+\DeclareMathOperator{\aut}{\mathrm{Aut}}
+\DeclareMathOperator{\cone}{\mathrm{Cone}}
+\DeclareMathOperator{\fun}{\mathrm{Fun}}
+\DeclareMathOperator{\proj}{\mathrm{proj}}
+\DeclareMathOperator{\coker}{\mathrm{Coker}}
+\DeclareMathOperator{\aend}{\mathrm{End}} %a is added because LaTeX does not allow commands to begin with "end."
+\DeclareMathOperator{\spec}{\mathrm{Spec}}
+\DeclareMathOperator{\ker}{\mathrm{Ker}}
+\DeclareMathOperator*{\Lim}{\mathrm{Lim }}
+\DeclareMathOperator*{\Colim}{\mathrm{Colim }}
+\DeclareMathOperator{\hom}{\mathrm{Hom}}
+\DeclareMathOperator{\Char}{\mathrm{char}} % We'd prefer \char, but... NEVER overwrite \char! TeX will die.
+\DeclareMathOperator{\ll}{\mathcal{L}}
+
+%% General Math Shortcuts
+\newcommand{\zz}{\mathbb{Z}}
+\newcommand{\rr}{\mathbb{R}}
+\newcommand{\nn}{\mathbb{N}}
+\newcommand{\qq}{\mathbb{Q}}
+\newcommand{\normal}{\unlhd}
+\newcommand{\join}{\vee}
+\newcommand{\meet}{\wedge}
+\renewcommand{\epsilon}{\varepsilon}
+\renewcommand{\phi}{\varphi}
+\renewcommand{\subset}{\subseteq}
+\newcommand{\op}{^{\mathrm{op}}}
+
+%% Category Shortcuts
+\newcommand{\bb}{\mathcal{B}}
+\newcommand{\cc}{\mathcal{C}}
+\newcommand{\dd}{\mathcal{D}}
+\newcommand{\ee}{\mathcal{E}}
+\newcommand{\ff}{\mathcal{F}}
+\newcommand{\mm}{\mathcal{M}}
+\newcommand{\pp}{\mathcal{P}} 
+\newcommand{\qqq}{\mathcal{Q}}
+\newcommand{\vv}{\mathcal{V}}
+\newcommand{\ww}{\mathcal{W}}
+\renewcommand{\aa}{\mathcal{A}}
+\renewcommand{\ee}{\mathcal{E}}
+\renewcommand{\ss}{\mathcal{S}}
+\renewcommand{\wp}{\mathcal{W}_{\mathrm{P}}}
+
+% Category of Sets
+\DeclareMathOperator{\Set}{\mathbf{Set}}
+\DeclareMathOperator{\finset}{\mathbf{FinSet}}
+\DeclareMathOperator{\finord}{\mathbf{FinOrd}}
+% "Algebraic" categories
+\DeclareMathOperator{\grp}{\mathbf{Grp}}
+\DeclareMathOperator{\ab}{\mathbf{Ab}}
+\DeclareMathOperator{\ring}{\mathbf{Ring}}
+\DeclareMathOperator{\cring}{\mathbf{CRing}}
+\DeclareMathOperator{\mon}{\mathbf{Mon}}
+\DeclareMathOperator{\rmod}{\mathbf{-Mod}}
+\DeclareMathOperator{\alg}{\mathbf{Alg}}
+\DeclareMathOperator{\fld}{\mathbf{Fld}}
+% Other Categories
+\DeclareMathOperator{\open}{\mathbf{Open}}
+\DeclareMathOperator{\top}{\mathbf{Top}}
+\DeclareMathOperator{\Toph}{\mathbf{Toph}}
+\DeclareMathOperator{\vect}{\mathbf{Vect}}
+\DeclareMathOperator{\cat}{\mathbf{Cat}}
+
+% A nice \to command
+\renewcommand{\to}{\mathbin{\tikz[baseline] \draw[-{Stealth[length=5pt,width=4pt]}] (0pt,.6ex) -- (3.5ex,.6ex);}} 
+
+% A nice isomorphism arrow
+\newcommand{\isomarrow}{\mathrel{\setstackgap{S}{-0.5pt}\ensurestackMath{\Shortstack{\scriptstyle\sim\\ \longrightarrow}}}} 
+
+% A nice \cdot symbol, which is bigger than \cdot but smaller than \bullet. 
+\makeatletter % So that we access commands with "@" in them
+\newcommand*\bcdot{\mathpalette\bcdot@{.6}}
+\newcommand*\bcdot@[2]{\mathbin{\vcenter{\hbox{\scalebox{#2}{$\m@th#1\bullet$}}}}}
+\DeclareMathOperator{\bigcdot}{\mathbin{\bcdot}}
+\makeatother
+
+% These are \Lim and \Colim with arrows underneath
+\newcommand{\Arrowto}[1]{\parbox{#1}{\tikz{\draw[->](0,0)--(#1,0);}}}
+\newcommand{\Arrowfrom}[1]{\parbox{#1}{\tikz{\draw[<-](0,0)--(#1,0);}}}
+\DeclareMathOperator*{\Limto}{\Lim_{\Arrowto{0.8cm}}}
+\DeclareMathOperator*{\Limfrom}{\Lim_{\Arrowfrom{0.8cm}}}
+\DeclareMathOperator*{\Colimto}{\Colim_{\Arrowto{1cm}}}
+\DeclareMathOperator*{\Colimfrom}{\Colim_{\Arrowfrom{1cm}}}
+
+% To type out adjunctions
+\newcommand{\adjunction}[4]{
+    \begin{tikzcd}[ampersand replacement = \&] %\newcommand freaks out with & symbols
+        #1
+        \arrow[r, shift right = -0.5ex, "#2"]
+        \&
+        #3
+        \arrow[l, shift right = -0.5ex, "#4"]
+    \end{tikzcd}
+}
+
+%----------------------------------------------------------------------------------------
+%	Non-Math Commands
+%----------------------------------------------------------------------------------------
+
+% Some colors
+\definecolor{processBlue}{HTML}{E0F8FF}
+\definecolor{mypurple}{HTML}{4D34A4}
+\definecolor{navy}{RGB}{20,150,220}
+\definecolor{purp}{HTML}{CDCBFF}  
+
+\begin{document}
+\pagestyle{empty} % no page numbers
+
+\begin{center}
+
+\begin{center}
+        \begin{tikzcd}[row sep = 1.4cm, column sep = 0.7cm]
+            S_2 \times (S_2 \times S_1)
+            \arrow[r]
+            \arrow[d]
+            &
+            {[A^2, A]\times \big([A^{2}, A], \times [A, A]\big)}
+            \arrow[d]
+            \\
+            S_3
+            \arrow[r]
+            &
+            \hom(A^3, A)
+        \end{tikzcd}
+        \begin{tikzcd}[row sep = 1.4cm, column sep = 1.4cm]
+            (e_2, e_2, e_1)
+            \arrow[r, maps to]
+            \arrow[d, maps to]
+            &
+            (\mu_2, \mu_2, \id_A)
+            \arrow[d, maps to]
+            \\
+            e_3
+            \arrow[r, maps to]
+            &
+            \mu_3 = \mu_2(\mu_2, \id_A)
+        \end{tikzcd}
+    \end{center}
+
+\end{center}
+
+\end{document}

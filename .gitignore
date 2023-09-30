@@ -1,6 +1,5 @@
 *.sw*
 docs/pdf
-docs/tikz
 ## Core latex/pdflatex auxiliary files:
 *.aux
 *.lof
